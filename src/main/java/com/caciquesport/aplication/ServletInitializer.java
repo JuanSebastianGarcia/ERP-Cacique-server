@@ -1,4 +1,4 @@
-package com.caciquesport.inventario.inventario;
+package com.caciquesport.aplication;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
