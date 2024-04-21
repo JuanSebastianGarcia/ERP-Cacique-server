@@ -1,5 +1,6 @@
 package com.caciquesport.model.entity;
 
+import com.caciquesport.model.configTypes.TipoHorario;
 import com.caciquesport.model.configTypes.TipoPrenda;
 
 import jakarta.persistence.*;
@@ -13,11 +14,15 @@ import lombok.NoArgsConstructor;
 @Table(name="producto")
 public class Producto {
 
-    private int id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="ip_producto")
+    private int idProducto;
     
     @ManyToOne
     private TipoPrenda tipoPrenda;
 
+    @ManyToOne
+    private TipoHorario tipoHorario;
 
 
 }
