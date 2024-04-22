@@ -1,6 +1,5 @@
 package com.caciquesport.model.configTypes;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,9 +18,9 @@ public class TipoHorario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_horario")
-    private int idHorario;
+    private int id;
 
-    @Column(name = "horario",nullable = false,unique = true,length = 10,updatable = false)
+    @Column(name = "horario" , nullable = false , unique = true , length = 10 , updatable = false)
     private String horario;
 
     
