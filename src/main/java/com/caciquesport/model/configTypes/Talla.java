@@ -12,19 +12,13 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
-@Table(name = "tipo_prenda")
-public class TipoPrenda {
+@Table(name = "talla")
+public class Talla {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_prenda")
+    @Column(name = "id_talla")
     private int id;
 
-    @Column(name = "prenda" , nullable = false , unique = true , length = 30 , updatable = false)
-    private String prenda;
-
-
-
-
-
-
+    @Column(name = "talla" , nullable = false , unique = true , length = 5 , updatable = false)
+    private String talla;
 }
