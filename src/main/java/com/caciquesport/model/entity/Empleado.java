@@ -45,4 +45,5 @@ public class Empleado {
     @Column(name = "tipo_empleado", nullable = false , updatable = false )
     private TipoEmpleado tipoEmpleado;
 
+    
 }

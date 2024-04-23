@@ -19,6 +19,7 @@ public class Institucion {
     @Column(name = "id_institucion")
     private int id;
 
+    
     @Column(name = "institucion" , nullable = false , unique = true , updatable = false)
     private String institucion;
 
