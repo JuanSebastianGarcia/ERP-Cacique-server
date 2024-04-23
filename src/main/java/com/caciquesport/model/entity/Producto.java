@@ -38,7 +38,5 @@ public class Producto {
     @OneToOne
     @JoinColumn(name = "detalle_producto")
     private DetalleProducto detalleProducto;
-
-
-    
+  
 }
