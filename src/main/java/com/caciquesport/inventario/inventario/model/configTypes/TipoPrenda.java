@@ -1,4 +1,4 @@
-package com.caciquesport.model.configTypes;
+package com.caciquesport.inventario.inventario.model.configTypes;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,19 +12,19 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
-@Table(name = "institucion")
-public class Institucion {
+@Table(name = "tipo_prenda")
+public class TipoPrenda {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_institucion")
+    @Column(name = "id_prenda")
     private int id;
 
-    
-    @Column(name = "institucion" , nullable = false , unique = true , updatable = false)
-    private String institucion;
+    @Column(name = "prenda" , nullable = false , unique = true , length = 30 , updatable = false)
+    private String prenda;
 
 
 
 
-    
+
+
 }
