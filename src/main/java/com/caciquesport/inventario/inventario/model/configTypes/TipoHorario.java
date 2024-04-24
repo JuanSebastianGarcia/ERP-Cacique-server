@@ -1,4 +1,6 @@
 package com.caciquesport.inventario.inventario.model.configTypes;
+import java.io.Serializable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,12 +14,12 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
 @Table(name="tipo_horario")
-public class TipoHorario {
+public class TipoHorario implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_horario")
-    private int id;
+    private Integer id;
 
     @Column(name = "horario" , nullable = false , unique = true , length = 10 , updatable = false)
     private String horario;

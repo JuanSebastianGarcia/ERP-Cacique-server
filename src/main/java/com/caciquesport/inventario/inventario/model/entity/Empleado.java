@@ -1,5 +1,7 @@
 package com.caciquesport.inventario.inventario.model.entity;
 
+import java.io.Serializable;
+
 import com.caciquesport.inventario.inventario.model.configTypes.TipoEmpleado;
 
 import jakarta.persistence.Column;
@@ -17,11 +19,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
 @Table(name = "empleado")
-public class Empleado {
+public class Empleado implements Serializable {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_empleado")
-    private int id;
+    private Integer id;
 
     @Column(name = "nombre_empleado" , nullable = false , length = 20 , updatable = false)
     private String nombre;

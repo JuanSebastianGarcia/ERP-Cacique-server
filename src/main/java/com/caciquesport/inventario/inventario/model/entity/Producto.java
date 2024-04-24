@@ -1,6 +1,8 @@
 package com.caciquesport.inventario.inventario.model.entity;
 
 
+import java.io.Serializable;
+
 import com.caciquesport.inventario.inventario.model.configTypes.Institucion;
 import com.caciquesport.inventario.inventario.model.configTypes.Talla;
 import com.caciquesport.inventario.inventario.model.configTypes.TipoHorario;
@@ -15,11 +17,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
 @Table(name="producto")
-public class Producto {
+public class Producto implements Serializable{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ip_producto")
-    private int id;
+    private Integer id;
     
     @ManyToOne  
     @JoinColumn(name = "tipo_prenda_id")
