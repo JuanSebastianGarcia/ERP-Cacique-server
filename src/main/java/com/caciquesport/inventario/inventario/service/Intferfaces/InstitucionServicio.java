@@ -1,22 +1,20 @@
 package com.caciquesport.inventario.inventario.service.Intferfaces;
 
-
-
 import java.util.List;
-
 import com.caciquesport.inventario.inventario.model.configTypes.Institucion;
 
 public interface InstitucionServicio {
 
-    int crearInstitucion(Institucion nuevaInstitucion);
+    Integer crearInstitucion(Institucion nuevaInstitucion) throws Exception;
 
-    int actualizarInstitucion(Institucion institucion);
+    Integer actualizarInstitucion(Institucion institucion) throws Exception;
 
-    void eliminarInstitucion(String nombreInstitucion);
+    void eliminarInstitucion(String nombreInstitucion) throws Exception;
 
-    Institucion obtenerInstitucion(String nombreInstitucion);
+    Institucion obtenerInstitucion(String nombreInstitucion) throws Exception;
 
-    List<Institucion> listarInstituciones();
+    List<Institucion> listarInstituciones() throws Exception;
+    
     
 
 }
