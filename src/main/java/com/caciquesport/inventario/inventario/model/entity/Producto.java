@@ -1,9 +1,11 @@
-package com.caciquesport.model.entity;
+package com.caciquesport.inventario.inventario.model.entity;
 
-import com.caciquesport.model.configTypes.Institucion;
-import com.caciquesport.model.configTypes.Talla;
-import com.caciquesport.model.configTypes.TipoHorario;
-import com.caciquesport.model.configTypes.TipoPrenda;
+
+import com.caciquesport.inventario.inventario.model.configTypes.Institucion;
+import com.caciquesport.inventario.inventario.model.configTypes.Talla;
+import com.caciquesport.inventario.inventario.model.configTypes.TipoHorario;
+import com.caciquesport.inventario.inventario.model.configTypes.TipoPrenda;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
