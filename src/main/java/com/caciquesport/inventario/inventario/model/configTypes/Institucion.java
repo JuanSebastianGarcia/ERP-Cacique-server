@@ -1,5 +1,7 @@
 package com.caciquesport.inventario.inventario.model.configTypes;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,11 +15,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
 @Table(name = "institucion")
-public class Institucion {
+public class Institucion implements Serializable{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_institucion")
-    private int id;
+    private Integer id;
 
     
     @Column(name = "institucion" , nullable = false , unique = true , updatable = false)

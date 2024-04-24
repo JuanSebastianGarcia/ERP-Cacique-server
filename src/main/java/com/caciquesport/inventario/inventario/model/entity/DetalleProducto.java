@@ -1,5 +1,7 @@
 package com.caciquesport.inventario.inventario.model.entity;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,14 +16,14 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
 @Table(name = "detalle_producto")
-public class DetalleProducto {
+public class DetalleProducto implements Serializable {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_detalle_producto")
-    private int id;
+    private Integer id;
 
     @Column(name = "cantidad_producto" , nullable = false)
-    private int cantidad;
+    private Integer cantidad;
 
     @Column(name = "precio_producto" , nullable = false)
     private double precio;
