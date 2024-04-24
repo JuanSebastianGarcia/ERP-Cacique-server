@@ -33,11 +33,8 @@ public class DetalleProductoServicioImpl implements DetalleProductoServicio{
     @Override
     public Integer crearDetalleProducto(DetalleProducto nuevoDetalleProducto) throws Exception {
         
-        try {
-            return detalleProductoRepository.save(nuevoDetalleProducto).getId();
-        } catch (Exception e) {
-            throw new UnsupportedOperationException("error guardando el detalle del producto");
-        }
+          return detalleProductoRepository.save(nuevoDetalleProducto).getId();
+  
     }
 
 
@@ -51,49 +48,71 @@ public class DetalleProductoServicioImpl implements DetalleProductoServicio{
     @Override
     public Integer actualizarDetalleProducto(DetalleProducto detalleProducto) throws Exception {
         
-        try {
-            return detalleProductoRepository.save(detalleProducto).getId();
-        } catch (Exception e) {
-            throw new UnsupportedOperationException("error aztualizando el detalle del producto");
-        }
-        
+            Optional<DetalleProducto>  detalleEncontrado =  detalleProductoRepository.findById(detalleProducto.getId());
+
+            if(detalleEncontrado.isEmpty()){
+                throw new Exception("error aztualizando el detalle del producto");
+            }else{
+                return detalleProductoRepository.save(detalleProducto).getId();
+            }
+            
     }
+
 
     /*
      * buscar el detalle de un producto por medio del codigo unico id, en caso de que el objeto no sea encontrado
-     * devolvera un null
+     * lanzara una excepcion
      * 
-     * @param id - identificador unico del detalle de producto, este esta vinculado al producto para encontrarlo
+     * @param id - identificador unico del detalle de producto, este esta vinculado al producto propietario
      * 
      * @return - devolvera el producto si lo encuentra, y si no lo encuentra devuelve un null
      * 
      */
     @Override
     public DetalleProducto obtenerDetalleProducto(Integer id) throws Exception {
-        
-        try {
-
+ 
             Optional<DetalleProducto> detalleEncontrado=detalleProductoRepository.findById(id);
         
-            DetalleProducto detalleProducto = detalleEncontrado.orElse(null);
+            if(detalleEncontrado.isEmpty()){
+                throw new Exception("el detalle no ha sido encontrado");
+            }else{
+                return detalleEncontrado.get();
+            }
 
-            return detalleProducto;   
-    
-        } catch (Exception e) {
-            throw new UnsupportedOperationException("error obteniendo el detalle del producto");
-        }
     }
 
+
+
+    /*
+     * eliminar el detalle del producto por medio del id, en caso de que no se encuentre el detalle o ocurra un error 
+     * lanzara una excepcion
+     * 
+     * @param id - identificador unico del detalle del producto, este esta vinculado al producto propietario
+     * 
+     */
     @Override
-    public void EliminarDetalleProducto(Integer Id) throws Exception {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("error eliminando el detalle del producto");
+    public void EliminarDetalleProducto(Integer id) throws Exception {
+  
+        Optional<DetalleProducto> detalleEncontrado=detalleProductoRepository.findById(id);
+
+        if(detalleEncontrado.isEmpty()){
+            throw new Exception("el detalle no ha podido ser eliminado");
+        }else{
+            detalleProductoRepository.delete(detalleEncontrado.get());
+        }  
     }
 
+
+
+    /*
+     *buscar toda la lista de detalle de producto 4
+     *
+     * @return- retorna la lista completa de detalle de producto
+     */
     @Override
     public List<DetalleProducto> listarDetalleProducto() throws Exception {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("error listando los detalles de los productos");
+        
+        return detalleProductoRepository.findAll();
     }
 
 }
