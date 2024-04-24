@@ -1,5 +1,9 @@
 package com.caciquesport.inventario.inventario.service.Intferfaces;
 
+
+
+import java.util.List;
+
 import com.caciquesport.inventario.inventario.model.configTypes.Institucion;
 
 public interface InstitucionServicio {
@@ -8,8 +12,11 @@ public interface InstitucionServicio {
 
     int actualizarInstitucion(Institucion institucion);
 
-    void eliminarInstitucion(Institucion eliminarInstitucion);
+    void eliminarInstitucion(String nombreInstitucion);
 
+    Institucion obtenerInstitucion(String nombreInstitucion);
 
+    List<Institucion> listarInstituciones();
+    
 
 }
