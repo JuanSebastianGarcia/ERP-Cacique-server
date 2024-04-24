@@ -1,5 +1,4 @@
-package com.caciquesport.model.configTypes;
-
+package com.caciquesport.inventario.inventario.model.configTypes;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,13 +11,16 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
-@Table(name = "talla")
-public class Talla {
+@Table(name="tipo_horario")
+public class TipoHorario {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_talla")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_horario")
     private int id;
 
-    @Column(name = "talla" , nullable = false , unique = true , length = 5 , updatable = false)
-    private String talla;
+    @Column(name = "horario" , nullable = false , unique = true , length = 10 , updatable = false)
+    private String horario;
+
+    
 }

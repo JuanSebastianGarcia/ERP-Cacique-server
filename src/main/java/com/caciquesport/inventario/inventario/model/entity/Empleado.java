@@ -1,6 +1,6 @@
-package com.caciquesport.model.entity;
+package com.caciquesport.inventario.inventario.model.entity;
 
-import com.caciquesport.model.configTypes.TipoEmpleado;
+import com.caciquesport.inventario.inventario.model.configTypes.TipoEmpleado;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
