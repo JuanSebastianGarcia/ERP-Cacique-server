@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 public class Producto implements Serializable{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="ip_producto")
+    @Column(name="id_producto")
     private Integer id;
     
     @ManyToOne  
@@ -39,7 +39,7 @@ public class Producto implements Serializable{
     @JoinColumn(name = "institucion_id")
     private Institucion institucion;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "detalle_producto")
     private DetalleProducto detalleProducto;
   
