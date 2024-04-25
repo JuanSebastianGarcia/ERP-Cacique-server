@@ -3,18 +3,20 @@ package com.caciquesport.inventario.inventario.service.Intferfaces;
 
 import java.util.List;
 
+import com.caciquesport.inventario.inventario.model.configTypes.TipoHorario;
+
 public interface TipoHorarioServicio {
 
 
     
-    Integer crearTipoHorario(TipoHorarioServicio tipoHorario) throws Exception;
+    Integer crearTipoHorario(TipoHorario nuevoTipoHorario) throws Exception;
 
-    Integer actudalizarTipoHorario(TipoHorarioServicio tipoHorario) throws Exception;
+    Integer actualizarTipoHorario(TipoHorario tipoHorario) throws Exception;
 
-    void eliminarTipoHorario(TipoHorarioServicio tipoHorario) throws Exception;
+    void eliminarTipoHorario(String horario) throws Exception;
 
-    TipoHorarioServicio obtenerTipoHortario(TipoHorarioServicio tipoHorario) throws Exception;
+    TipoHorario obtenerTipoHortario(String horario) throws Exception;
 
-    List<TipoHorarioServicio> listarTipoHorarios() throws Exception;
+    List<TipoHorario> listarTipoHorarios() throws Exception;
 
 }
