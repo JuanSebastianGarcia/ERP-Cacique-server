@@ -9,9 +9,9 @@ public interface ProductoServicio {
 
     Integer actualizarProducto(Producto producto) throws Exception;
 
-    void eliminarProducto() throws Exception;
+    void eliminarProducto(Integer id) throws Exception;
 
-    Producto obtenerProducto(Producto productoBuscado) throws Exception;
+    Producto obtenerProducto(Integer id) throws Exception;
 
     List<Producto> listarProductos() throws Exception;
     

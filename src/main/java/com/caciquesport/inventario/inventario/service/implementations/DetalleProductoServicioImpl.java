@@ -105,7 +105,7 @@ public class DetalleProductoServicioImpl implements DetalleProductoServicio{
 
 
     /*
-     *buscar toda la lista de detalle de producto 4
+     *buscar toda la lista de detalle./ de producto 4
      *
      * @return- retorna la lista completa de detalle de producto
      */
