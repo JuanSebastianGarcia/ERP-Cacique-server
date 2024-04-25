@@ -3,8 +3,8 @@ package com.caciquesport.inventario.inventario.model.entity;
 
 import java.io.Serializable;
 
-import com.caciquesport.inventario.inventario.model.configTypes.Institucion;
-import com.caciquesport.inventario.inventario.model.configTypes.Talla;
+import com.caciquesport.inventario.inventario.model.configTypes.TipoInstitucion;
+import com.caciquesport.inventario.inventario.model.configTypes.TipoTalla;
 import com.caciquesport.inventario.inventario.model.configTypes.TipoHorario;
 import com.caciquesport.inventario.inventario.model.configTypes.TipoPrenda;
 
@@ -32,12 +32,12 @@ public class Producto implements Serializable{
     private TipoHorario tipoHorario;
 
     @ManyToOne
-    @JoinColumn(name = "talla_id")
-    private Talla talla;
+    @JoinColumn(name = "tipo_talla_id")
+    private TipoTalla tipoTalla;
 
     @ManyToOne
-    @JoinColumn(name = "institucion_id")
-    private Institucion institucion;
+    @JoinColumn(name = "tipo_institucion_id")
+    private TipoInstitucion tipoInstitucion;
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "detalle_producto")

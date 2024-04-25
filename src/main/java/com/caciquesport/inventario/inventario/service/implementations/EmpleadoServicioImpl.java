@@ -23,7 +23,7 @@ public class EmpleadoServicioImpl implements EmpleadoServicio {
     /*
      * crear empleado
      * 
-     * @param nuevoEmpleado- es el objeto empleado que se va a almacenar
+     * @param nuevoEmpleado- el objeto empleado que se va a almacenar
      * 
      * @return - id del empleado almacenado
      */
@@ -32,6 +32,8 @@ public class EmpleadoServicioImpl implements EmpleadoServicio {
         
         return empleadoRepository.save(nuevoEmpleado).getId();
     }
+
+
 
 
     /*
@@ -54,6 +56,7 @@ public class EmpleadoServicioImpl implements EmpleadoServicio {
     }
 
 
+    
 
     /*
      * eliminar empleado por medio de la cedula. si el empleado no existe lanza una excepcion
@@ -98,6 +101,8 @@ public class EmpleadoServicioImpl implements EmpleadoServicio {
 
     /*
      * obtener toda la lista de empleados
+     * 
+     * @return - la lista de empleados
      */
     @Override
     public List<Empleado> listarEmpleado() throws Exception {

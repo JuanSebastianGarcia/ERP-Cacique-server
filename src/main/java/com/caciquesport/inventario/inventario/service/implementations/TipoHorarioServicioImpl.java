@@ -28,7 +28,7 @@ public class TipoHorarioServicioImpl implements TipoHorarioServicio{
      * @param nuevoTipoHorario - objeto tipo horario que se va a almacenar
      */
     @Override
-    public Integer crearTipoHorario(TipoHorario nuevoTipoHorario) throws Exception {
+    public Integer crearHorario(TipoHorario nuevoTipoHorario) throws Exception {
         return tipoHorarioRepository.save(nuevoTipoHorario).getId();
     }
 
@@ -37,12 +37,12 @@ public class TipoHorarioServicioImpl implements TipoHorarioServicio{
      * actualizar tipo horario. se busca por medio del nombre que es unico, y si no se encuentra
      * se lanza una excepcion
      * 
-     * @param tipoHorario - es el tipo horario que se va a actualizar
+     * @param tipoHorario -  el tipo horario que se va a actualizar
      * 
      * @return - id del tipo horario actualizado
      */
     @Override
-    public Integer actualizarTipoHorario(TipoHorario tipoHorario) throws Exception {
+    public Integer actualizarHorario(TipoHorario tipoHorario) throws Exception {
         Optional<TipoHorario> tipoHorarioEncontrado=tipoHorarioRepository.findByHorario(tipoHorario.getHorario());
 
         if(tipoHorarioEncontrado.isEmpty()){
@@ -62,7 +62,7 @@ public class TipoHorarioServicioImpl implements TipoHorarioServicio{
      * @param horario - horario por el que se busca el objeto
      */
     @Override
-    public void eliminarTipoHorario(String horario) throws Exception {
+    public void eliminarHorario(String horario) throws Exception {
 
         Optional<TipoHorario> tipoHorarioEncontrado=tipoHorarioRepository.findByHorario(horario);
 
@@ -82,7 +82,7 @@ public class TipoHorarioServicioImpl implements TipoHorarioServicio{
      * @param horario - horario por el que se busca el objeto
      */
     @Override
-    public TipoHorario obtenerTipoHortario(String horario) throws Exception {
+    public TipoHorario obtenerHorario(String horario) throws Exception {
  
         Optional<TipoHorario> tipoHorarioEncontrado= tipoHorarioRepository.findByHorario(horario);
 
@@ -97,9 +97,11 @@ public class TipoHorarioServicioImpl implements TipoHorarioServicio{
 
     /*
      * obtener la lista de tipos horario
+     * 
+     * @return - lista de horarios
      */
     @Override
-    public List<TipoHorario> listarTipoHorarios() throws Exception {
+    public List<TipoHorario> listarHorarios() throws Exception {
         return tipoHorarioRepository.findAll();       
     }
 

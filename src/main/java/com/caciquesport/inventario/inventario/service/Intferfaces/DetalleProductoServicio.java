@@ -4,6 +4,10 @@ package com.caciquesport.inventario.inventario.service.Intferfaces;
 import java.util.List;
 import com.caciquesport.inventario.inventario.model.entity.DetalleProducto;
 
+/**
+ * Interfaz para definir los servicios de gestión de DetalleProducto.
+ * Proporciona métodos para operaciones CRUD básicas en DetalleProducto.
+ */
 public interface DetalleProductoServicio {
 
 

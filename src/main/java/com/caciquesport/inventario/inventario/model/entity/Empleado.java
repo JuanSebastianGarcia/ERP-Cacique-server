@@ -40,9 +40,6 @@ public class Empleado implements Serializable {
     @Column(name = "password_empleado" , nullable = false , length = 20 )
     private String password;
 
-    @Column(name = "direccion_empleado" , nullable = false , length = 40 )
-    private String direccion;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_empleado", nullable = false , updatable = false )
     private TipoEmpleado tipoEmpleado;

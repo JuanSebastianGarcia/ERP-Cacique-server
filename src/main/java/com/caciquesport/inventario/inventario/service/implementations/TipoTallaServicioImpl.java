@@ -5,19 +5,19 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.caciquesport.inventario.inventario.model.configTypes.Talla;
-import com.caciquesport.inventario.inventario.repository.TallaRepository;
-import com.caciquesport.inventario.inventario.service.Intferfaces.TallaServicio;
+import com.caciquesport.inventario.inventario.model.configTypes.TipoTalla;
+import com.caciquesport.inventario.inventario.repository.TipoTallaRepository;
+import com.caciquesport.inventario.inventario.service.Intferfaces.TipoTallaServicio;
 
 import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
-public class TallaServicioImpl implements TallaServicio{
+public class TipoTallaServicioImpl implements TipoTallaServicio{
 
-    private final TallaRepository tallaRepository;
+    private final TipoTallaRepository tallaRepository;
 
-    public TallaServicioImpl(TallaRepository tallaRepository){
+    public TipoTallaServicioImpl(TipoTallaRepository tallaRepository){
         this.tallaRepository=tallaRepository;
     }
 
@@ -28,23 +28,23 @@ public class TallaServicioImpl implements TallaServicio{
      * @param nuevaTalla- objeto talla que se va a almacenar
      */
     @Override
-    public Integer crearTalla(Talla nuevaTalla) throws Exception {
-        return tallaRepository.save(nuevaTalla).getId();
+    public Integer crearTalla(TipoTalla nuevoTipoTalla) throws Exception {
+        return tallaRepository.save(nuevoTipoTalla).getId();
     }
 
 
 
     /*
-     * actualizar talla. se busca por medio del nombre. si no se encuentra lanza una excepcion
+     * actualizar talla. se busca por medio del nombre de la talla. si no se encuentra lanza una excepcion
      * 
-     * @param talla -  objeto talla que se va a actualizar
+     * @param tipoTalla -  objeto talla que se va a actualizar
      * 
      * @return - id de la talla almacenada
      */
     @Override
-    public Integer actualizarTalla(Talla talla) throws Exception {
+    public Integer actualizarTalla(TipoTalla tipoTalla) throws Exception {
         
-        Optional<Talla> tallaEncontrada=tallaRepository.findByTalla(talla.getTalla());
+        Optional<TipoTalla> tallaEncontrada=tallaRepository.findByTalla(tipoTalla.getTalla());
 
         if(tallaEncontrada.isEmpty()){
             throw new Exception("no se puede actualizar la talla");
@@ -58,12 +58,13 @@ public class TallaServicioImpl implements TallaServicio{
     /*
      * eliminar talla por medio del nombre de la talla. si no se encuentra se lanza una excepcion
      * 
-     * @param talla - objeto talla que se va a eliminar
+     * @param talla - nombre de la talla
+     * 
      */
     @Override
     public void eliminarTalla(String talla) throws Exception {
         
-        Optional<Talla> tallaEncontrada=tallaRepository.findByTalla(talla);
+        Optional<TipoTalla> tallaEncontrada=tallaRepository.findByTalla(talla);
 
         if(tallaEncontrada.isEmpty()){
             throw new Exception("no se puede eliminar la talla");
@@ -77,14 +78,14 @@ public class TallaServicioImpl implements TallaServicio{
     /*
      * buscar una talla por medio del nombre que es unico. si no se encuentra se lanza una excepcion
      * 
-     * @param talla - nombre por el cual se busca la talla
+     * @param talla - nombre de la talla
      * 
      * @return - objeto talla encontrado
      */
     @Override
-    public Talla obtenerTalla(String talla) throws Exception {
+    public TipoTalla obtenerTalla(String talla) throws Exception {
         
-        Optional<Talla> tallaEncontrada=tallaRepository.findByTalla(talla);
+        Optional<TipoTalla> tallaEncontrada=tallaRepository.findByTalla(talla);
 
         if(tallaEncontrada.isEmpty()){
             throw new Exception("no se puede encontrar la talla");
@@ -98,7 +99,7 @@ public class TallaServicioImpl implements TallaServicio{
      * devuelve la lista de todas las tallas
      */
     @Override
-    public List<Talla> listarTallas() throws Exception {
+    public List<TipoTalla> listarTallas() throws Exception {
         return tallaRepository.findAll();
     }
 

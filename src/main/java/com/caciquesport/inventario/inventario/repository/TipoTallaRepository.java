@@ -5,10 +5,10 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.caciquesport.inventario.inventario.model.configTypes.Talla;
+import com.caciquesport.inventario.inventario.model.configTypes.TipoTalla;
 
 @Repository
-public interface TallaRepository extends JpaRepository<Talla,Integer>{
+public interface TipoTallaRepository extends JpaRepository<TipoTalla,Integer>{
 
-    Optional<Talla> findByTalla(String talla);
+    Optional<TipoTalla> findByTalla(String talla);
 }

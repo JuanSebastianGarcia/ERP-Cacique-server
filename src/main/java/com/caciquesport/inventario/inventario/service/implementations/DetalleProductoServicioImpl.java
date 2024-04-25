@@ -24,7 +24,7 @@ public class DetalleProductoServicioImpl implements DetalleProductoServicio{
 
 
     /*
-     * crear un detalle el cual esta ligado a un solo producto
+     * crear un detalleProducto
      * 
      * @param nuevoDetalleProducto - el detalle que se va a almacenar
      * 
@@ -39,9 +39,9 @@ public class DetalleProductoServicioImpl implements DetalleProductoServicio{
 
 
     /*
-     *actualizar la informacion de un detalle de producto
+     *actualizar un detalleProducto. si el dealle no existe se lanza una excepcion
      *  
-     * @param detalleProducto - detalle de producto con la informacion actualizada
+     * @param detalleProducto - detalle de producto que se va a actualizada
      *  
      * @return - el codigo del detalle almacenado en la base de datos
      */
@@ -60,12 +60,11 @@ public class DetalleProductoServicioImpl implements DetalleProductoServicio{
 
 
     /*
-     * buscar el detalle de un producto por medio del codigo unico id, en caso de que el objeto no sea encontrado
-     * lanzara una excepcion
+     * buscar el detalleProducto por el id. si no existe lanza una excepcion
      * 
-     * @param id - identificador unico del detalle de producto, este esta vinculado al producto propietario
+     * @param id - id unico del detalleProducto
      * 
-     * @return - devolvera el producto si lo encuentra, y si no lo encuentra devuelve un null
+     * @return - devuelve el detalleProducto encontrado
      * 
      */
     @Override
@@ -84,10 +83,9 @@ public class DetalleProductoServicioImpl implements DetalleProductoServicio{
 
 
     /*
-     * eliminar el detalle del producto por medio del id, en caso de que no se encuentre el detalle o ocurra un error 
-     * lanzara una excepcion
+     * eliminar el detalle del producto por medio del id, si no se encuentra lanza una excepcion
      * 
-     * @param id - identificador unico del detalle del producto, este esta vinculado al producto propietario
+     * @param id - id unico del detalleProducto
      * 
      */
     @Override
@@ -105,9 +103,9 @@ public class DetalleProductoServicioImpl implements DetalleProductoServicio{
 
 
     /*
-     *buscar toda la lista de detalle./ de producto 4
+     *buscar toda la lista de detalleProducto
      *
-     * @return- retorna la lista completa de detalle de producto
+     * @return- retorna la lista  de detalle de producto
      */
     @Override
     public List<DetalleProducto> listarDetalleProducto() throws Exception {

@@ -3,32 +3,32 @@ package com.caciquesport.inventario.inventario.service.implementations;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
-import com.caciquesport.inventario.inventario.model.configTypes.Institucion;
-import com.caciquesport.inventario.inventario.repository.InstitucionRepository;
-import com.caciquesport.inventario.inventario.service.Intferfaces.InstitucionServicio;
+import com.caciquesport.inventario.inventario.model.configTypes.TipoInstitucion;
+import com.caciquesport.inventario.inventario.repository.TipoInstitucionRepository;
+import com.caciquesport.inventario.inventario.service.Intferfaces.TipoIstitucionServicio;
 
 import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
-public class InstitucionServicioImpl implements InstitucionServicio{
+public class TipoInstitucionServicioImpl implements TipoIstitucionServicio{
 
-    private final InstitucionRepository institucionRepository;
+    private final TipoInstitucionRepository institucionRepository;
 
-    public InstitucionServicioImpl(InstitucionRepository institucionRepository){
+    public TipoInstitucionServicioImpl(TipoInstitucionRepository institucionRepository){
         this.institucionRepository=institucionRepository;
     }
 
     /*
-     * crear institucion
+     * crear tipo institucion
      * 
-     * @param nuevaInstitucion - objeto institucion que se va a almcenar
+     * @param nuevoTipoInstitucion - objeto institucion que se va a almcenar
      * 
      * @return - id de la institucion almacenada
      */
     @Override
-    public Integer crearInstitucion(Institucion nuevaInstitucion) throws Exception {
-        return institucionRepository.save(nuevaInstitucion).getId();
+    public Integer crearInstitucion(TipoInstitucion nuevoTipoInstitucion) throws Exception {
+        return institucionRepository.save(nuevoTipoInstitucion).getId();
     }
 
 
@@ -42,9 +42,9 @@ public class InstitucionServicioImpl implements InstitucionServicio{
      * @return - id de la institucion actualizada
      */
     @Override
-    public Integer actualizarInstitucion(Institucion institucion) throws Exception {
+    public Integer actualizarInstitucion(TipoInstitucion tipoInstitucion) throws Exception {
         
-        Optional<Institucion> institucionEncontrada=institucionRepository.findByInstitucion(institucion.getInstitucion());
+        Optional<TipoInstitucion> institucionEncontrada=institucionRepository.findByInstitucion(tipoInstitucion.getInstitucion());
 
         if(institucionEncontrada.isEmpty()){
             throw new Exception("no se puede actualizar la institucion");
@@ -58,13 +58,13 @@ public class InstitucionServicioImpl implements InstitucionServicio{
     /*
      * eliminar una institucion por medio del nombre que es unico, si no se encuentra se lanza una excepcion
      * 
-     * @param nombrInstitucion - el nombre por el cual se localiza la institucion
+     * @param nombrInstitucion - nombre de la institucion
      * 
      */
     @Override
-    public void eliminarInstitucion(String nombreInstitucion) throws Exception {
+    public void eliminarInstitucion(String institucion) throws Exception {
         
-        Optional<Institucion> institucionEncontrada=institucionRepository.findByInstitucion(nombreInstitucion);
+        Optional<TipoInstitucion> institucionEncontrada=institucionRepository.findByInstitucion(institucion);
 
         if(institucionEncontrada.isEmpty()){
             throw new Exception("no se puede eliminar la institucion");
@@ -77,14 +77,14 @@ public class InstitucionServicioImpl implements InstitucionServicio{
     /*
      * obtener una institucion por medio del nombre que es unico, si no se encuentra se lanza una excepcion
      * 
-     * @param nombrInstitucion - el nombre por el cual se localiza la institucion
+     * @param institucion - nombre de la institucion 
      * 
      * @return - institucion encontrada
      */
     @Override
-    public Institucion obtenerInstitucion(String nombreInstitucion) throws Exception {
+    public TipoInstitucion obtenerInstitucion(String institucion) throws Exception {
       
-        Optional<Institucion> institucionEncontrada=institucionRepository.findByInstitucion(nombreInstitucion);
+        Optional<TipoInstitucion> institucionEncontrada=institucionRepository.findByInstitucion(institucion);
 
         if(institucionEncontrada.isEmpty()){
             throw new Exception("no se puede encontras la institucion");
@@ -96,9 +96,11 @@ public class InstitucionServicioImpl implements InstitucionServicio{
 
     /*
      * obtener la lista de instituciones
+     * 
+     * @return - lista de instituciones
      */
     @Override
-    public List<Institucion> listarInstituciones() throws Exception {
+    public List<TipoInstitucion> listarInstituciones() throws Exception {
         return institucionRepository.findAll();
     }
 

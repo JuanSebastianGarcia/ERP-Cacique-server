@@ -24,9 +24,9 @@ public class ProductoServicioImpl implements ProductoServicio{
     /*
      *crear un producto 
      *
-     * @param nuevoProducto - el producto que se va a almacenar
+     * @param nuevoProducto - el objeto producto que se va a almacenar
      * 
-     * @return - el codigo del producto almacenado en la base de datos
+     * @return - el id del producto almacenado 
      */
     @Override
     public Integer crearProducto(Producto nuevoProducto) throws Exception {
@@ -35,12 +35,11 @@ public class ProductoServicioImpl implements ProductoServicio{
 
 
     /*
-     *actualiza el producto, es importante que el parametro llege con el id correcto del producto para
-     *actualizar correctamente. si el producto no existe se lanza una excepcion
+     *actualiza el producto. si el producto no existe se lanza una excepcion
      *
      * @param producto - el objeto el cual se desea actualizar/almacenar
      * 
-     * @return - retorna el id del producto almacenado
+     * @return -  id del producto almacenado
      * 
      */
     @Override
@@ -57,7 +56,7 @@ public class ProductoServicioImpl implements ProductoServicio{
 
 
     /*
-     * eliminar el producto por medio del id
+     * eliminar el producto por medio del id. si no se encuentra lanza una excepcion
      * 
      * @param id- es el id unico del producto
      * 
@@ -99,6 +98,8 @@ public class ProductoServicioImpl implements ProductoServicio{
 
     /*
      * obtener toda la lista de los productos
+     * 
+     * @return - la lista de productos
      */
     @Override
     public List<Producto> listarProductos() throws Exception {

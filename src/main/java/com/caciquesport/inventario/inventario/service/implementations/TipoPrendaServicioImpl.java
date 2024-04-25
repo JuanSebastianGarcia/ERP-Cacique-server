@@ -25,17 +25,21 @@ public class TipoPrendaServicioImpl implements TipoPrendaServicio{
      * @param nuevoTipoPrenda - objeto tipoPrenda que se va a almacenar
      */
     @Override
-    public Integer crearTipoPrenda(TipoPrenda nuevoTipoHorario) throws Exception {
-        return tipoPrendaRepostirory.save(nuevoTipoHorario).getId();
+    public Integer crearPrenda(TipoPrenda nuevoTipoPrenda) throws Exception {
+        return tipoPrendaRepostirory.save(nuevoTipoPrenda).getId();
     }
 
 
     /*
-     * actualizar tipoPrenda. se busca por medio de la prenda que es unico. si no se encuentra 
+     * actualizar tipoPrenda. se busca por medio del nombre de la prenda que es unico. si no se encuentra 
      * se lanza una excepcion
+     * 
+     * @param tipoPrenda - el tipo prenda que se va a actualizar
+     * 
+     * @return - id de la prenda actualizada
      */
     @Override
-    public Integer actualizarTipoPrenda(TipoPrenda tipoPrenda) throws Exception {
+    public Integer actualizarPrenda(TipoPrenda tipoPrenda) throws Exception {
         
         Optional<TipoPrenda> tipoPrendaEncontrado=tipoPrendaRepostirory.findByPrenda(tipoPrenda.getPrenda());
 
@@ -49,13 +53,13 @@ public class TipoPrendaServicioImpl implements TipoPrendaServicio{
 
 
     /*
-     * eliminarTipoPrenda. se busca por medio de la prenda que es unico. si no se encuentra 
+     * eliminarTipoPrenda. se busca por medio del nombre de la prenda que es unico. si no se encuentra 
      * se lanza una excepcion
      * 
      * @param prenda - nombre de la prenda
      */
     @Override
-    public void eliminarTipoPrenda(String prenda) throws Exception {
+    public void eliminarPrenda(String prenda) throws Exception {
                 
         Optional<TipoPrenda> tipoPrendaEncontrado=tipoPrendaRepostirory.findByPrenda(prenda);
 
@@ -68,14 +72,14 @@ public class TipoPrendaServicioImpl implements TipoPrendaServicio{
 
 
     /*
-     * obtener tipoPrenda. se busca por medio de la prenda que es unico. si no se encuentra se lanza una excepcion
+     * obtener tipoPrenda. se busca por medio del nombre de la prenda que es unico. si no se encuentra se lanza una excepcion
      * 
      * @param prenda - nombre de la prenda
      * 
      * @return - objeto tipoPreda encontrado
      */
     @Override
-    public TipoPrenda obtenerTipoPrenda(String prenda) throws Exception {
+    public TipoPrenda obtenerPrenda(String prenda) throws Exception {
 
         Optional<TipoPrenda> tipoPrendaEncontrado=tipoPrendaRepostirory.findByPrenda(prenda);
 
@@ -89,6 +93,8 @@ public class TipoPrendaServicioImpl implements TipoPrendaServicio{
 
     /*
      * buscar la lista de tipoPrendas
+     * 
+     * @return - lista de prendas
      */
     @Override
     public List<TipoPrenda> listarPrendas() throws Exception {

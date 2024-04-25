@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
 @Table(name = "talla")
-public class Talla implements Serializable{
+public class TipoTalla implements Serializable{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_talla")

@@ -9,14 +9,14 @@ public interface TipoHorarioServicio {
 
 
     
-    Integer crearTipoHorario(TipoHorario nuevoTipoHorario) throws Exception;
+    Integer crearHorario(TipoHorario nuevoTipoHorario) throws Exception;
 
-    Integer actualizarTipoHorario(TipoHorario tipoHorario) throws Exception;
+    Integer actualizarHorario(TipoHorario tipoHorario) throws Exception;
 
-    void eliminarTipoHorario(String horario) throws Exception;
+    void eliminarHorario(String horario) throws Exception;
 
-    TipoHorario obtenerTipoHortario(String horario) throws Exception;
+    TipoHorario obtenerHorario(String horario) throws Exception;
 
-    List<TipoHorario> listarTipoHorarios() throws Exception;
+    List<TipoHorario> listarHorarios() throws Exception;
 
 }

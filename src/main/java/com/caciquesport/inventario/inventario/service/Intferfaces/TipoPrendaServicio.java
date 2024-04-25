@@ -6,13 +6,13 @@ import com.caciquesport.inventario.inventario.model.configTypes.TipoPrenda;
 
 public interface TipoPrendaServicio {
 
-    Integer crearTipoPrenda(TipoPrenda nuevoTipoHorario) throws Exception;
+    Integer crearPrenda(TipoPrenda nuevoTipoPrenda) throws Exception;
 
-    Integer actualizarTipoPrenda(TipoPrenda tipoPrenda) throws Exception;
+    Integer actualizarPrenda(TipoPrenda tipoPrenda) throws Exception;
 
-    void eliminarTipoPrenda(String prenda) throws Exception;
+    void eliminarPrenda(String prenda) throws Exception;
 
-    TipoPrenda  obtenerTipoPrenda(String prenda) throws Exception;
+    TipoPrenda  obtenerPrenda(String prenda) throws Exception;
 
     List<TipoPrenda> listarPrendas() throws Exception;
 
