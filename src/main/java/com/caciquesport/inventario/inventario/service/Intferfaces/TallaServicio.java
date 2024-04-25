@@ -3,15 +3,17 @@ package com.caciquesport.inventario.inventario.service.Intferfaces;
 
 import java.util.List;
 
+import com.caciquesport.inventario.inventario.model.configTypes.Talla;
+
 public interface TallaServicio {
 
-    Integer crearTalla(TallaServicio nuevTalla) throws Exception;
+    Integer crearTalla(Talla nuevaTalla) throws Exception;
 
-    Integer actualizarTalla(TallaServicio talla) throws Exception;
+    Integer actualizarTalla(Talla talla) throws Exception;
 
     void eliminarTalla(String talla) throws Exception;
 
-    TallaServicio obtenerTalla(String talla) throws Exception;
+    Talla obtenerTalla(String talla) throws Exception;
 
-    List<TallaServicio> listarTallas() throws Exception;
+    List<Talla> listarTallas() throws Exception;
 }
