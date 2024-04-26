@@ -7,7 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.caciquesport.inventario.inventario.model.entity.DetalleProducto;
 import com.caciquesport.inventario.inventario.repository.DetalleProductoRepository;
-import com.caciquesport.inventario.inventario.service.Intferfaces.DetalleProductoServicio;
+import com.caciquesport.inventario.inventario.service.interfaces.DetalleProductoServicio;
+
 import java.util.Optional;
 
 @Service

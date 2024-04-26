@@ -1,4 +1,4 @@
-package com.caciquesport.inventario.inventario.service.Intferfaces;
+package com.caciquesport.inventario.inventario.service.interfaces;
 
 import java.util.List;
 import com.caciquesport.inventario.inventario.model.entity.Producto;

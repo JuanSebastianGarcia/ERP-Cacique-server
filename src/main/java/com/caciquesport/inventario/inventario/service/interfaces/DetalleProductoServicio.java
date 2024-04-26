@@ -1,4 +1,4 @@
-package com.caciquesport.inventario.inventario.service.Intferfaces;
+package com.caciquesport.inventario.inventario.service.interfaces;
 
 
 import java.util.List;
@@ -9,7 +9,6 @@ import com.caciquesport.inventario.inventario.model.entity.DetalleProducto;
  * Proporciona métodos para operaciones CRUD básicas en DetalleProducto.
  */
 public interface DetalleProductoServicio {
-
 
     Integer crearDetalleProducto(DetalleProducto nuevoDetalleProducto) throws Exception;
 

@@ -6,7 +6,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import com.caciquesport.inventario.inventario.model.entity.Empleado;
 import com.caciquesport.inventario.inventario.repository.EmpleadoRepository;
-import com.caciquesport.inventario.inventario.service.Intferfaces.EmpleadoServicio;
+import com.caciquesport.inventario.inventario.service.interfaces.EmpleadoServicio;
+
 import jakarta.transaction.Transactional;
 
 @Service
@@ -51,7 +52,7 @@ public class EmpleadoServicioImpl implements EmpleadoServicio {
         if(empleadoEncontrado.isEmpty()){
             throw new Exception("el empleado no se puede actualizar");
         }else{
-            return empleadoRepository.save(empleadoEncontrado.get()).getId();
+            return empleadoRepository.save(empleado).getId();
         }
     }
 

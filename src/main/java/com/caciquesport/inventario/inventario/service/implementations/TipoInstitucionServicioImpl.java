@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import com.caciquesport.inventario.inventario.model.configTypes.TipoInstitucion;
 import com.caciquesport.inventario.inventario.repository.TipoInstitucionRepository;
-import com.caciquesport.inventario.inventario.service.Intferfaces.TipoIstitucionServicio;
+import com.caciquesport.inventario.inventario.service.interfaces.TipoIstitucionServicio;
 
 import jakarta.transaction.Transactional;
 
@@ -49,7 +49,7 @@ public class TipoInstitucionServicioImpl implements TipoIstitucionServicio{
         if(institucionEncontrada.isEmpty()){
             throw new Exception("no se puede actualizar la institucion");
         }else{
-            return institucionRepository.save(institucionEncontrada.get()).getId();
+            return institucionRepository.save(tipoInstitucion).getId();
         }
     }
 

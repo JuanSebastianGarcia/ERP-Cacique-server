@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.caciquesport.inventario.inventario.model.configTypes.TipoHorario;
 import com.caciquesport.inventario.inventario.repository.TipoHorarioRepository;
-import com.caciquesport.inventario.inventario.service.Intferfaces.TipoHorarioServicio;
+import com.caciquesport.inventario.inventario.service.interfaces.TipoHorarioServicio;
 
 import jakarta.transaction.Transactional;
 
@@ -48,7 +48,7 @@ public class TipoHorarioServicioImpl implements TipoHorarioServicio{
         if(tipoHorarioEncontrado.isEmpty()){
             throw new Exception("no se puede actualizar el tipo horario");
         }else{
-            return tipoHorarioRepository.save(tipoHorarioEncontrado.get()).getId();
+            return tipoHorarioRepository.save(tipoHorario).getId();
         }
 
     }

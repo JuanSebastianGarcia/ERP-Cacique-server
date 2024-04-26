@@ -6,7 +6,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import com.caciquesport.inventario.inventario.model.configTypes.TipoPrenda;
 import com.caciquesport.inventario.inventario.repository.TipoPrendaRepostirory;
-import com.caciquesport.inventario.inventario.service.Intferfaces.TipoPrendaServicio;
+import com.caciquesport.inventario.inventario.service.interfaces.TipoPrendaServicio;
+
 import jakarta.transaction.Transactional;
 
 @Service
@@ -46,7 +47,7 @@ public class TipoPrendaServicioImpl implements TipoPrendaServicio{
         if(tipoPrendaEncontrado.isEmpty()){
             throw new Exception("no se puede encontrar la prenda");
         }else{
-            return tipoPrendaRepostirory.save(tipoPrendaEncontrado.get()).getId();
+            return tipoPrendaRepostirory.save(tipoPrenda).getId();
         }
         
     }

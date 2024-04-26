@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.caciquesport.inventario.inventario.model.entity.Producto;
 import com.caciquesport.inventario.inventario.repository.ProductoRepository;
-import com.caciquesport.inventario.inventario.service.Intferfaces.ProductoServicio;
+import com.caciquesport.inventario.inventario.service.interfaces.ProductoServicio;
 
 import jakarta.transaction.Transactional;
 

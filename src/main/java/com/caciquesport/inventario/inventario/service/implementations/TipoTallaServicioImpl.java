@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.caciquesport.inventario.inventario.model.configTypes.TipoTalla;
 import com.caciquesport.inventario.inventario.repository.TipoTallaRepository;
-import com.caciquesport.inventario.inventario.service.Intferfaces.TipoTallaServicio;
+import com.caciquesport.inventario.inventario.service.interfaces.TipoTallaServicio;
 
 import jakarta.transaction.Transactional;
 
@@ -49,7 +49,7 @@ public class TipoTallaServicioImpl implements TipoTallaServicio{
         if(tallaEncontrada.isEmpty()){
             throw new Exception("no se puede actualizar la talla");
         }else{
-            return tallaRepository.save(tallaEncontrada.get()).getId();
+            return tallaRepository.save(tipoTalla).getId();
         }
     }
 

@@ -1,10 +1,13 @@
-package com.caciquesport.inventario.inventario.service.Intferfaces;
+package com.caciquesport.inventario.inventario.service.interfaces;
 
 
 import java.util.List;
-
 import com.caciquesport.inventario.inventario.model.configTypes.TipoHorario;
 
+/**
+ * Interfaz para definir los servicios de gestión de TipoHorario.
+ * Proporciona métodos para operaciones CRUD básicas en TipoHorario.
+ */
 public interface TipoHorarioServicio {
 
 
