@@ -2,7 +2,6 @@ package com.caciquesport.inventario.inventario.model.entity;
 
 
 import java.io.Serializable;
-
 import com.caciquesport.inventario.inventario.model.configTypes.TipoInstitucion;
 import com.caciquesport.inventario.inventario.model.configTypes.TipoTalla;
 import com.caciquesport.inventario.inventario.model.configTypes.TipoHorario;
