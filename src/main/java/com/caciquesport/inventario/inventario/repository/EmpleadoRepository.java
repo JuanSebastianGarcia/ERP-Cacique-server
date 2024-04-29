@@ -13,6 +13,18 @@ import com.caciquesport.inventario.inventario.model.entity.Empleado;
 @Repository
 public interface EmpleadoRepository extends JpaRepository<Empleado,Integer>{
 
+    /*
+     * buscar un empleado por la cedula
+     * 
+     * @param cedula del empleado 
+     */
     Optional<Empleado> findByCedula(String cedula);
+
+    /*
+     * buscar un empleado por el email
+     * 
+     * @param email del empleado
+     */
+    Optional<Empleado> findByEmail(String email);
     
 }
