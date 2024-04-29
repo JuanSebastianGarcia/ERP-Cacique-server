@@ -1,15 +1,17 @@
 package com.caciquesport.inventario.inventario.service.implementations;
 
 import java.util.Optional;
-
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.caciquesport.inventario.inventario.dto.LoginDto;
 import com.caciquesport.inventario.inventario.dto.TokenDto;
 import com.caciquesport.inventario.inventario.model.entity.Empleado;
 import com.caciquesport.inventario.inventario.repository.EmpleadoRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.AutenticacionServicio;
 import lombok.RequiredArgsConstructor;
+import java.util.HashMap;
+import java.util.Map;
+
 
 @Service
 @RequiredArgsConstructor
@@ -28,21 +30,55 @@ public class AutenticacionServicioImpl implements AutenticacionServicio{
         
         Optional<Empleado> empleadoEncontrado=empleadoRepository.findByEmail(loginDto.email());
 
-        if(empleadoEncontrado.isEmpty() &&  verificarPassword(empleadoEncontrado.get())){
-            throw new Exception("el correo no esta registrado");
-        }else{
-           
+        if(empleadoEncontrado.isEmpty() ||  !verificarPassword(empleadoEncontrado.get(),loginDto.password())){
+            throw new Exception("los datos no se encuentran, el email o la contraseña no son validos");
         }
+
+        return generarToken(empleadoEncontrado.get());
     }
 
 
+
+
     /*
-     * verificar que la contraseña sea correcta
+     * generar un token si las credenciales fueron validadas
+     * 
+     * @param empleadoEncontrado - empleado ingresado en el sistema 
+     * 
+     * @return token en su representacion dto
      */
-    private boolean verificarPassword(Empleado empleadoEncontrado) {
+    private TokenDto generarToken(Empleado empleadoEncontrado) {
+        
+        Map<String,Object> datos=new HashMap<>();
+
+        datos.put("tipoEmpleado", empleadoEncontrado.getTipoEmpleado().toString());
+        datos.put("id", empleadoEncontrado.getId());
+        datos.put("nombre",empleadoEncontrado.getNombre());
+
+        return null;
+    }
+
+
+
+
+
+    /*
+     * verificar que la contraseña sea correcta 
+     * 
+     * @param empleadoEncontrado - representa la entidad encontrada en la base de datos
+     * @param password - la contraseña que sera validada con la real
+     * 
+     * @return - son iguales(true) o diferentes(false) 
+     */
+    private boolean verificarPassword(Empleado empleadoEncontrado,String password) {
         
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         
+        if(passwordEncoder.matches(password, empleadoEncontrado.getPassword())){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 
