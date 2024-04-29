@@ -8,6 +8,8 @@ import com.caciquesport.inventario.inventario.dto.TokenDto;
 import com.caciquesport.inventario.inventario.model.entity.Empleado;
 import com.caciquesport.inventario.inventario.repository.EmpleadoRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.AutenticacionServicio;
+import com.caciquesport.inventario.utils.JwtUtils;
+
 import lombok.RequiredArgsConstructor;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +20,7 @@ import java.util.Map;
 public class AutenticacionServicioImpl implements AutenticacionServicio{
 
     private final EmpleadoRepository empleadoRepository;
+    private final JwtUtils jwtUtils;
 
 
     /*
@@ -55,7 +58,10 @@ public class AutenticacionServicioImpl implements AutenticacionServicio{
         datos.put("id", empleadoEncontrado.getId());
         datos.put("nombre",empleadoEncontrado.getNombre());
 
-        return null;
+        //invocacion a metodos que generan el token 
+        String token = jwtUtils.generarToken(empleadoEncontrado.getEmail(),datos);
+
+        return new TokenDto(token);
     }
 
 
