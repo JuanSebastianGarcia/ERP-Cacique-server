@@ -8,7 +8,7 @@ import com.caciquesport.inventario.inventario.dto.TokenDto;
 import com.caciquesport.inventario.inventario.model.entity.Empleado;
 import com.caciquesport.inventario.inventario.repository.EmpleadoRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.AutenticacionServicio;
-import com.caciquesport.inventario.utils.JwtUtils;
+import com.caciquesport.inventario.utils.TokenJwtServicio;
 
 import lombok.RequiredArgsConstructor;
 import java.util.HashMap;
@@ -20,7 +20,7 @@ import java.util.Map;
 public class AutenticacionServicioImpl implements AutenticacionServicio{
 
     private final EmpleadoRepository empleadoRepository;
-    private final JwtUtils jwtUtils;
+    private final TokenJwtServicio jwtUtils;
 
 
     /*
