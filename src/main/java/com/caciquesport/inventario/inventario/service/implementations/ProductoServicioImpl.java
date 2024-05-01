@@ -5,21 +5,41 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.azure.core.implementation.Option;
+import com.caciquesport.inventario.inventario.dto.RegistroProductoDto;
+import com.caciquesport.inventario.inventario.model.configTypes.TipoGenero;
+import com.caciquesport.inventario.inventario.model.configTypes.TipoHorario;
+import com.caciquesport.inventario.inventario.model.configTypes.TipoInstitucion;
+import com.caciquesport.inventario.inventario.model.configTypes.TipoPrenda;
+import com.caciquesport.inventario.inventario.model.configTypes.TipoTalla;
+import com.caciquesport.inventario.inventario.model.entity.DetalleProducto;
 import com.caciquesport.inventario.inventario.model.entity.Producto;
 import com.caciquesport.inventario.inventario.repository.ProductoRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.ProductoServicio;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class ProductoServicioImpl implements ProductoServicio{
 
+    /*
+     * Respositorio que maneja el objeto principal del servicio
+     */
     private final ProductoRepository productoRepository;
 
-    public ProductoServicioImpl(ProductoRepository productoRepository){
-        this.productoRepository=productoRepository;
-    }
+
+    /*
+     *servicios usados en el proceso 
+     */
+    private final TipoGeneroServicioImpl tipoGeneroServicioImpl;
+    private final TipoHorarioServicioImpl tipoHorarioServicioImpl;
+    private final TipoInstitucionServicioImpl tipoInstitucionServicioImpl;
+    private final TipoPrendaServicioImpl tipoPrendaServicioImpl;
+    private final TipoTallaServicioImpl tipoTallaServicioImpl;
+
 
     /*
      *crear un producto 
@@ -29,9 +49,108 @@ public class ProductoServicioImpl implements ProductoServicio{
      * @return - el id del producto almacenado 
      */
     @Override
-    public Integer crearProducto(Producto nuevoProducto) throws Exception {
-        return productoRepository.save(nuevoProducto).getId();
+    public Integer crearProducto(RegistroProductoDto registroProductoDto) throws Exception {
+
+        boolean existencia=verificarExistenciaProducto(registroProductoDto);
+
+        if(existencia==false){
+            Producto nuevoProducto = almacenarProducto(registroProductoDto);
+            return nuevoProducto.getId();
+        }else{
+            throw new Exception("el producto ya existe");
+        }
     }
+
+
+
+    /*
+     * crear y almacenar el objeto producto
+     */
+    private Producto almacenarProducto(RegistroProductoDto registroProductoDto) throws Exception {
+
+        //creacion de objetos
+        Producto nuevoProducto = new Producto();
+        DetalleProducto nuevoDetalleProducto = new DetalleProducto();
+
+        //asignacion de datos al detalle de producto
+
+
+        //asignacion de datos al producto
+        asignarDatosProducto(registroProductoDto, nuevoProducto);
+        asignarDatosDetalleProducto(registroProductoDto,nuevoDetalleProducto);
+
+        //agregar el detalle al producto
+        nuevoProducto.setDetalleProducto(nuevoDetalleProducto);
+
+        //enviar a la base de datos
+        productoRepository.save(nuevoProducto);
+
+        return nuevoProducto;
+    }
+
+
+    /*
+     * asigar o agregar datos a un objeto detalleProducto
+     * 
+     * @param registroProductoDto - contiene la informacion necesaria para crear el objeto
+     * @param nuevoDetalleProducto - referencia al objeto que se esta construyendo
+     */
+    private void asignarDatosDetalleProducto(RegistroProductoDto registroProductoDto, DetalleProducto nuevoDetalleProducto) {
+        
+        nuevoDetalleProducto.setCantidad(registroProductoDto.cantidad());
+        nuevoDetalleProducto.setPrecio(registroProductoDto.precio());
+        nuevoDetalleProducto.setDescripcion(registroProductoDto.descripcion());
+
+    }
+
+
+
+    /*
+     * asigar o agregar datos a un objeto producto
+     * 
+     * @param registroProductoDto - contiene la informacion necesaria para crear el objeto
+     * @param nuevoProducto - referencia al objeto que se esta construyendo
+     */
+    private void asignarDatosProducto(RegistroProductoDto registroProductoDto, Producto nuevoProducto ) throws Exception{
+
+        nuevoProducto.setTipoPrenda(tipoPrendaServicioImpl.obtenerPrenda(registroProductoDto.prenda()));
+        nuevoProducto.setTipoHorario(tipoHorarioServicioImpl.obtenerHorario(registroProductoDto.horario()));
+        nuevoProducto.setTipoTalla(tipoTallaServicioImpl.obtenerTalla(registroProductoDto.talla()));
+        nuevoProducto.setTipoInstitucion(tipoInstitucionServicioImpl.obtenerInstitucion(registroProductoDto.institucion()));
+        nuevoProducto.setTipoGenero(tipoGeneroServicioImpl.obtenerGenero(registroProductoDto.genero()));
+
+    }
+
+
+
+    /*
+     * vericiar la existena del producto validando que no haya otro objeto 
+     * con los mismos valores para los atributos principales(talla, prenda, horario, institucion, genero)
+     * 
+     * @param registroProductoDto - contiene la informacion necesarioa
+     * 
+     * @return - el objeto existe(true) o no existe(false)
+     */
+    private boolean verificarExistenciaProducto(RegistroProductoDto registroProductoDto) throws Exception {
+
+       boolean respuesta=false;
+
+       TipoGenero genero = tipoGeneroServicioImpl.obtenerGenero(registroProductoDto.genero());
+       TipoTalla talla = tipoTallaServicioImpl.obtenerTalla(registroProductoDto.talla());
+       TipoInstitucion institucion = tipoInstitucionServicioImpl.obtenerInstitucion(registroProductoDto.institucion());
+       TipoHorario horario = tipoHorarioServicioImpl.obtenerHorario(registroProductoDto.horario());
+       TipoPrenda prenda = tipoPrendaServicioImpl.obtenerPrenda(registroProductoDto.prenda());
+
+       Optional<Producto> productoEncontrado = productoRepository.verificarExistenciaProducto(institucion.getId(), talla.getId(), genero.getId(), horario.getId(), prenda.getId());
+
+       if (!productoEncontrado.isEmpty()) {
+            respuesta=true;
+       }
+
+        return respuesta;
+    }
+
+
 
 
     /*
@@ -55,6 +174,10 @@ public class ProductoServicioImpl implements ProductoServicio{
     }
 
 
+
+
+
+
     /*
      * eliminar el producto por medio del id. si no se encuentra lanza una excepcion
      * 
@@ -72,6 +195,8 @@ public class ProductoServicioImpl implements ProductoServicio{
             productoRepository.delete(productoEncontrado.get());
         }
     }
+
+
 
 
 
@@ -93,6 +218,8 @@ public class ProductoServicioImpl implements ProductoServicio{
             return productoEncontrado.get();
         }
     }
+
+
 
 
 

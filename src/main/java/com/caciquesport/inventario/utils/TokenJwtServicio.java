@@ -9,11 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import com.caciquesport.inventario.inventario.dto.RespuestaDto;
-import com.caciquesport.inventario.inventario.model.configTypes.TipoEmpleado;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.security.Key;
@@ -145,9 +142,7 @@ public class TokenJwtServicio extends OncePerRequestFilter{
         String requestURI = request.getRequestURI();
 
         if(requestURI.startsWith("/api/jefe") || requestURI.startsWith("/api/empleado")){
-           
             validarToken(request,response,filterChain);
-
         }else{
             filterChain.doFilter(request, response);
         }
@@ -158,10 +153,13 @@ public class TokenJwtServicio extends OncePerRequestFilter{
 
 
 
-
-
+    
     /*
-     * extraer los clais del token y validarlos
+     * verificar la existencia del token
+     * 
+     * @param request - La solicitud HTTP entrante que contiene información del cliente, cabeceras, y más.
+     * @param response - La respuesta HTTP que se enviará al cliente, donde se pueden establecer estados, cabeceras, y cuerpo.
+     * @param filterChain - Una cadena de filtros que permite pasar la solicitud y la respuesta a otros filtros o al recurso final.
      */
     private void validarToken(HttpServletRequest request, HttpServletResponse response,FilterChain filterChain) throws IOException, ServletException{
        
@@ -177,7 +175,7 @@ public class TokenJwtServicio extends OncePerRequestFilter{
             if (acceso) {
                 filterChain.doFilter(request, response);
             }else{
-
+                crearRespuestaError("no cuenta con los permisos de acceso", HttpServletResponse.SC_FORBIDDEN, response);
             }
 
         }
@@ -186,9 +184,12 @@ public class TokenJwtServicio extends OncePerRequestFilter{
 
 
 
+
     /*
      * verificar que el rol en el token si pueda acceder al recurso solicitado. 
      * el jefe puede acceder a la api de jefe y el empleado a la api de empleado
+     * 
+     * @param claims - datos de acceso en el token
      */
     private boolean validarAcceso(Jws<Claims> claims, String requestURI) {
         
@@ -201,6 +202,7 @@ public class TokenJwtServicio extends OncePerRequestFilter{
 
         return acceso;
     }
+
 
 
 
@@ -218,6 +220,7 @@ public class TokenJwtServicio extends OncePerRequestFilter{
         response.getWriter().flush();
         response.getWriter().close();
     }
+
 
 
     

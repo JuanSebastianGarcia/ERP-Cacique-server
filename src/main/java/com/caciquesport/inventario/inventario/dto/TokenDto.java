@@ -2,7 +2,7 @@ package com.caciquesport.inventario.inventario.dto;
 import jakarta.validation.constraints.NotBlank;
 
 /*
- * almacena la informa
+ * DTO que maneja la cadea del token 
  */
 public record TokenDto(@NotBlank String token) {
 

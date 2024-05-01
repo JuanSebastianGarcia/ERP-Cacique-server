@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.caciquesport.inventario.inventario.dto.LoginDto;
 import com.caciquesport.inventario.inventario.dto.RespuestaDto;
 import com.caciquesport.inventario.inventario.dto.TokenDto;
@@ -35,9 +34,9 @@ public class LoginController {
     @PostMapping("/ingresar")
     public ResponseEntity<RespuestaDto<TokenDto>> ingresar(@Valid @RequestBody LoginDto loginDto)throws Exception{
 
-            TokenDto token = autenticacionServicioImpl.verificarIdentidad(loginDto);
+            TokenDto tokenDto = autenticacionServicioImpl.verificarIdentidad(loginDto);
 
-            return ResponseEntity.ok().body(new RespuestaDto<>(false,token));
+            return ResponseEntity.ok().body(new RespuestaDto<>(false,tokenDto));
     }
 
 
