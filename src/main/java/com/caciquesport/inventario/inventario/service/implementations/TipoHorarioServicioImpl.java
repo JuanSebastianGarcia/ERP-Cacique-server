@@ -10,17 +10,16 @@ import com.caciquesport.inventario.inventario.repository.TipoHorarioRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.TipoHorarioServicio;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class TipoHorarioServicioImpl implements TipoHorarioServicio{
 
 
     private final TipoHorarioRepository tipoHorarioRepository;
 
-    public TipoHorarioServicioImpl(TipoHorarioRepository tipoHorarioRepository){
-        this.tipoHorarioRepository=tipoHorarioRepository;
-    }
 
     /*
      * crear tipo horario

@@ -9,16 +9,15 @@ import com.caciquesport.inventario.inventario.repository.TipoPrendaRepostirory;
 import com.caciquesport.inventario.inventario.service.interfaces.TipoPrendaServicio;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class TipoPrendaServicioImpl implements TipoPrendaServicio{
 
     private final TipoPrendaRepostirory tipoPrendaRepostirory;
 
-    public TipoPrendaServicioImpl(TipoPrendaRepostirory tipoPrendaRepostirory){
-        this.tipoPrendaRepostirory=tipoPrendaRepostirory;
-    }
 
     /*
      * crear un tipoPrenda.

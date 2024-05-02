@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.azure.core.implementation.Option;
+
 import com.caciquesport.inventario.inventario.dto.RegistroProductoDto;
 import com.caciquesport.inventario.inventario.model.configTypes.TipoGenero;
 import com.caciquesport.inventario.inventario.model.configTypes.TipoHorario;
@@ -141,7 +141,7 @@ public class ProductoServicioImpl implements ProductoServicio{
        TipoHorario horario = tipoHorarioServicioImpl.obtenerHorario(registroProductoDto.horario());
        TipoPrenda prenda = tipoPrendaServicioImpl.obtenerPrenda(registroProductoDto.prenda());
 
-       Optional<Producto> productoEncontrado = productoRepository.verificarExistenciaProducto(institucion.getId(), talla.getId(), genero.getId(), horario.getId(), prenda.getId());
+       Optional<Producto> productoEncontrado = productoRepository.verificarExistenciaProducto(institucion, talla,genero, horario, prenda);
 
        if (!productoEncontrado.isEmpty()) {
             respuesta=true;

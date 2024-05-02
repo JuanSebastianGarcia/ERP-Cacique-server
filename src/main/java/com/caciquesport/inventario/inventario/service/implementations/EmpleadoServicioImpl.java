@@ -9,17 +9,16 @@ import com.caciquesport.inventario.inventario.repository.EmpleadoRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.EmpleadoServicio;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class EmpleadoServicioImpl implements EmpleadoServicio {
 
 
     private final EmpleadoRepository empleadoRepository;
 
-    public EmpleadoServicioImpl(EmpleadoRepository empleadoRepository){
-        this.empleadoRepository=empleadoRepository;
-    }
 
     /*
      * crear empleado
@@ -87,9 +86,9 @@ public class EmpleadoServicioImpl implements EmpleadoServicio {
      * @return - empleado encontrado
      */
     @Override
-    public Empleado obtenerEmpleado(String cedula) throws Exception {
+    public Empleado obtenerEmpleado(String email) throws Exception {
         
-        Optional<Empleado> empleadoEncontrado=empleadoRepository.findByCedula(cedula);
+        Optional<Empleado> empleadoEncontrado=empleadoRepository.findByEmail(email);
 
         if(empleadoEncontrado.isEmpty()){
             throw new Exception("el empleado no ha podido ser encontrado");

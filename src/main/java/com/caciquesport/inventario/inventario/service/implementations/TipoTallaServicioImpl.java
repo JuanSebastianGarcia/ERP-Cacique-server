@@ -10,16 +10,15 @@ import com.caciquesport.inventario.inventario.repository.TipoTallaRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.TipoTallaServicio;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class TipoTallaServicioImpl implements TipoTallaServicio{
 
     private final TipoTallaRepository tallaRepository;
 
-    public TipoTallaServicioImpl(TipoTallaRepository tallaRepository){
-        this.tallaRepository=tallaRepository;
-    }
 
 
     /*

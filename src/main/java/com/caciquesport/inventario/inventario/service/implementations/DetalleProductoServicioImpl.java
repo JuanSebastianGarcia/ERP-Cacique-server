@@ -9,19 +9,18 @@ import com.caciquesport.inventario.inventario.model.entity.DetalleProducto;
 import com.caciquesport.inventario.inventario.repository.DetalleProductoRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.DetalleProductoServicio;
 
+import lombok.RequiredArgsConstructor;
+
 import java.util.Optional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class DetalleProductoServicioImpl implements DetalleProductoServicio{
 
 
     private final DetalleProductoRepository detalleProductoRepository;
 
-
-    public DetalleProductoServicioImpl(DetalleProductoRepository detalleProductoRepository){
-        this.detalleProductoRepository=detalleProductoRepository;
-    }
 
 
     /*

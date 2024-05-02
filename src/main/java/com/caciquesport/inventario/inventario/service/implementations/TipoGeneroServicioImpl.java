@@ -1,18 +1,24 @@
 package com.caciquesport.inventario.inventario.service.implementations;
 
 import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import com.caciquesport.inventario.inventario.model.configTypes.TipoGenero;
 import com.caciquesport.inventario.inventario.repository.TipoGeneroRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.TipoGeneroServicio;
 
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+
+
+@Service
+@Transactional
+@RequiredArgsConstructor
 public class TipoGeneroServicioImpl implements TipoGeneroServicio{
 
     private final TipoGeneroRepository tipoGeneroRepository;
-
-    public TipoGeneroServicioImpl(TipoGeneroRepository tipoGeneroRepository){
-        this.tipoGeneroRepository=tipoGeneroRepository;
-    }
 
     /*
      * crear genero

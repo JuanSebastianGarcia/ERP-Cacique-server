@@ -1,14 +1,11 @@
 package com.caciquesport.inventario.inventario.service.implementations;
-
-import java.util.Optional;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.caciquesport.inventario.inventario.dto.LoginDto;
 import com.caciquesport.inventario.inventario.dto.TokenDto;
 import com.caciquesport.inventario.inventario.model.entity.Empleado;
-import com.caciquesport.inventario.inventario.repository.EmpleadoRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.AutenticacionServicio;
-import com.caciquesport.inventario.utils.TokenJwtServicio;
+import com.caciquesport.inventario.inventario.utils.TokenJwtServicio;
 
 import lombok.RequiredArgsConstructor;
 import java.util.HashMap;
@@ -19,7 +16,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AutenticacionServicioImpl implements AutenticacionServicio{
 
-    private final EmpleadoRepository empleadoRepository;
+    private final EmpleadoServicioImpl empleadoServicioImpl;
     private final TokenJwtServicio jwtUtils;
 
 
@@ -31,13 +28,13 @@ public class AutenticacionServicioImpl implements AutenticacionServicio{
     @Override
     public TokenDto verificarIdentidad(LoginDto loginDto)throws Exception {
         
-        Optional<Empleado> empleadoEncontrado=empleadoRepository.findByEmail(loginDto.email());
+        Empleado empleadoEncontrado=empleadoServicioImpl.obtenerEmpleado(loginDto.email());
 
-        if(empleadoEncontrado.isEmpty() ||  !verificarPassword(empleadoEncontrado.get(),loginDto.password())){
-            throw new Exception("los datos no se encuentran, el email o la contraseña no son validos");
+        if(!verificarPassword(empleadoEncontrado , loginDto.password())){
+            throw new Exception("la contraseña no es valida");
         }
 
-        return generarToken(empleadoEncontrado.get());
+        return generarToken(empleadoEncontrado);
     }
 
 

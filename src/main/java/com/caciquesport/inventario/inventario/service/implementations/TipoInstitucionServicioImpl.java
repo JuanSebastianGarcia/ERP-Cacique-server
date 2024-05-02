@@ -8,16 +8,15 @@ import com.caciquesport.inventario.inventario.repository.TipoInstitucionReposito
 import com.caciquesport.inventario.inventario.service.interfaces.TipoIstitucionServicio;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class TipoInstitucionServicioImpl implements TipoIstitucionServicio{
 
     private final TipoInstitucionRepository institucionRepository;
 
-    public TipoInstitucionServicioImpl(TipoInstitucionRepository institucionRepository){
-        this.institucionRepository=institucionRepository;
-    }
 
     /*
      * crear tipo institucion
