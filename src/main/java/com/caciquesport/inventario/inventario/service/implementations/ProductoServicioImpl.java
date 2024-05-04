@@ -5,8 +5,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-
-import com.caciquesport.inventario.inventario.dto.RegistroProductoDto;
+import com.caciquesport.inventario.inventario.dto.FiltroProductoDto;
+import com.caciquesport.inventario.inventario.dto.ProductoDto;
 import com.caciquesport.inventario.inventario.model.configTypes.TipoGenero;
 import com.caciquesport.inventario.inventario.model.configTypes.TipoHorario;
 import com.caciquesport.inventario.inventario.model.configTypes.TipoInstitucion;
@@ -16,8 +16,9 @@ import com.caciquesport.inventario.inventario.model.entity.DetalleProducto;
 import com.caciquesport.inventario.inventario.model.entity.Producto;
 import com.caciquesport.inventario.inventario.repository.ProductoRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.ProductoServicio;
-
+import java.util.ArrayList;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -49,7 +50,7 @@ public class ProductoServicioImpl implements ProductoServicio{
      * @return - el id del producto almacenado 
      */
     @Override
-    public Integer crearProducto(RegistroProductoDto registroProductoDto) throws Exception {
+    public Integer crearProducto(ProductoDto registroProductoDto) throws Exception {
 
         boolean existencia=verificarExistenciaProducto(registroProductoDto);
 
@@ -65,15 +66,15 @@ public class ProductoServicioImpl implements ProductoServicio{
 
     /*
      * crear y almacenar el objeto producto
+     * 
+     * @regitroProductoDto - objeto que contiene la informacion para la creacion de un producto
+     * @return el producto almacenado
      */
-    private Producto almacenarProducto(RegistroProductoDto registroProductoDto) throws Exception {
+    private Producto almacenarProducto(ProductoDto registroProductoDto) throws Exception {
 
         //creacion de objetos
         Producto nuevoProducto = new Producto();
         DetalleProducto nuevoDetalleProducto = new DetalleProducto();
-
-        //asignacion de datos al detalle de producto
-
 
         //asignacion de datos al producto
         asignarDatosProducto(registroProductoDto, nuevoProducto);
@@ -95,7 +96,7 @@ public class ProductoServicioImpl implements ProductoServicio{
      * @param registroProductoDto - contiene la informacion necesaria para crear el objeto
      * @param nuevoDetalleProducto - referencia al objeto que se esta construyendo
      */
-    private void asignarDatosDetalleProducto(RegistroProductoDto registroProductoDto, DetalleProducto nuevoDetalleProducto) {
+    private void asignarDatosDetalleProducto(ProductoDto registroProductoDto, DetalleProducto nuevoDetalleProducto) {
         
         nuevoDetalleProducto.setCantidad(registroProductoDto.cantidad());
         nuevoDetalleProducto.setPrecio(registroProductoDto.precio());
@@ -111,7 +112,7 @@ public class ProductoServicioImpl implements ProductoServicio{
      * @param registroProductoDto - contiene la informacion necesaria para crear el objeto
      * @param nuevoProducto - referencia al objeto que se esta construyendo
      */
-    private void asignarDatosProducto(RegistroProductoDto registroProductoDto, Producto nuevoProducto ) throws Exception{
+    private void asignarDatosProducto(ProductoDto registroProductoDto, Producto nuevoProducto ) throws Exception{
 
         nuevoProducto.setTipoPrenda(tipoPrendaServicioImpl.obtenerPrenda(registroProductoDto.prenda()));
         nuevoProducto.setTipoHorario(tipoHorarioServicioImpl.obtenerHorario(registroProductoDto.horario()));
@@ -131,7 +132,7 @@ public class ProductoServicioImpl implements ProductoServicio{
      * 
      * @return - el objeto existe(true) o no existe(false)
      */
-    private boolean verificarExistenciaProducto(RegistroProductoDto registroProductoDto) throws Exception {
+    private boolean verificarExistenciaProducto(ProductoDto registroProductoDto) throws Exception {
 
        boolean respuesta=false;
 
@@ -197,30 +198,7 @@ public class ProductoServicioImpl implements ProductoServicio{
     }
 
 
-
-
-
-    /*
-     * obtener el producto por medio del id. si el producto no existe lanza una excepcion
-     * 
-     * @param id- es el id unico del producto
-     * 
-     * @return - el producto encontrado
-     */
-    @Override
-    public Producto obtenerProducto(Integer id) throws Exception {
-        
-        Optional<Producto> productoEncontrado=productoRepository.findById(id);
-
-        if(productoEncontrado.isEmpty()){
-            throw new Exception("el producto no se puede encontrar");
-        }else{
-            return productoEncontrado.get();
-        }
-    }
-
-
-
+    
 
 
     /*
@@ -232,4 +210,168 @@ public class ProductoServicioImpl implements ProductoServicio{
     public List<Producto> listarProductos() throws Exception {
         return productoRepository.findAll();
     }
+
+
+
+
+
+    /*
+     * filtra la lista de productos con base en una serie de parametros institucion, talla, prenda, genero y horario
+     * 
+     * @ filtroProducto
+     */
+    public List<ProductoDto> filtrarListaProducto(FiltroProductoDto filtroProductoDto) throws Exception {
+        
+        List<Producto> listaProductos=listarProductos();
+        
+        filtrarPorPrenda(listaProductos,filtroProductoDto);
+        filtrarPorGenero(listaProductos, filtroProductoDto);
+        filtrarPorHorario(listaProductos, filtroProductoDto);
+        filtrarPorInstitucion(listaProductos, filtroProductoDto);
+        filtrarPorTalla(listaProductos, filtroProductoDto);
+
+        return convertirListaDto(listaProductos);
+    }
+
+
+
+
+
+    /*
+     * convertir la lista de productos en formato de objeto a un formato dto
+     * 
+     * @param listaProductos - lista de productos a convertir
+     * @return lista de datos en formato dto
+     */
+    private List<ProductoDto> convertirListaDto(List<Producto> listaProductos) {
+        
+        List<ProductoDto> listaDto= new ArrayList<>();
+
+        for (Producto producto : listaProductos) {
+            
+            listaDto.add(new ProductoDto(producto.getTipoPrenda().getPrenda(),
+            producto.getTipoInstitucion().getInstitucion(),
+            producto.getTipoTalla().getTalla(),
+            producto.getTipoHorario().getHorario(),
+            producto.getTipoGenero().getGenero(),
+            producto.getDetalleProducto().getPrecio(),
+            producto.getDetalleProducto().getCantidad(),
+            producto.getDetalleProducto().getDescripcion()));
+
+        }
+
+        return listaDto;
+    }
+
+
+
+
+    /*
+     * filtra una lista de productos removiendo los que no concuerden con una Prenda
+     */
+    private void filtrarPorPrenda(List<Producto> listaProductos, FiltroProductoDto filtroProductoDto) {
+        
+        String prenda=filtroProductoDto.prenda();
+
+        if(!prenda.equals("")){
+
+            for (Producto producto : listaProductos) {
+                if(producto.getTipoPrenda().getPrenda().equals(prenda)){
+                    listaProductos.remove(producto);
+                }
+            }
+    
+        }
+
+    }
+
+
+
+
+
+     /*
+     * filtra una lista de productos removiendo los que no concuerden con una Institucion
+     */
+    private void filtrarPorInstitucion(List<Producto> listaProductos,FiltroProductoDto filtroProductoDto) {
+        
+        String institucion=filtroProductoDto.institucion();
+
+        if(!institucion.equals("")){
+
+            for (Producto producto : listaProductos) {
+                if(producto.getTipoInstitucion().getInstitucion().equals(institucion)){
+                    listaProductos.remove(producto);
+                }
+            }
+    
+        }
+    }
+
+
+
+
+    /*
+     * filtra una lista de productos removiendo los que no concuerden con una Talla
+     */
+    private void filtrarPorTalla(List<Producto> listaProductos,FiltroProductoDto filtroProductoDto) {
+        
+        String talla = filtroProductoDto.talla();
+
+        if (!talla.equals("")){
+            for (Producto producto : listaProductos) {
+                if(producto.getTipoTalla().getTalla().equals(talla)){
+                    listaProductos.remove(producto);
+                }
+            }
+        }
+    }
+
+
+
+
+    /*
+     * filtra una lista de productos removiendo los que no concuerden con un Horario
+     */
+    private void filtrarPorHorario(List<Producto> listaProductos,FiltroProductoDto filtroProductoDto) {
+        
+        String horario = filtroProductoDto.horario();
+
+        if(!horario.equals("")){
+            for (Producto producto : listaProductos) {
+                if(producto.getTipoHorario().getHorario().equals(horario)){
+                    listaProductos.remove(producto);
+                }
+            }
+        }
+    }
+
+
+
+    /*
+     * filtra una lista de productos removiendo los que no concuerden con una Genero
+     */
+    private void filtrarPorGenero(List<Producto> listaProductos,FiltroProductoDto filtroProductoDto) {
+    
+        String genero = filtroProductoDto.genero();
+
+        if(!genero.equals("")){
+            for (Producto producto : listaProductos) {
+                if(producto.getTipoGenero().getGenero().equals(genero)){
+                    listaProductos.remove(producto);
+                }
+            }
+        }
+    }
+
+
+
+    @Override
+    public Producto obtenerProducto(Integer id) throws Exception {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'obtenerProducto'");
+    }
+
+
+
+
 }

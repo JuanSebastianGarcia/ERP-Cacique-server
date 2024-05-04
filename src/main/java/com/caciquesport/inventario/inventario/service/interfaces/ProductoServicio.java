@@ -2,7 +2,7 @@ package com.caciquesport.inventario.inventario.service.interfaces;
 
 import java.util.List;
 
-import com.caciquesport.inventario.inventario.dto.RegistroProductoDto;
+import com.caciquesport.inventario.inventario.dto.ProductoDto;
 import com.caciquesport.inventario.inventario.model.entity.Producto;
 
 /**
@@ -11,7 +11,7 @@ import com.caciquesport.inventario.inventario.model.entity.Producto;
  */
 public interface ProductoServicio {
 
-    Integer crearProducto(RegistroProductoDto RegistroProductoDto) throws Exception;
+    Integer crearProducto(ProductoDto RegistroProductoDto) throws Exception;
 
     Integer actualizarProducto(Producto producto) throws Exception;
 

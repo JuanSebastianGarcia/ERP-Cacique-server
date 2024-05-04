@@ -37,7 +37,7 @@ public class Empleado implements Serializable {
     @Column(name = "email_empleado" , nullable = false , length = 40 , unique = true)
     private String email;
 
-    @Column(name = "password_empleado" , nullable = false , length = 20 )
+    @Column(name = "password_empleado" , nullable = false , length = 100 )
     private String password;
 
     @Enumerated(EnumType.STRING)

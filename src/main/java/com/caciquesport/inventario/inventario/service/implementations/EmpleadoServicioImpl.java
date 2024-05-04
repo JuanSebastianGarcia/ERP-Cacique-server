@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+
+import com.caciquesport.inventario.exceptions.types.EmpleadoNoEncontradoException;
 import com.caciquesport.inventario.inventario.model.entity.Empleado;
 import com.caciquesport.inventario.inventario.repository.EmpleadoRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.EmpleadoServicio;
@@ -91,7 +93,7 @@ public class EmpleadoServicioImpl implements EmpleadoServicio {
         Optional<Empleado> empleadoEncontrado=empleadoRepository.findByEmail(email);
 
         if(empleadoEncontrado.isEmpty()){
-            throw new Exception("el empleado no ha podido ser encontrado");
+            throw new EmpleadoNoEncontradoException("el email no ha sido encontrado");
         }else{
             return empleadoEncontrado.get();
         }

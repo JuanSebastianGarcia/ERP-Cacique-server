@@ -1,6 +1,8 @@
 package com.caciquesport.inventario.inventario.service.implementations;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.caciquesport.inventario.exceptions.types.EmpleadoNoEncontradoException;
 import com.caciquesport.inventario.inventario.dto.LoginDto;
 import com.caciquesport.inventario.inventario.dto.TokenDto;
 import com.caciquesport.inventario.inventario.model.entity.Empleado;
@@ -27,11 +29,11 @@ public class AutenticacionServicioImpl implements AutenticacionServicio{
      */
     @Override
     public TokenDto verificarIdentidad(LoginDto loginDto)throws Exception {
-        
+
         Empleado empleadoEncontrado=empleadoServicioImpl.obtenerEmpleado(loginDto.email());
 
         if(!verificarPassword(empleadoEncontrado , loginDto.password())){
-            throw new Exception("la contraseña no es valida");
+            throw new EmpleadoNoEncontradoException("la contraseña no coincide");
         }
 
         return generarToken(empleadoEncontrado);

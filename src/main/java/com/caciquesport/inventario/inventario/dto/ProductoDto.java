@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 /*
  * DTO que maneja los datos necesarios para la creacion de un producto
  */
-public record RegistroProductoDto(
+public record ProductoDto(
 
     @NotNull
     String prenda,
