@@ -1,4 +1,4 @@
-package com.caciquesport.inventario.exceptions.types;
+package com.caciquesport.inventario.inventario.exceptions.types;
 
 /*
  * excepcion para cuando un usuario no es validado

@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.caciquesport.inventario.exceptions.types.EmpleadoNoEncontradoException;
+import com.caciquesport.inventario.inventario.exceptions.types.EmpleadoNoEncontradoException;
 import com.caciquesport.inventario.inventario.model.entity.Empleado;
 import com.caciquesport.inventario.inventario.repository.EmpleadoRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.EmpleadoServicio;

@@ -18,7 +18,6 @@ import com.caciquesport.inventario.inventario.repository.ProductoRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.ProductoServicio;
 import java.util.ArrayList;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -198,7 +197,7 @@ public class ProductoServicioImpl implements ProductoServicio{
     }
 
 
-    
+
 
 
     /*
@@ -367,7 +366,7 @@ public class ProductoServicioImpl implements ProductoServicio{
 
     @Override
     public Producto obtenerProducto(Integer id) throws Exception {
-        // TODO Auto-generated method stub
+       
         throw new UnsupportedOperationException("Unimplemented method 'obtenerProducto'");
     }
 
