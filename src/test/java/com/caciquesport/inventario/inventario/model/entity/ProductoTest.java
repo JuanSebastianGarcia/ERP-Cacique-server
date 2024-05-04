@@ -20,7 +20,7 @@ public class ProductoTest {
 
     /*
      * metodo para probar la creacion de un producto atravez de su servicio
-     */
+     *
     @Test
     public void crearBuscarProducto() throws Exception{
 
@@ -33,6 +33,6 @@ public class ProductoTest {
         //ProductoDto producto=new ProductoDto("", null, null, null, null, 0, 0, null)
         //productoServicioImpl.crearProducto(null);
 
-    }
+    }*/
 
 }

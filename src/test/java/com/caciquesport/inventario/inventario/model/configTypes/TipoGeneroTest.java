@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Optional;
 import com.caciquesport.inventario.inventario.repository.TipoGeneroRepository;
 
+
 @DataJpaTest
 public class TipoGeneroTest {
 
@@ -27,4 +28,6 @@ public class TipoGeneroTest {
         assertTrue(generoEncontrado.isPresent());
 
     }
+
+    
 }
