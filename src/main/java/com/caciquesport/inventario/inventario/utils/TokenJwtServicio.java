@@ -90,6 +90,10 @@ public class TokenJwtServicio extends OncePerRequestFilter{
      * @param request - 
      */
     public void establecerPermisos(HttpServletResponse response){
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.addHeader("Access-Control-Allow-Headers", "Origin, Accept, Content-Type, Authorization");
+        response.addHeader("Access-Control-Allow-Credentials", "true");
 
     }
 
@@ -109,12 +113,8 @@ public class TokenJwtServicio extends OncePerRequestFilter{
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         
-            //establece permisos para las solicitudes
-            //establecerPermisos(response);
-            response.addHeader("Access-Control-Allow-Origin", "*");
-            response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-            response.addHeader("Access-Control-Allow-Headers", "Origin, Accept, Content-Type, Authorization");
-            response.addHeader("Access-Control-Allow-Credentials", "true");
+
+            establecerPermisos(response);
 
             if(request.getMethod().equals("OPTIONS")){
                 response.setStatus(HttpServletResponse.SC_OK);
