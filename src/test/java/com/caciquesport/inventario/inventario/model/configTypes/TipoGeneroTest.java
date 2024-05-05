@@ -4,6 +4,8 @@ package com.caciquesport.inventario.inventario.model.configTypes;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.jdbc.Sql;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Optional;
 import com.caciquesport.inventario.inventario.repository.TipoGeneroRepository;
@@ -21,9 +23,7 @@ public class TipoGeneroTest {
     @Test
     public void crearGenero(){
 
-        TipoGenero tipoGenero=new TipoGenero();
-        tipoGenero.setGenero("hombre");
-        tipoGeneroRepository.save(tipoGenero);
+
         Optional<TipoGenero> generoEncontrado=tipoGeneroRepository.findByGenero("hombre");
         assertTrue(generoEncontrado.isPresent());
 
