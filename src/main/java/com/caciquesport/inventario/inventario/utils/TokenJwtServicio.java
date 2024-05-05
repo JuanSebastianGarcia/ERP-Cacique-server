@@ -90,10 +90,7 @@ public class TokenJwtServicio extends OncePerRequestFilter{
      * @param request - 
      */
     public void establecerPermisos(HttpServletResponse response){
-        response.addHeader("Access-Control-Allow-Origin", "*");
-        response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        response.addHeader("Access-Control-Allow-Headers", "Origin, Accept, Content-Type, Authorization");
-        response.addHeader("Access-Control-Allow-Credentials", "true");
+
     }
 
 
@@ -107,12 +104,17 @@ public class TokenJwtServicio extends OncePerRequestFilter{
      * @param response - La respuesta HTTP que se enviará al cliente, donde se pueden establecer estados, cabeceras, y cuerpo.
      * @param filterChain - Una cadena de filtros que permite pasar la solicitud y la respuesta a otros filtros o al recurso final.
      */
+    @SuppressWarnings("null")
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         
             //establece permisos para las solicitudes
-            establecerPermisos(response);
+            //establecerPermisos(response);
+            response.addHeader("Access-Control-Allow-Origin", "*");
+            response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+            response.addHeader("Access-Control-Allow-Headers", "Origin, Accept, Content-Type, Authorization");
+            response.addHeader("Access-Control-Allow-Credentials", "true");
 
             if(request.getMethod().equals("OPTIONS")){
                 response.setStatus(HttpServletResponse.SC_OK);
@@ -121,10 +123,6 @@ public class TokenJwtServicio extends OncePerRequestFilter{
             }
 
     }
-
-
-
-
 
 
     /*
@@ -139,7 +137,7 @@ public class TokenJwtServicio extends OncePerRequestFilter{
         
         String requestURI = request.getRequestURI();
 
-        if(requestURI.startsWith("/api/jefe") || requestURI.startsWith("/api/empleado")){
+        if(requestURI.startsWith("/api/manejoProducto") ){
             validarToken(request,response,filterChain);
         }else{
             filterChain.doFilter(request, response);
@@ -193,8 +191,7 @@ public class TokenJwtServicio extends OncePerRequestFilter{
         
         boolean acceso=false;
 
-        if(requestURI.startsWith("/api/jefe") && claims.getBody().get("tipoEmpleado").equals("JEFE") ||
-           requestURI.startsWith("/api/empleado") && claims.getBody().get("tipoEmpleado").equals("EMPLEADO")){
+        if(requestURI.startsWith("/api/manejoProducto") && claims.getBody().get("tipoEmpleado").equals("JEFE") ){
             acceso=true;
         }
 
