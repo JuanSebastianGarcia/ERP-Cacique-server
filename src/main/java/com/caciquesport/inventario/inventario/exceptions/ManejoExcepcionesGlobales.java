@@ -12,12 +12,24 @@ import com.caciquesport.inventario.inventario.exceptions.types.EmpleadoNoEncontr
 public class ManejoExcepcionesGlobales {
 
 
+    /*
+     * maneja la excepcion que indica que un empleado no ha sido encontrado
+     */
     @ExceptionHandler(EmpleadoNoEncontradoException.class)
     public ResponseEntity<RespuestaDto> handleEmpleadoNoEncontrado(EmpleadoNoEncontradoException exception){
 
-        return ResponseEntity.badRequest().body(new RespuestaDto<>(true,HttpStatus.BAD_REQUEST));
+        return ResponseEntity.badRequest().body(new RespuestaDto<>(true,exception.getMessage()));
     }
 
+    /*
+     * manejar la excepcion mas basica "excepcion"
+     * 
+     */
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<RespuestaDto<String>> generalException(Exception exception){
+        return ResponseEntity.internalServerError().body( new RespuestaDto<>(true, exception.getMessage())
+        );
+    }
 
 
 
