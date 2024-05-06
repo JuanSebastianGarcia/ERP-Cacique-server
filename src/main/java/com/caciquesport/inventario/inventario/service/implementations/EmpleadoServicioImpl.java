@@ -109,14 +109,10 @@ public class EmpleadoServicioImpl implements EmpleadoServicio {
     @Override
     public void eliminarEmpleado(String cedula) throws Exception {
      
-        Optional<Empleado> empleadoEncontrado=empleadoRepository.findByCedula(cedula);
+        Empleado empleadoEncontrado=obtenerEmpleado(cedula);
 
-        if(empleadoEncontrado.isEmpty()){
-            throw new Exception("el empleado no ha podido ser encontrado");
-        }else{
-            empleadoRepository.delete(empleadoEncontrado.get());
-        }
-
+        empleadoRepository.delete(empleadoEncontrado);
+        
     }
 
 
