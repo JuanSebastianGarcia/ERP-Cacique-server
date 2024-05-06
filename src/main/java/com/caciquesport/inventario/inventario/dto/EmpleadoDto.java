@@ -1,7 +1,7 @@
 package com.caciquesport.inventario.inventario.dto;
 
 public record EmpleadoDto(
-
+    Integer id,
     String nombre,
     String cedula,
     String telefono,

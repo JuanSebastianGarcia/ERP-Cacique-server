@@ -2,6 +2,7 @@ package com.caciquesport.inventario.inventario.service.interfaces;
 
 import java.util.List;
 
+import com.caciquesport.inventario.inventario.dto.FiltroProductoDto;
 import com.caciquesport.inventario.inventario.dto.ProductoDto;
 import com.caciquesport.inventario.inventario.model.entity.Producto;
 
@@ -17,7 +18,7 @@ public interface ProductoServicio {
 
     void eliminarProducto(Integer id) throws Exception;
 
-    Producto obtenerProducto(Integer id) throws Exception;
+    List<ProductoDto> filtrarListaProducto(FiltroProductoDto filtroProductoDto) throws Exception;
 
     List<Producto> listarProductos() throws Exception;
     

@@ -40,6 +40,7 @@ public class ProductoController {
     /*
      * api para la creacion de un producto
      * 
+     * @param nuevoProductoDto - contiene la informacion para la creacion de un nuevo producto
      */
     @PostMapping("/crearProducto")
     public ResponseEntity<RespuestaDto<String>> crearProducto(@Valid @RequestBody ProductoDto nuevoProductoDto) throws Exception{
@@ -66,7 +67,6 @@ public class ProductoController {
         return ResponseEntity.ok().body(new RespuestaDto<>(false,listaProducto));
     }
 
-
     
     /*
      * api para eliminar un producto
@@ -80,6 +80,8 @@ public class ProductoController {
 
         return ResponseEntity.ok().body(new RespuestaDto<>(false,"el producto ha sido eliminado"));
     }
+
+
 
 
     /*

@@ -3,9 +3,13 @@ package com.caciquesport.inventario.inventario.service.implementations;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.caciquesport.inventario.inventario.dto.EmpleadoDto;
+import com.caciquesport.inventario.inventario.dto.ProductoDto;
 import com.caciquesport.inventario.inventario.exceptions.types.EmpleadoNoEncontradoException;
+import com.caciquesport.inventario.inventario.model.configTypes.TipoEmpleado;
 import com.caciquesport.inventario.inventario.model.entity.Empleado;
 import com.caciquesport.inventario.inventario.repository.EmpleadoRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.EmpleadoServicio;
@@ -23,17 +27,54 @@ public class EmpleadoServicioImpl implements EmpleadoServicio {
 
 
     /*
-     * crear empleado
+     * crear empleado. en caso de que exista una excepcion sera disparada
      * 
      * @param nuevoEmpleado- el objeto empleado que se va a almacenar
      * 
      * @return - id del empleado almacenado
      */
     @Override
-    public Integer crearEmpleado(Empleado nuevoEmpleado) throws Exception {
+    public Integer crearEmpleado(EmpleadoDto nuevoEmpleadoDto) throws Exception {
         
+        //se verifica que el empleado no exista
+        obtenerEmpleado(nuevoEmpleadoDto.email());
+
+        Empleado nuevoEmpleado = new Empleado();
+
+        registrarDatos(nuevoEmpleado,nuevoEmpleadoDto);
+
+
         return empleadoRepository.save(nuevoEmpleado).getId();
     }
+
+
+
+    /*
+     * construir un objeto Empleado con base en una clase EmpleadoDto
+     */
+    private void registrarDatos(Empleado nuevoEmpleado,EmpleadoDto nuevoEmpleadoDto) {
+        
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String passwordEncrypt=encoder.encode(nuevoEmpleadoDto.password());
+
+        nuevoEmpleado.setCedula( nuevoEmpleadoDto.cedula());
+        nuevoEmpleado.setEmail(nuevoEmpleadoDto.email());
+        nuevoEmpleado.setNombre(nuevoEmpleadoDto.nombre());
+        nuevoEmpleado.setPassword(passwordEncrypt);
+        nuevoEmpleado.setTelefono(nuevoEmpleadoDto.telefono());
+
+        if(nuevoEmpleadoDto.tipoEmpleado().equals("JEFE")){
+            nuevoEmpleado.setTipoEmpleado(TipoEmpleado.JEFE);
+        }
+        if(nuevoEmpleadoDto.tipoEmpleado().equals("EMPLEADO")){
+            nuevoEmpleado.setTipoEmpleado(TipoEmpleado.EMPLEADO);
+        }
+
+
+    }
+
+
+
 
 
 

@@ -1,5 +1,6 @@
 package com.caciquesport.inventario.inventario.service.interfaces;
 
+import com.caciquesport.inventario.inventario.dto.EmpleadoDto;
 import com.caciquesport.inventario.inventario.model.entity.Empleado;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  */
 public interface EmpleadoServicio {
 
-    Integer crearEmpleado(Empleado nuevoEmpleado) throws Exception;
+    Integer crearEmpleado(EmpleadoDto nuevoEmpleadoDto) throws Exception;
 
     Integer actualizarEmpleado(Empleado empleado) throws Exception;
 

@@ -89,6 +89,7 @@ public class ProductoServicioImpl implements ProductoServicio{
     }
 
 
+
     /*
      * asigar o agregar datos a un objeto detalleProducto
      * 
@@ -120,6 +121,7 @@ public class ProductoServicioImpl implements ProductoServicio{
         nuevoProducto.setTipoGenero(tipoGeneroServicioImpl.obtenerGenero(registroProductoDto.genero()));
 
     }
+
 
 
 
@@ -200,6 +202,7 @@ public class ProductoServicioImpl implements ProductoServicio{
 
 
 
+
     /*
      * eliminar el producto por medio del id. si no se encuentra lanza una excepcion
      * 
@@ -241,6 +244,7 @@ public class ProductoServicioImpl implements ProductoServicio{
      * 
      * @ filtroProducto
      */
+    @Override
     public List<ProductoDto> filtrarListaProducto(FiltroProductoDto filtroProductoDto) throws Exception {
         
         List<Producto> listaProductos=listarProductos();
@@ -384,16 +388,6 @@ public class ProductoServicioImpl implements ProductoServicio{
             }
         }
     }
-
-
-
-    @Override
-    public Producto obtenerProducto(Integer id) throws Exception {
-       
-        throw new UnsupportedOperationException("Unimplemented method 'obtenerProducto'");
-    }
-
-
 
 
 }
