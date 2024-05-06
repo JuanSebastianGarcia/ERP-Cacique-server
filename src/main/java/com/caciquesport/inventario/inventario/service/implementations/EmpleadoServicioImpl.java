@@ -37,7 +37,11 @@ public class EmpleadoServicioImpl implements EmpleadoServicio {
     public Integer crearEmpleado(EmpleadoDto nuevoEmpleadoDto) throws Exception {
         
         //se verifica que el empleado no exista
-        obtenerEmpleado(nuevoEmpleadoDto.email());
+        Optional<Empleado> empleadoEncontrado=empleadoRepository.findByEmail(nuevoEmpleadoDto.email());
+
+        if(empleadoEncontrado.isPresent()){
+            throw new Exception("ya existe un empleado con este correo");
+        }
 
         Empleado nuevoEmpleado = new Empleado();
 
@@ -57,7 +61,7 @@ public class EmpleadoServicioImpl implements EmpleadoServicio {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String passwordEncrypt=encoder.encode(nuevoEmpleadoDto.password());
 
-        nuevoEmpleado.setCedula( nuevoEmpleadoDto.cedula());
+        nuevoEmpleado.setCedula(nuevoEmpleadoDto.cedula());
         nuevoEmpleado.setEmail(nuevoEmpleadoDto.email());
         nuevoEmpleado.setNombre(nuevoEmpleadoDto.nombre());
         nuevoEmpleado.setPassword(passwordEncrypt);
@@ -109,9 +113,12 @@ public class EmpleadoServicioImpl implements EmpleadoServicio {
     @Override
     public void eliminarEmpleado(String cedula) throws Exception {
      
-        Empleado empleadoEncontrado=obtenerEmpleado(cedula);
+        Optional<Empleado> empleadoEncontrado=empleadoRepository.findByCedula(cedula);
 
-        empleadoRepository.delete(empleadoEncontrado);
+        if(empleadoEncontrado.isEmpty()){
+            throw new Exception("el empleado no ha sido encontrado");
+        }
+        empleadoRepository.delete(empleadoEncontrado.get());
     }
 
 
