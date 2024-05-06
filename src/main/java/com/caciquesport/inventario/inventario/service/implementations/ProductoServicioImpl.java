@@ -248,7 +248,8 @@ public class ProductoServicioImpl implements ProductoServicio{
 
         for (Producto producto : listaProductos) {
             
-            listaDto.add(new ProductoDto(producto.getTipoPrenda().getPrenda(),
+            listaDto.add(new ProductoDto(producto.getId(),
+            producto.getTipoPrenda().getPrenda(),
             producto.getTipoInstitucion().getInstitucion(),
             producto.getTipoTalla().getTalla(),
             producto.getTipoHorario().getHorario(),

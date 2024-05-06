@@ -2,7 +2,9 @@ package com.caciquesport.inventario.inventario.controller;
 
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +38,7 @@ public class ProductoController {
 
 
     /*
-     * controlador para la creacion de un producto
+     * api para la creacion de un producto
      * 
      */
     @PostMapping("/crearProducto")
@@ -50,7 +52,7 @@ public class ProductoController {
 
 
     /*
-     * controlador para la busqueda de un producto
+     * api  para la busqueda de un producto
      * 
      * @param filtroProductoDto - contiene las catacteristicas de diferenciacion que un producto tiene con otro
      * 
@@ -63,5 +65,29 @@ public class ProductoController {
 
         return ResponseEntity.ok().body(new RespuestaDto<>(false,listaProducto));
     }
+
+
+    
+    /*
+     * api para eliminar un producto
+     * 
+     * @param productoDto - contiene la informacion de un producto
+     */
+    @DeleteMapping("/eliminarProducto/{id}")
+    public ResponseEntity<RespuestaDto<String>> eliminarProducto(@PathVariable("id") Integer idProducto) throws Exception{
+
+        productoServicioImpl.eliminarProducto(idProducto);
+
+        return ResponseEntity.ok().body(new RespuestaDto<>(false,"el producto ha sido eliminado"));
+    }
+
+
+
+
+
+
+
+
+
 
 }
