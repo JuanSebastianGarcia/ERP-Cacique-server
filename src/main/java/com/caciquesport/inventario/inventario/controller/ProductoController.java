@@ -44,9 +44,9 @@ public class ProductoController {
     @PostMapping("/crearProducto")
     public ResponseEntity<RespuestaDto<String>> crearProducto(@Valid @RequestBody ProductoDto nuevoProductoDto) throws Exception{
 
-        productoServicioImpl.crearProducto(nuevoProductoDto);
+        Integer id =productoServicioImpl.crearProducto(nuevoProductoDto);
 
-        return ResponseEntity.ok().body(new RespuestaDto<>(false,"el producto ha sido creado"));
+        return ResponseEntity.ok().body(new RespuestaDto<>(false,"el producto ha sido creado id:"+id));
     }
 
 
@@ -71,7 +71,7 @@ public class ProductoController {
     /*
      * api para eliminar un producto
      * 
-     * @param productoDto - contiene la informacion de un producto
+     * @param idProducto - el id del producto que se va a eliminar
      */
     @DeleteMapping("/eliminarProducto/{id}")
     public ResponseEntity<RespuestaDto<String>> eliminarProducto(@PathVariable("id") Integer idProducto) throws Exception{
@@ -82,7 +82,18 @@ public class ProductoController {
     }
 
 
-
+    /*
+     * api para la actualizacion de un producto
+     * 
+     * @param productoDto - trae la informacion del objeto 
+     */
+    @PostMapping("/actualizarProducto")
+    public ResponseEntity<RespuestaDto<String>> actualizarProducto(@Valid @RequestBody ProductoDto productoDto) throws Exception{
+       
+        Integer id=productoServicioImpl.actualizarProducto(productoDto);
+        
+        return ResponseEntity.ok().body(new RespuestaDto<>(false,"el producto ha sido actualizado id:"+id));
+    }
 
 
 

@@ -13,7 +13,7 @@ public interface ProductoServicio {
 
     Integer crearProducto(ProductoDto RegistroProductoDto) throws Exception;
 
-    Integer actualizarProducto(Producto producto) throws Exception;
+    Integer actualizarProducto(ProductoDto productoDto) throws Exception;
 
     void eliminarProducto(Integer id) throws Exception;
 

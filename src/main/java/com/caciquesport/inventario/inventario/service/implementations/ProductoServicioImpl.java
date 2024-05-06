@@ -162,19 +162,41 @@ public class ProductoServicioImpl implements ProductoServicio{
      * 
      */
     @Override
-    public Integer actualizarProducto(Producto producto) throws Exception {
+    public Integer actualizarProducto(ProductoDto productoDto) throws Exception {
         
-        Optional<Producto> productoEncontrado=productoRepository.findById(producto.getId());
+        Optional<Producto> productoEncontrado=productoRepository.findById(productoDto.id());
+
+        //actualizar los datos
+        Producto productoActualizado=actualizarDatos(productoEncontrado.get(),productoDto);
 
         if(productoEncontrado.isEmpty()){
-            throw new Exception("no se puede actualizar el producto");
+            throw new Exception("no se puede actualizar el producto debido a que no se encuentra");
         }else{
-            return productoRepository.save(producto).getId(); 
+            return productoRepository.save(productoActualizado).getId(); 
         }
     }
 
 
 
+
+
+    /*
+     * actualizar los datos en el detalle  de un producto
+     * 
+     * @param producto - el producto que se va a actualizar
+     * @param productoDto - contiene los datos a actualizar
+     * 
+     * @return producto actualizado
+     * 
+     */
+    private Producto actualizarDatos(Producto producto, ProductoDto productoDto) {
+        
+        producto.getDetalleProducto().setCantidad(productoDto.cantidad());
+        producto.getDetalleProducto().setDescripcion(productoDto.descripcion());
+        producto.getDetalleProducto().setPrecio(productoDto.precio());
+
+        return producto;
+    }
 
 
 
