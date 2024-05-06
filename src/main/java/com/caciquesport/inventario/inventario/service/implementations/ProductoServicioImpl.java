@@ -302,7 +302,7 @@ public class ProductoServicioImpl implements ProductoServicio{
         if(!prenda.equals("")){
 
             for (Producto producto : listaProductos) {
-                if(producto.getTipoPrenda().getPrenda().equals(prenda)){
+                if(!producto.getTipoPrenda().getPrenda().equals(prenda)){
                     listaProductos.remove(producto);
                 }
             }
@@ -325,7 +325,7 @@ public class ProductoServicioImpl implements ProductoServicio{
         if(!institucion.equals("")){
 
             for (Producto producto : listaProductos) {
-                if(producto.getTipoInstitucion().getInstitucion().equals(institucion)){
+                if(!producto.getTipoInstitucion().getInstitucion().equals(institucion)){
                     listaProductos.remove(producto);
                 }
             }
@@ -345,7 +345,7 @@ public class ProductoServicioImpl implements ProductoServicio{
 
         if (!talla.equals("")){
             for (Producto producto : listaProductos) {
-                if(producto.getTipoTalla().getTalla().equals(talla)){
+                if(!producto.getTipoTalla().getTalla().equals(talla)){
                     listaProductos.remove(producto);
                 }
             }
@@ -364,7 +364,7 @@ public class ProductoServicioImpl implements ProductoServicio{
 
         if(!horario.equals("")){
             for (Producto producto : listaProductos) {
-                if(producto.getTipoHorario().getHorario().equals(horario)){
+                if(!producto.getTipoHorario().getHorario().equals(horario)){
                     listaProductos.remove(producto);
                 }
             }
@@ -382,7 +382,7 @@ public class ProductoServicioImpl implements ProductoServicio{
 
         if(!genero.equals("")){
             for (Producto producto : listaProductos) {
-                if(producto.getTipoGenero().getGenero().equals(genero)){
+                if(!producto.getTipoGenero().getGenero().equals(genero)){
                     listaProductos.remove(producto);
                 }
             }
