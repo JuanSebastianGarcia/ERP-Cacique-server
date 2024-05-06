@@ -112,7 +112,6 @@ public class EmpleadoServicioImpl implements EmpleadoServicio {
         Empleado empleadoEncontrado=obtenerEmpleado(cedula);
 
         empleadoRepository.delete(empleadoEncontrado);
-        
     }
 
 
