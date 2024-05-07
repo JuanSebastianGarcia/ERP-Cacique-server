@@ -1,4 +1,4 @@
-name: Build and deploy WAR app to Azure Web App
+name: Build and deploy WAR app to Azure Web App - caiquesportinventario
 
 on:
   push:
@@ -7,44 +7,51 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Set up Java version
         uses: actions/setup-java@v1
         with:
           java-version: '17'
 
-      - name: Grant execute permissions for Gradle
+      - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
       - name: Build with Gradle
-        run: ./gradlew build -x test  # Assumes tests are handled separately or not needed for build
+        run: ./gradlew build
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v3
+        with:
+          name: java-app
+          path: build/libs/*.war  # Asegúrate de que esto coincide con la salida de tus archivos .war
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: java-app
 
       - name: Login to Azure
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
-        with:
-          name: my-app
-          path: build/libs/*.war
-
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v3
-        with:
-          name: my-app
-
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'myazurewebapp'  # Replace with your actual Azure Web App name
-          slot-name: 'production'    # Optional: specify if using deployment slots
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          app-name: 'caiquesportinventario'
+          slot-name: 'production'
           package: '*.war'
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_9cd2993a713c4f148c890a24d08fc7f6 }}
