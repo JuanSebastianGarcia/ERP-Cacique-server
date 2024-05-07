@@ -249,11 +249,11 @@ public class ProductoServicioImpl implements ProductoServicio{
         
         List<Producto> listaProductos=listarProductos();
         
-        filtrarPorPrenda(listaProductos,filtroProductoDto);
-        filtrarPorGenero(listaProductos, filtroProductoDto);
-        filtrarPorHorario(listaProductos, filtroProductoDto);
-        filtrarPorInstitucion(listaProductos, filtroProductoDto);
-        filtrarPorTalla(listaProductos, filtroProductoDto);
+        listaProductos= filtrarPorPrenda(listaProductos,filtroProductoDto);
+        listaProductos= filtrarPorGenero(listaProductos, filtroProductoDto);
+        listaProductos= filtrarPorHorario(listaProductos, filtroProductoDto);
+        listaProductos= filtrarPorInstitucion(listaProductos, filtroProductoDto);
+        listaProductos= filtrarPorTalla(listaProductos, filtroProductoDto);
 
         return convertirListaDto(listaProductos);
     }
@@ -295,20 +295,23 @@ public class ProductoServicioImpl implements ProductoServicio{
     /*
      * filtra una lista de productos removiendo los que no concuerden con una Prenda
      */
-    private void filtrarPorPrenda(List<Producto> listaProductos, FiltroProductoDto filtroProductoDto) {
+    private List<Producto> filtrarPorPrenda(List<Producto> listaProductos, FiltroProductoDto filtroProductoDto) {
         
         String prenda=filtroProductoDto.prenda();
+        List<Producto> nuevaLista=new ArrayList<>();
 
         if(!prenda.equals("")){
 
             for (Producto producto : listaProductos) {
-                if(!producto.getTipoPrenda().getPrenda().equals(prenda)){
-                    listaProductos.remove(producto);
+                if(producto.getTipoPrenda().getPrenda().equals(prenda)){
+                    nuevaLista.add(producto);
                 }
             }
     
+        }else{
+            nuevaLista=listaProductos;
         }
-
+        return  nuevaLista;
     }
 
 
@@ -318,19 +321,23 @@ public class ProductoServicioImpl implements ProductoServicio{
      /*
      * filtra una lista de productos removiendo los que no concuerden con una Institucion
      */
-    private void filtrarPorInstitucion(List<Producto> listaProductos,FiltroProductoDto filtroProductoDto) {
+    private List<Producto> filtrarPorInstitucion(List<Producto> listaProductos,FiltroProductoDto filtroProductoDto) {
         
         String institucion=filtroProductoDto.institucion();
+        List<Producto> nuevaLista=new ArrayList<>();
 
         if(!institucion.equals("")){
 
             for (Producto producto : listaProductos) {
-                if(!producto.getTipoInstitucion().getInstitucion().equals(institucion)){
-                    listaProductos.remove(producto);
+                if(producto.getTipoInstitucion().getInstitucion().equals(institucion)){
+                    nuevaLista.add(producto);
                 }
             }
     
+        }else{
+            nuevaLista=listaProductos;
         }
+        return nuevaLista;
     }
 
 
@@ -339,17 +346,21 @@ public class ProductoServicioImpl implements ProductoServicio{
     /*
      * filtra una lista de productos removiendo los que no concuerden con una Talla
      */
-    private void filtrarPorTalla(List<Producto> listaProductos,FiltroProductoDto filtroProductoDto) {
+    private List<Producto> filtrarPorTalla(List<Producto> listaProductos,FiltroProductoDto filtroProductoDto) {
         
         String talla = filtroProductoDto.talla();
+        List<Producto> nuevaLista=new ArrayList<>();
 
         if (!talla.equals("")){
             for (Producto producto : listaProductos) {
-                if(!producto.getTipoTalla().getTalla().equals(talla)){
-                    listaProductos.remove(producto);
+                if(producto.getTipoTalla().getTalla().equals(talla)){
+                    nuevaLista.add(producto);
                 }
             }
+        }else{
+            nuevaLista=listaProductos;
         }
+        return nuevaLista;
     }
 
 
@@ -358,17 +369,21 @@ public class ProductoServicioImpl implements ProductoServicio{
     /*
      * filtra una lista de productos removiendo los que no concuerden con un Horario
      */
-    private void filtrarPorHorario(List<Producto> listaProductos,FiltroProductoDto filtroProductoDto) {
+    private List<Producto> filtrarPorHorario(List<Producto> listaProductos,FiltroProductoDto filtroProductoDto) {
         
         String horario = filtroProductoDto.horario();
+        List<Producto> nuevaLista=new ArrayList<>();
 
         if(!horario.equals("")){
             for (Producto producto : listaProductos) {
-                if(!producto.getTipoHorario().getHorario().equals(horario)){
-                    listaProductos.remove(producto);
+                if(producto.getTipoHorario().getHorario().equals(horario)){
+                    nuevaLista.add(producto);
                 }
             }
+        }else{
+            nuevaLista=listaProductos;
         }
+        return nuevaLista;
     }
 
 
@@ -376,17 +391,21 @@ public class ProductoServicioImpl implements ProductoServicio{
     /*
      * filtra una lista de productos removiendo los que no concuerden con una Genero
      */
-    private void filtrarPorGenero(List<Producto> listaProductos,FiltroProductoDto filtroProductoDto) {
+    private List<Producto> filtrarPorGenero(List<Producto> listaProductos,FiltroProductoDto filtroProductoDto) {
     
         String genero = filtroProductoDto.genero();
+        List<Producto> nuevaLista=new ArrayList<>();
 
         if(!genero.equals("")){
             for (Producto producto : listaProductos) {
-                if(!producto.getTipoGenero().getGenero().equals(genero)){
-                    listaProductos.remove(producto);
+                if(producto.getTipoGenero().getGenero().equals(genero)){
+                    nuevaLista.add(producto);
                 }
             }
+        }else{
+            nuevaLista=listaProductos;
         }
+        return nuevaLista;
     }
 
 
