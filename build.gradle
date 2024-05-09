@@ -16,12 +16,9 @@ repositories {
 	mavenCentral()
 }
 
-sourceSets {
-    main {
-        resources {
-            exclude 'src/test/'
-        }
-    }
+
+war {
+    archiveFileName = 'sistemainventario.war'
 }
 
 
