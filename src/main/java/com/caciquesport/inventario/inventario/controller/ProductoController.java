@@ -59,7 +59,7 @@ public class ProductoController {
      * 
      * @return - lista de productos filtrada
      */
-    @GetMapping("/buscarProductos")
+    @PostMapping("/buscarProductos")
     public ResponseEntity<RespuestaDto<List<ProductoDto>>> buscarProductos(@RequestBody FiltroProductoDto filtroProductoDto ) throws Exception{
 
         List<ProductoDto> listaProducto = productoServicioImpl.filtrarListaProducto(filtroProductoDto);
