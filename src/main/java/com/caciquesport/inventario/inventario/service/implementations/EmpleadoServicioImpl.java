@@ -3,9 +3,9 @@ package com.caciquesport.inventario.inventario.service.implementations;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.tomcat.util.digester.ArrayStack;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.caciquesport.inventario.inventario.dto.EmpleadoDto;
 import com.caciquesport.inventario.inventario.dto.ProductoDto;
 import com.caciquesport.inventario.inventario.exceptions.types.EmpleadoNoEncontradoException;
@@ -13,7 +13,7 @@ import com.caciquesport.inventario.inventario.model.configTypes.TipoEmpleado;
 import com.caciquesport.inventario.inventario.model.entity.Empleado;
 import com.caciquesport.inventario.inventario.repository.EmpleadoRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.EmpleadoServicio;
-
+import java.util.ArrayList;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -150,9 +150,40 @@ public class EmpleadoServicioImpl implements EmpleadoServicio {
      * @return - la lista de empleados
      */
     @Override
-    public List<Empleado> listarEmpleado() throws Exception {
+    public List<EmpleadoDto> listarEmpleado() throws Exception {
 
-        return empleadoRepository.findAll();
+        List<Empleado> listaEmpleados=empleadoRepository.findAll();
+
+        return listarEmpleadosDto(listaEmpleados);
+    }
+
+
+
+    /*
+     * recibe una lista de empleados y saca una nueva lista con el formato dto
+     * @param listaEmpleados - lista que contiene la lista Empleados
+     * 
+     * @return lista que contiene los EmpeladosDto
+     */
+    private List<EmpleadoDto> listarEmpleadosDto(List<Empleado> listaEmpleados) {
+        
+        List<EmpleadoDto> listaDto=new ArrayList<>();
+
+        for (Empleado empleado : listaEmpleados) {
+
+        
+            EmpleadoDto empleadoDto = new EmpleadoDto(empleado.getId(),
+                        empleado.getNombre(),
+                        empleado.getCedula(),
+                        empleado.getTelefono(),
+                        empleado.getEmail(),
+                        "empty",
+                        empleado.getTipoEmpleado().toString());
+
+            listaDto.add(empleadoDto);
+        }
+
+        return listaDto;
     }
 
 

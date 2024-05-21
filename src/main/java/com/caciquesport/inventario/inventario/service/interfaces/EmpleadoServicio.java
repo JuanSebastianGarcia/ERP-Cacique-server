@@ -18,6 +18,6 @@ public interface EmpleadoServicio {
 
     Empleado obtenerEmpleado(String cedula) throws Exception;
 
-    List<Empleado> listarEmpleado() throws Exception;
+    List<EmpleadoDto> listarEmpleado() throws Exception;
 
 }

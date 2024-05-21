@@ -1,7 +1,10 @@
 package com.caciquesport.inventario.inventario.controller;
 
+
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,6 +43,8 @@ public class EmpleadoController {
 
     /*
      * api encargada de la eliminacion de un empleado
+     * 
+     * @param cedula - cedula del empleado que se va a eliminar
      */
     @DeleteMapping("/eliminarEmpleado/{cedula}")
     public ResponseEntity<RespuestaDto<String>> eliminarEmpleado(@PathVariable("cedula") String cedula) throws Exception{
@@ -47,5 +52,16 @@ public class EmpleadoController {
         empleadoServicioImpl.eliminarEmpleado(cedula);
 
         return ResponseEntity.ok().body(new RespuestaDto<>(false,"el empelado ha sido eliminadoo"));
+    }
+
+
+    /*
+     * api encargada de la busqueda de todos los empleados
+    */
+    @GetMapping("/buscarEmpleados")
+    public ResponseEntity<RespuestaDto<List<EmpleadoDto>>> buscarEmpleados() throws Exception{
+
+        List<EmpleadoDto> lista=empleadoServicioImpl.listarEmpleado();
+        return ResponseEntity.ok().body(new RespuestaDto<>(false,lista));
     }
 }
