@@ -1,3 +1,6 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
 name: Build and deploy JAR app to Azure Web App - caiquesportinventario
 
 on:
@@ -18,17 +21,14 @@ jobs:
         with:
           java-version: '17'
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew
-
-      - name: Build with Gradle
-        run: ./gradlew clean build
+      - name: Build with Maven
+        run: mvn clean install
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: java-app
-          path: '${{ github.workspace }}/build/libs/*.war'
+          path: '${{ github.workspace }}/target/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
@@ -36,11 +36,8 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-          
     permissions:
-      id-token: write  # Asegúrate de que esto esté presente
-      contents: read   # Permiso para leer el contenido del repositorio
-
+      id-token: write #This is required for requesting the JWT
   
     steps:
       - name: Download artifact from build job
@@ -51,9 +48,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_5447A8DCDBFB4A879B49AF1CFBA53248 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_FAB92D83494D49B9A7E73A33DC2268C4 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_71127114F5404E24816294E31DA9443A }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_C51261FC2A2F41DBAF373246150D5782 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_8D6D801D722840E4BE22690583282D0E }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_FDD5EC9BEEFE48E7B0CD16D299959CE7 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -61,5 +58,5 @@ jobs:
         with:
           app-name: 'caiquesportinventario'
           slot-name: 'Production'
-          package: '*.war'
-
+          package: '*.jar'
+          
