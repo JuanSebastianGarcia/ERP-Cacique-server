@@ -16,7 +16,13 @@ java {
 repositories {
 	mavenCentral()
 }
+bootJar {
+    mainClassName = 'com.example.MainApplication'
+}
 
+bootWar {
+    mainClassName = 'com.example.MainApplication'
+}
 
 war {
     archiveFileName = 'sistemainventario.war'
