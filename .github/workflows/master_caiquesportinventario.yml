@@ -62,5 +62,5 @@ jobs:
         with:
           app-name: 'caiquesportinventario'
           slot-name: 'Production'
-          package: '*.jar'
+          package: '*.war'
           
