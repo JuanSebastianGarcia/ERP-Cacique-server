@@ -17,15 +17,15 @@ repositories {
 	mavenCentral()
 }
 bootJar {
-    mainClassName = 'com.example.MainApplication'
+    mainClassName = 'src/main/java/com/caciquesport/inventario/inventario/InventarioApplication.java'
 }
 
 bootWar {
-    mainClassName = 'com.example.MainApplication'
+    mainClassName = 'src/main/java/com/caciquesport/inventario/inventario/InventarioApplication.java'
 }
 
 war {
-    archiveFileName = 'sistemainventario.war'
+    archiveFileName = 'src/main/java/com/caciquesport/inventario/inventario/InventarioApplication.java'
 }
 
 
