@@ -28,7 +28,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: java-app
-          path: build/libs/sistemainventario.war  # Asegúrate de que esto coincide con la salida de tus archivos .war
+          path: build/libs/inventario-0.0.1-SNAPSHOT.war
 
   deploy:
     runs-on: ubuntu-latest
