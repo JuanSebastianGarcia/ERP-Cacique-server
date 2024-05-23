@@ -36,6 +36,10 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+          
+    permissions:
+      id-token: write  # Asegúrate de que esto esté presente
+      contents: read   # Permiso para leer el contenido del repositorio
 
   
     steps:
