@@ -16,16 +16,10 @@ java {
 repositories {
 	mavenCentral()
 }
-bootJar {
-    mainClassName = 'src/main/java/com/caciquesport/inventario/inventario/InventarioApplication.java'
-}
 
-bootWar {
-    mainClassName = 'src/main/java/com/caciquesport/inventario/inventario/InventarioApplication.java'
-}
 
-war {
-    archiveFileName = 'src/main/java/com/caciquesport/inventario/inventario/InventarioApplication.java'
+springBoot {
+    mainClass = 'src/main/java/com/caciquesport/inventario/inventario/InventarioApplication.java'
 }
 
 
