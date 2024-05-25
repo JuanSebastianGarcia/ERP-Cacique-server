@@ -28,7 +28,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: java-app
-          path: build/libs/inventario-0.0.2-SNAPSHOT.jar
+          path: 'build/libs/inventario-0.0.2-SNAPSHOT.jar'
 
   deploy:
     runs-on: ubuntu-latest
@@ -53,6 +53,6 @@ jobs:
         with:
           app-name: 'caciqueerp'
           slot-name: 'production'
-          package: 'build/libs/inventario-0.0.2-SNAPSHOT.jar'
+          package: '*.jar'
           publish-profile: ${{ secrets.AzureAppService_PublishProfile_9cd2993a713c4f148c890a24d08fc7f6 }}
 
