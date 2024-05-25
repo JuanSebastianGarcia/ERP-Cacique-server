@@ -1,4 +1,4 @@
-name: Build and deploy WAR app to Azure Web App - caiquesportinventario
+name: Build and deploy WAR app to Azure Web App - caciquesportinventario
 
 on:
   push:
