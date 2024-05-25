@@ -19,7 +19,7 @@ repositories {
 
 
 springBoot {
-    mainClass = 'src/main/java/com/caciquesport/inventario/inventario/InventarioApplication.java'
+    mainClass = 'com.caciquesport.inventario.inventario.InventarioApplication'
 }
 
 
