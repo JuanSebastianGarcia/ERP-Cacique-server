@@ -57,5 +57,4 @@ jobs:
           app-name: 'caciqueerp'
           slot-name: 'production'
           package: '*.jar'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_9cd2993a713c4f148c890a24d08fc7f6 }}
 
