@@ -1,19 +1,19 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.1.10'
-	id 'io.spring.dependency-management' version '1.1.4'
-	id "com.microsoft.azure.azurewebapp" version "1.7.1"
+    id 'java'
+    id 'org.springframework.boot' version '3.1.10'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id "com.microsoft.azure.azurewebapp" version "1.7.1"
 }
 
 group = 'com.caciquesport.inventario'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	sourceCompatibility = '17'
+    sourceCompatibility = '17'
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 springBoot {
@@ -21,41 +21,40 @@ springBoot {
 }
 
 dependencies {
-	// dependencias de spring
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	//providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat' // Eliminar esta línea
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	implementation 'org.springframework.boot:spring-boot-starter-security:3.2.4'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.security:spring-security-crypto:6.2.0'
+    // dependencias de spring
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-security:3.2.4'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.security:spring-security-crypto:6.2.0'
 
-	// dependencias útiles
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	implementation 'com.microsoft.sqlserver:mssql-jdbc:12.6.1.jre11'
-	implementation 'com.azure.spring:spring-cloud-azure-autoconfigure:5.3.0'
-	testImplementation 'com.h2database:h2'
+    // dependencias útiles
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    implementation 'com.microsoft.sqlserver:mssql-jdbc:12.6.1.jre11'
+    implementation 'com.azure.spring:spring-cloud-azure-autoconfigure:5.3.0'
+    testImplementation 'com.h2database:h2'
 
-	// dependencias del token
-	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    // dependencias del token
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 }
 
 tasks.named('bootBuildImage') {
-	builder = 'paketobuildpacks/builder-jammy-base:latest'
+    builder = 'paketobuildpacks/builder-jammy-base:latest'
 }
 
-tasks.named('bootJar') { // Cambia bootWar a bootJar
+tasks.named('bootJar') {
     manifest {
         attributes(
-            'Main-Class': 'com.caciquesport.inventario.inventario.InventarioApplication',
+            'Main-Class':  'com.caciquesport.inventario.inventario.InventarioApplication',
             'Start-Class': 'com.caciquesport.inventario.inventario.InventarioApplication'
         )
     }
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
