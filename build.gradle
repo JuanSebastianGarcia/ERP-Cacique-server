@@ -43,8 +43,7 @@ dependencies {
 }
 
 tasks.named('bootJar') {
-    archiveBaseName.set('inventario')
-    archiveVersion.set('0.0.2-SNAPSHOT')
+
     manifest {
         attributes(
 			"Manifest-Version":"1.0",
