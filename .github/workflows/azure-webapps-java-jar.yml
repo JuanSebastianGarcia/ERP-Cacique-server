@@ -1,4 +1,4 @@
-name: Build and deploy WAR app to Azure Web App - caciquesportinventario
+name: Build and deploy WAR app to Azure Web App - caciqueerp
 
 on:
   push:
@@ -51,7 +51,7 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'caiquesportinventario'
+          app-name: 'caciqueerp'
           slot-name: 'production'
           package: '*.war'
           publish-profile: ${{ secrets.AzureAppService_PublishProfile_9cd2993a713c4f148c890a24d08fc7f6 }}
