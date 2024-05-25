@@ -50,7 +50,8 @@ tasks.named('bootBuildImage') {
 tasks.named('bootJar') { // Cambia bootWar a bootJar
     manifest {
         attributes(
-            'Main-Class': 'com.caciquesport.inventario.inventario.InventarioApplication'
+            'Main-Class': 'com.caciquesport.inventario.inventario.InventarioApplication',
+            'Start-Class': 'com.caciquesport.inventario.inventario.InventarioApplication'
         )
     }
 }
