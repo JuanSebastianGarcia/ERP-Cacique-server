@@ -1,6 +1,7 @@
 Manifest-Version: 1.0
-Main-Class: ${group}.inventario.InventarioApplication.class
-Start-Class: ${group}.inventario.InventarioApplication.class
+Main-Class: org.springframework.boot.loader.JarLauncher
+Start-Class: com.caciquesport.inventario.inventario.InventarioApplicatio
+ n
 Spring-Boot-Version: 3.1.10
 Spring-Boot-Classes: BOOT-INF/classes/
 Spring-Boot-Lib: BOOT-INF/lib/
