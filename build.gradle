@@ -49,8 +49,8 @@ tasks.named('bootJar') {
     manifest {
         attributes(
 			"Manifest-Version":"1.0",
-            'Main-Class':  '${group}.inventario.InventarioApplication',
-            'Start-Class': '${group}.inventario.InventarioApplication'
+            'Main-Class':  '${group}.inventario.InventarioApplication.class',
+            'Start-Class': '${group}.inventario.InventarioApplication.class'
         )
     }
 }
