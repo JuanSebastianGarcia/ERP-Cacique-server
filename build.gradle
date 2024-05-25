@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.caciquesport.inventario'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.2-SNAPSHOT'
 
 java {
     sourceCompatibility = '17'
@@ -17,7 +17,7 @@ repositories {
 }
 
 springBoot {
-    mainClass = 'com.caciquesport.inventario.inventario.InventarioApplication'
+    mainClass = '${group}.inventario.InventarioApplicationinventario'
 }
 
 dependencies {
@@ -42,19 +42,28 @@ dependencies {
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 }
 
-tasks.named('bootBuildImage') {
-    builder = 'paketobuildpacks/builder-jammy-base:latest'
-}
-
 tasks.named('bootJar') {
+    archiveBaseName.set('inventario')
+    archiveVersion.set('0.0.2-SNAPSHOT')
     manifest {
         attributes(
-            'Main-Class':  'com.caciquesport.inventario.inventario.InventarioApplication',
-            'Start-Class': 'com.caciquesport.inventario.inventario.InventarioApplication'
+			"Manifest-Version":"1.0",
+            'Main-Class':  '${group}.inventario.InventarioApplication',
+            'Start-Class': '${group}.inventario.InventarioApplication'
         )
     }
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+tasks.named('jar') {
+
+    manifest {
+        attributes(
+            "Manifest-Version":"1.0",
+            "Main-Class": 'com.caciquesport.inventario.inventario.InventarioApplication'
+        )
+    }
 }

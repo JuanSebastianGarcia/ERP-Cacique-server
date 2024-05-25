@@ -15,7 +15,7 @@ public class ManejoExcepcionesGlobales {
      * maneja la excepcion que indica que un empleado no ha sido encontrado
      */
     @ExceptionHandler(EmpleadoNoEncontradoException.class)
-    public ResponseEntity<RespuestaDto> handleEmpleadoNoEncontrado(EmpleadoNoEncontradoException exception){
+    public ResponseEntity<RespuestaDto<String>> handleEmpleadoNoEncontrado(EmpleadoNoEncontradoException exception){
 
         return ResponseEntity.badRequest().body(new RespuestaDto<>(true,exception.getMessage()));
     }
