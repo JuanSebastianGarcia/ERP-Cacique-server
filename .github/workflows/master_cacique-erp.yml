@@ -21,7 +21,6 @@ jobs:
         with:
           java-version: '17'
 
-
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
@@ -30,7 +29,6 @@ jobs:
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
-        
         with:
           name: java-app
           path: '${{ github.workspace }}/build/libs/inventario-0.0.1-SNAPSHOT.jar'
@@ -53,9 +51,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_BFCF04A3975F4EA68494E9E18F9AF95C }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_62B57BADCB774C17AA97FAC5FDA41C74 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_635C945156694304BBBE4A4B87AB4FAD }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_7C2C8BECACEB4F0E96A8F73932B2286D }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_E0E4BD69BD1947DCA98C6AE35A223438 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_2B725AF7FDE04AB68278D8D8F70DE46B }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
