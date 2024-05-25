@@ -20,7 +20,7 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
-
+        
       - name: Build with Gradle
         run: ./gradlew clean build
 
@@ -36,7 +36,10 @@ jobs:
     environment:
       name: 'production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    permissions:
+      id-token: write #This is required for requesting the JWT
 
+      
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
@@ -54,5 +57,4 @@ jobs:
           app-name: 'caciqueerp'
           slot-name: 'production'
           package: '*.jar'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_9cd2993a713c4f148c890a24d08fc7f6 }}
 
