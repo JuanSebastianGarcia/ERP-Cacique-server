@@ -35,6 +35,10 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
+    // https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc11
+    implementation 'com.oracle.database.jdbc:ojdbc11:23.3.0.23.09'
+
+
     //dependencias para la bases de datos
     implementation 'com.microsoft.sqlserver:mssql-jdbc:12.6.1.jre11'
     testImplementation 'com.h2database:h2'
