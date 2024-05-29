@@ -13,6 +13,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig{
 
+    /*
+     * Deshabilita la generacion de un token para el ingreso a la aplicacion
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -21,6 +24,9 @@ public class SecurityConfig{
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
     }
+
+
+
 }
 
 

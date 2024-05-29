@@ -2,12 +2,9 @@ package com.caciquesport.inventario.inventario.service.implementations;
 
 import java.util.List;
 import java.util.Optional;
-
-import org.apache.tomcat.util.digester.ArrayStack;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.caciquesport.inventario.inventario.dto.EmpleadoDto;
-import com.caciquesport.inventario.inventario.dto.ProductoDto;
 import com.caciquesport.inventario.inventario.exceptions.types.EmpleadoNoEncontradoException;
 import com.caciquesport.inventario.inventario.model.configTypes.TipoEmpleado;
 import com.caciquesport.inventario.inventario.model.entity.Empleado;
