@@ -83,19 +83,6 @@ public class TokenJwtServicio extends OncePerRequestFilter{
 
 
 
- 
-    /*
-     * Configura las cabeceras CORS en la respuesta HTTP
-     * 
-     * @param request - 
-     */
-    public void establecerPermisos(HttpServletResponse response){
-        response.addHeader("Access-Control-Allow-Origin", "*");
-        response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        response.addHeader("Access-Control-Allow-Headers", "Origin, Accept, Content-Type, Authorization");
-        response.addHeader("Access-Control-Allow-Credentials", "true");
-
-    }
 
 
 
@@ -114,7 +101,6 @@ public class TokenJwtServicio extends OncePerRequestFilter{
             throws ServletException, IOException {
         
 
-            establecerPermisos(response);
 
             if(request.getMethod().equals("OPTIONS")){
                 response.setStatus(HttpServletResponse.SC_OK);

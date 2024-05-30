@@ -7,7 +7,6 @@ import io.github.bucket4j.Bucket;
 import io.github.bucket4j.Refill;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
@@ -16,8 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.time.Duration;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.stereotype.Component;
 
 
@@ -25,9 +23,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class RateLimitingFilter implements Filter{
 
-    private final Bucket bucket;
-    //private static final Logger LOGGER = LoggerFactory.getLogger(RateLimitingFilter.class);--permite observar los logs del bucket
 
+    /*
+     * clase que maneja la cantidad de solicitudes
+     */
+    private final Bucket bucket;
+    
+
+    
     /*
      * Establecer las especificaciones con las que se necesita que el filtro opere
      */
