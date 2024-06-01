@@ -36,7 +36,6 @@ out/
 ### VS Code ###
 .vscode/
 
-
 *.cer
 *.p12
-
+*.properties

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Service;
 
 import com.caciquesport.inventario.inventario.dto.Entities.ConfigTypesDto;
-import com.caciquesport.inventario.inventario.model.configTypes.TipoGenero;
 import com.caciquesport.inventario.inventario.model.configTypes.TipoTalla;
 import com.caciquesport.inventario.inventario.repository.TipoTallaRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.TipoTallaServicio;
