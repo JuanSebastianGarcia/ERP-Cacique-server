@@ -2,9 +2,11 @@ package com.caciquesport.inventario.inventario.service.implementations;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
 
+import com.caciquesport.inventario.inventario.dto.Entities.ConfigTypesDto;
 import com.caciquesport.inventario.inventario.model.configTypes.TipoHorario;
 import com.caciquesport.inventario.inventario.repository.TipoHorarioRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.TipoHorarioServicio;
@@ -27,8 +29,15 @@ public class TipoHorarioServicioImpl implements TipoHorarioServicio{
      * @param nuevoTipoHorario - objeto tipo horario que se va a almacenar
      */
     @Override
-    public Integer crearHorario(TipoHorario nuevoTipoHorario) throws Exception {
-        return tipoHorarioRepository.save(nuevoTipoHorario).getId();
+    public void crearHorario(String nuevoTipoHorario) throws Exception {
+        try{
+            TipoHorario tipoHorario =new TipoHorario();
+            tipoHorario.setHorario(nuevoTipoHorario);
+            tipoHorarioRepository.save(tipoHorario).getId();
+        }catch(Exception e){
+            throw new Exception("el horario esta repetido");
+        }
+
     }
 
 
@@ -76,11 +85,19 @@ public class TipoHorarioServicioImpl implements TipoHorarioServicio{
     /*
      * obtener la lista de tipos horario
      * 
-     * @return - lista de horarios
+     * @return - lista de horarios en 
      */
     @Override
-    public List<TipoHorario> listarHorarios() throws Exception {
-        return tipoHorarioRepository.findAll();       
+    public List<ConfigTypesDto> listarHorarios() throws Exception {
+
+        List<TipoHorario> listaHorarios = tipoHorarioRepository.findAll();
+        List<ConfigTypesDto> listaDto = new ArrayList<>();
+
+        for (TipoHorario tipoHorario : listaHorarios) {
+            listaDto.add(new ConfigTypesDto(tipoHorario.getHorario()));
+        }
+
+        return listaDto;       
     }
 
 

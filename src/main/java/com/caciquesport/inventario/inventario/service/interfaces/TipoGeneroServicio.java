@@ -1,6 +1,8 @@
 package com.caciquesport.inventario.inventario.service.interfaces;
 
 import java.util.List;
+
+import com.caciquesport.inventario.inventario.dto.Entities.ConfigTypesDto;
 import com.caciquesport.inventario.inventario.model.configTypes.TipoGenero;
 
 /**
@@ -13,7 +15,7 @@ public interface TipoGeneroServicio {
     * crear un genero
     * @param nuevoTipoGenero - objeto a almacenar
     */
-    Integer crearGenero(TipoGenero nuevoTipoGenero) throws Exception;
+    void crearGenero(String nuevoTipoGenero) throws Exception;
 
     /*
     *buscar y optener  un genero 
@@ -30,5 +32,5 @@ public interface TipoGeneroServicio {
     /*
      * obtener la lista de generos
      */
-    List<TipoGenero> listarGeneros() throws Exception;
+    List<ConfigTypesDto> listarGeneros() throws Exception;
 }

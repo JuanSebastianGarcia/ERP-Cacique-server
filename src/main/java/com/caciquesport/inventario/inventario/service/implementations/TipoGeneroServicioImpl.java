@@ -5,6 +5,9 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.ArrayList;
+
+import com.caciquesport.inventario.inventario.dto.Entities.ConfigTypesDto;
 import com.caciquesport.inventario.inventario.model.configTypes.TipoGenero;
 import com.caciquesport.inventario.inventario.repository.TipoGeneroRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.TipoGeneroServicio;
@@ -28,8 +31,16 @@ public class TipoGeneroServicioImpl implements TipoGeneroServicio{
      * @Return - id del genero almacenado
      */
     @Override
-    public Integer crearGenero(TipoGenero nuevoTipoGenero) {
-        return tipoGeneroRepository.save(nuevoTipoGenero).getId();
+    public void crearGenero(String nuevoTipoGenero) throws Exception {
+
+        try {
+            TipoGenero genero = new TipoGenero();
+            genero.setGenero(nuevoTipoGenero);
+            tipoGeneroRepository.save(genero).getId();
+        } catch (Exception e) { 
+            throw new Exception("el horario esta repetido"); 
+        }
+
     }
 
 
@@ -79,8 +90,16 @@ public class TipoGeneroServicioImpl implements TipoGeneroServicio{
      * @return - la lista de generos
      */
     @Override
-    public List<TipoGenero> listarGeneros() throws Exception {
-        return tipoGeneroRepository.findAll();
+    public List<ConfigTypesDto> listarGeneros() throws Exception {
+
+        List<TipoGenero> listaGeneros=tipoGeneroRepository.findAll();
+        List<ConfigTypesDto> listaDto=new ArrayList<>();
+
+        for (TipoGenero tipoGenero : listaGeneros) {
+            listaDto.add(new ConfigTypesDto(tipoGenero.getGenero()));
+        }
+
+        return listaDto;
     }
 
 }

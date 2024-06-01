@@ -2,6 +2,8 @@ package com.caciquesport.inventario.inventario.service.interfaces;
 
 
 import java.util.List;
+
+import com.caciquesport.inventario.inventario.dto.Entities.ConfigTypesDto;
 import com.caciquesport.inventario.inventario.model.configTypes.TipoTalla;
 
 /**
@@ -14,7 +16,7 @@ public interface TipoTallaServicio {
     * crear una talla
     * @param nuevoTipoTalla - objeto que se requiere almacenar
     */
-    Integer crearTalla(TipoTalla nuevoTipoTalla) throws Exception;
+    void crearTalla(String nuevoTipoTalla) throws Exception;
 
     /*
     * buscar una talla
@@ -32,5 +34,5 @@ public interface TipoTallaServicio {
     /*
     * buscar la lista de tallas
     */    
-    List<TipoTalla> listarTallas() throws Exception;
+    List<ConfigTypesDto> listarTallas() throws Exception;
 }

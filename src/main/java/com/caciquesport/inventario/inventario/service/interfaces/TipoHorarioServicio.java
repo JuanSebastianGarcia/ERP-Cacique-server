@@ -2,6 +2,8 @@ package com.caciquesport.inventario.inventario.service.interfaces;
 
 
 import java.util.List;
+
+import com.caciquesport.inventario.inventario.dto.Entities.ConfigTypesDto;
 import com.caciquesport.inventario.inventario.model.configTypes.TipoHorario;
 
 /**
@@ -15,7 +17,7 @@ public interface TipoHorarioServicio {
     * crear un horario
     * @param nuevoTipoHorario - objeto a almacenar
     */
-    Integer crearHorario(TipoHorario nuevoTipoHorario) throws Exception;
+    void crearHorario(String nuevoTipoHorario) throws Exception;
 
     /*
     * buscar  un horario
@@ -35,6 +37,6 @@ public interface TipoHorarioServicio {
     * buscar la lista de horarios
     * @param horario - identificador unico
     */
-    List<TipoHorario> listarHorarios() throws Exception;
+    List<ConfigTypesDto> listarHorarios() throws Exception;
 
 }

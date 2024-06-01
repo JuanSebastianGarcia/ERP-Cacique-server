@@ -2,9 +2,12 @@ package com.caciquesport.inventario.inventario.service.implementations;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
 
+import com.caciquesport.inventario.inventario.dto.Entities.ConfigTypesDto;
+import com.caciquesport.inventario.inventario.model.configTypes.TipoGenero;
 import com.caciquesport.inventario.inventario.model.configTypes.TipoTalla;
 import com.caciquesport.inventario.inventario.repository.TipoTallaRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.TipoTallaServicio;
@@ -27,8 +30,17 @@ public class TipoTallaServicioImpl implements TipoTallaServicio{
      * @param nuevaTalla- objeto talla que se va a almacenar
      */
     @Override
-    public Integer crearTalla(TipoTalla nuevoTipoTalla) throws Exception {
-        return tallaRepository.save(nuevoTipoTalla).getId();
+    public void  crearTalla(String nuevoTipoTalla) throws Exception {
+
+        try {
+            TipoTalla tipoTalla = new TipoTalla();
+            tipoTalla.setTalla(nuevoTipoTalla);
+    
+            tallaRepository.save(tipoTalla).getId();
+        } catch (Exception e) {
+            throw new Exception("la talla esta repetida");
+        }
+
     }
 
 
@@ -47,7 +59,7 @@ public class TipoTallaServicioImpl implements TipoTallaServicio{
         Optional<TipoTalla> tallaEncontrada=tallaRepository.findByTalla(talla);
 
         if(tallaEncontrada.isEmpty()){
-            throw new Exception("no se puede eliminar la talla");
+            throw new Exception("no se encuentra la talla");
         }else{
             tallaRepository.delete(tallaEncontrada.get());
         }
@@ -79,8 +91,16 @@ public class TipoTallaServicioImpl implements TipoTallaServicio{
      * devuelve la lista de todas las tallas
      */
     @Override
-    public List<TipoTalla> listarTallas() throws Exception {
-        return tallaRepository.findAll();
+    public List<ConfigTypesDto> listarTallas() throws Exception {
+
+        List<TipoTalla> listaTallas = tallaRepository.findAll();
+        List<ConfigTypesDto> listaDto = new ArrayList<>();
+
+        for (TipoTalla tipoTalla : listaTallas) {
+            listaDto.add(new ConfigTypesDto(tipoTalla.getTalla()));
+        }
+
+        return listaDto;
     }
 
 }
