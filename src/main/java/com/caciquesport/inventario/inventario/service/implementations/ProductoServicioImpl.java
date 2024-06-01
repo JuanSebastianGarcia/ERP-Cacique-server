@@ -107,7 +107,7 @@ public class ProductoServicioImpl implements ProductoServicio{
 
 
     /*
-     * asigar o agregar datos a un objeto producto
+     * asigar o agregar datos a un objeto producto. se le asignan los datos de configuracion al producto que se va a almacenar
      * 
      * @param registroProductoDto - contiene la informacion necesaria para crear el objeto
      * @param nuevoProducto - referencia al objeto que se esta construyendo

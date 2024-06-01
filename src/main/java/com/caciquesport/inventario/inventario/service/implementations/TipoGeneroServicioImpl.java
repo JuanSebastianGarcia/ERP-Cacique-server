@@ -33,28 +33,6 @@ public class TipoGeneroServicioImpl implements TipoGeneroServicio{
     }
 
 
-
-    /*
-     * actualizar TipoGenero. se busca por medio del nombre el cual es unico. si no se encuentra lanza una excepcion
-     * 
-     * @param tipoGenero - objeto TipoGenero que se va a actualizar
-     * 
-     * @return - id del objeto tipoGeneto actualizado
-     */
-    @Override
-    public Integer actualizarGenero(TipoGenero tipoGenero) throws Exception {
-        
-        Optional<TipoGenero> tipoGeneroEncontrado=tipoGeneroRepository.findByGenero(tipoGenero.getGenero());
-
-        if(tipoGeneroEncontrado.isEmpty()){
-            throw new Exception("no se puede encontrar el genero");
-        }else{
-            return tipoGeneroRepository.save(tipoGenero).getId();
-        }
-    }
-
-
-
     /*
      * eliminar tipoGenero. se busca por medio del nombre el cual es unico. si no se encuentra lanza una excepcion
      * 
@@ -71,6 +49,7 @@ public class TipoGeneroServicioImpl implements TipoGeneroServicio{
             tipoGeneroRepository.delete(tipoGeneroEncontrado.get());
         }
     }
+
 
 
     /*
@@ -92,6 +71,7 @@ public class TipoGeneroServicioImpl implements TipoGeneroServicio{
         }
     }
 
+    
 
     /*
      * obtener la lista de generos

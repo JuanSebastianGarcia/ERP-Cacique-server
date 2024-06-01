@@ -9,14 +9,27 @@ import com.caciquesport.inventario.inventario.model.configTypes.TipoInstitucion;
  */
 public interface TipoIstitucionServicio {
 
+    /*
+    * crear una institucion
+    * @param nuevoTipoInstitucion - objeto a almacenar
+    */
     Integer crearInstitucion(TipoInstitucion nuevoTipoInstitucion) throws Exception;
 
-    Integer actualizarInstitucion(TipoInstitucion tipoInstitucion) throws Exception;
-
+    /*
+     * eliminar una institucion
+     * @param institucion - identificador unico
+     */
     void eliminarInstitucion(String institucion) throws Exception;
 
+     /*
+     * buscar una institucion
+     * @param institucion - identificador unico
+     */
     TipoInstitucion obtenerInstitucion(String institucion) throws Exception;
 
+    /*
+     * buscar la lista de instituciones
+     */
     List<TipoInstitucion> listarInstituciones() throws Exception;
     
     

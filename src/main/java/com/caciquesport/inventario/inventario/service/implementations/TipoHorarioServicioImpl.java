@@ -32,27 +32,6 @@ public class TipoHorarioServicioImpl implements TipoHorarioServicio{
     }
 
 
-    /*
-     * actualizar tipo horario. se busca por medio del nombre que es unico, y si no se encuentra
-     * se lanza una excepcion
-     * 
-     * @param tipoHorario -  el tipo horario que se va a actualizar
-     * 
-     * @return - id del tipo horario actualizado
-     */
-    @Override
-    public Integer actualizarHorario(TipoHorario tipoHorario) throws Exception {
-        Optional<TipoHorario> tipoHorarioEncontrado=tipoHorarioRepository.findByHorario(tipoHorario.getHorario());
-
-        if(tipoHorarioEncontrado.isEmpty()){
-            throw new Exception("no se puede actualizar el tipo horario");
-        }else{
-            return tipoHorarioRepository.save(tipoHorario).getId();
-        }
-
-    }
-
-
 
     /*
      * eliminar tipo horario. se busca por medio del nombre que es unico, y si no se encuentra

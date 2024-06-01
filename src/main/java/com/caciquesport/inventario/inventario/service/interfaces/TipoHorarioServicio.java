@@ -11,15 +11,30 @@ import com.caciquesport.inventario.inventario.model.configTypes.TipoHorario;
 public interface TipoHorarioServicio {
 
 
-    
+    /*
+    * crear un horario
+    * @param nuevoTipoHorario - objeto a almacenar
+    */
     Integer crearHorario(TipoHorario nuevoTipoHorario) throws Exception;
 
-    Integer actualizarHorario(TipoHorario tipoHorario) throws Exception;
-
-    void eliminarHorario(String horario) throws Exception;
-
+    /*
+    * buscar  un horario
+    * @param horario - identificador unico
+    */
     TipoHorario obtenerHorario(String horario) throws Exception;
 
+
+    /*
+     * eliminar un horario
+     * @param horario - identificador unico
+     */
+    void eliminarHorario(String horario) throws Exception;
+
+
+    /*
+    * buscar la lista de horarios
+    * @param horario - identificador unico
+    */
     List<TipoHorario> listarHorarios() throws Exception;
 
 }

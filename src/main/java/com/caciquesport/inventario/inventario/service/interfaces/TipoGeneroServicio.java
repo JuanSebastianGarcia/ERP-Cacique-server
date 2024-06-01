@@ -9,13 +9,26 @@ import com.caciquesport.inventario.inventario.model.configTypes.TipoGenero;
  */
 public interface TipoGeneroServicio {
 
+    /*
+    * crear un genero
+    * @param nuevoTipoGenero - objeto a almacenar
+    */
     Integer crearGenero(TipoGenero nuevoTipoGenero) throws Exception;
 
-    Integer actualizarGenero(TipoGenero tipoGenero) throws Exception;
+    /*
+    *buscar y optener  un genero 
+    *@param  genero - identificador unico 
+    */ 
+    TipoGenero obtenerGenero(String genero) throws Exception ;
 
+    /*
+     * eliminar un genero
+     * @param genero - identificador unico 
+     */
     void eliminarGenero(String genero) throws Exception;
 
-    TipoGenero obtenerGenero(String genero) throws Exception;
-    
+    /*
+     * obtener la lista de generos
+     */
     List<TipoGenero> listarGeneros() throws Exception;
 }

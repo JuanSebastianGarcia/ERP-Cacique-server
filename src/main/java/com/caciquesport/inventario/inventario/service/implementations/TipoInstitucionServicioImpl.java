@@ -32,26 +32,6 @@ public class TipoInstitucionServicioImpl implements TipoIstitucionServicio{
 
 
 
-    /*
-     * actualizar institucion. se busca por medio del nombre que es unico. si no se encuentra
-     * se lanza una exception
-     * 
-     * @param institucion - el objeto institucion que se va a actualizar
-     * 
-     * @return - id de la institucion actualizada
-     */
-    @Override
-    public Integer actualizarInstitucion(TipoInstitucion tipoInstitucion) throws Exception {
-        
-        Optional<TipoInstitucion> institucionEncontrada=institucionRepository.findByInstitucion(tipoInstitucion.getInstitucion());
-
-        if(institucionEncontrada.isEmpty()){
-            throw new Exception("no se puede actualizar la institucion");
-        }else{
-            return institucionRepository.save(tipoInstitucion).getId();
-        }
-    }
-
     
 
     /*

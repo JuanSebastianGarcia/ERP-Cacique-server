@@ -30,26 +30,6 @@ public class TipoPrendaServicioImpl implements TipoPrendaServicio{
     }
 
 
-    /*
-     * actualizar tipoPrenda. se busca por medio del nombre de la prenda que es unico. si no se encuentra 
-     * se lanza una excepcion
-     * 
-     * @param tipoPrenda - el tipo prenda que se va a actualizar
-     * 
-     * @return - id de la prenda actualizada
-     */
-    @Override
-    public Integer actualizarPrenda(TipoPrenda tipoPrenda) throws Exception {
-        
-        Optional<TipoPrenda> tipoPrendaEncontrado=tipoPrendaRepostirory.findByPrenda(tipoPrenda.getPrenda());
-
-        if(tipoPrendaEncontrado.isEmpty()){
-            throw new Exception("no se puede encontrar la prenda");
-        }else{
-            return tipoPrendaRepostirory.save(tipoPrenda).getId();
-        }
-        
-    }
 
 
     /*

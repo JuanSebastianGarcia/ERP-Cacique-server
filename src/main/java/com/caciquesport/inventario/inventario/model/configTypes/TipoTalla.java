@@ -21,6 +21,6 @@ public class TipoTalla implements Serializable{
     @Column(name = "id_talla")
     private Integer id;
 
-    @Column(name = "talla" , nullable = false , unique = true , length = 5 , updatable = false)
+    @Column(name = "talla" , nullable = false , unique = true, updatable = false)
     private String talla;
 }

@@ -21,7 +21,7 @@ public class TipoHorario implements Serializable{
     @Column(name = "id_horario")
     private Integer id;
 
-    @Column(name = "horario" , nullable = false , unique = true , length = 10 , updatable = false)
+    @Column(name = "horario" , nullable = false , unique = true , updatable = false)
     private String horario;
 
     

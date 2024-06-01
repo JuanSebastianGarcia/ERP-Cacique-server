@@ -33,25 +33,6 @@ public class TipoTallaServicioImpl implements TipoTallaServicio{
 
 
 
-    /*
-     * actualizar talla. se busca por medio del nombre de la talla. si no se encuentra lanza una excepcion
-     * 
-     * @param tipoTalla -  objeto talla que se va a actualizar
-     * 
-     * @return - id de la talla almacenada
-     */
-    @Override
-    public Integer actualizarTalla(TipoTalla tipoTalla) throws Exception {
-        
-        Optional<TipoTalla> tallaEncontrada=tallaRepository.findByTalla(tipoTalla.getTalla());
-
-        if(tallaEncontrada.isEmpty()){
-            throw new Exception("no se puede actualizar la talla");
-        }else{
-            return tallaRepository.save(tipoTalla).getId();
-        }
-    }
-
 
 
     /*

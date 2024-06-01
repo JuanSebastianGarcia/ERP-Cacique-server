@@ -9,14 +9,28 @@ import com.caciquesport.inventario.inventario.model.configTypes.TipoPrenda;
  */
 public interface TipoPrendaServicio {
 
+    /*
+    * crear una prenda
+    * @param nuevoTipoPrenda - objeto a almacenar
+    */
     Integer crearPrenda(TipoPrenda nuevoTipoPrenda) throws Exception;
 
-    Integer actualizarPrenda(TipoPrenda tipoPrenda) throws Exception;
-
+    /*
+    * eliminar una prenda
+    * @param prenda - identificador unico
+    */
     void eliminarPrenda(String prenda) throws Exception;
 
+    /*
+    * buscar una prenda
+    * @param prenda - identificador unico
+    */
     TipoPrenda  obtenerPrenda(String prenda) throws Exception;
 
+    /*
+    * buscar la lista de prendas
+    * @param prenda - identificador unico
+    */
     List<TipoPrenda> listarPrendas() throws Exception;
 
     

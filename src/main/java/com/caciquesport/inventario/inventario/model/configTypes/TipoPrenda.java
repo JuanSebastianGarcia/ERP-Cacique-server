@@ -21,7 +21,7 @@ public class TipoPrenda implements Serializable {
     @Column(name = "id_prenda")
     private Integer id;
 
-    @Column(name = "prenda" , nullable = false , unique = true , length = 30 , updatable = false)
+    @Column(name = "prenda" , nullable = false , unique = true  , updatable = false)
     private String prenda;
 
 
