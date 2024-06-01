@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import com.caciquesport.inventario.inventario.dto.RespuestaDto;
 import com.caciquesport.inventario.inventario.dto.Entities.ConfigTypesDto;
+import com.caciquesport.inventario.inventario.service.implementations.TipoInstitucionServicioImpl;
 import com.caciquesport.inventario.inventario.service.implementations.TipoPrendaServicioImpl;
 
 import lombok.AllArgsConstructor;
@@ -29,12 +31,15 @@ public class ConfigTypesController{
      * servicios para la configuracion de los tipos
      */
     private final TipoPrendaServicioImpl tipoPrendaServicioImpl;
+    private final TipoInstitucionServicioImpl tipoInstitucionServicioImpl;
 
 
 
     /*
      * Crear una prenda
      * @param nuevaPrenda - el nombre de la prenda que se va agregar
+     * 
+     * @return mensaje de confirmacion
      */
     @PostMapping("/crearPrenda/{nuevaPrenda}")
     public ResponseEntity<RespuestaDto<String>> crearPrenda(@PathVariable("nuevaPrenda") String nuevaPrenda) throws Exception{
@@ -47,7 +52,10 @@ public class ConfigTypesController{
 
     /*
      * eliminar una prenda
+     * 
      * @param prenda - identifiacador unico
+     * 
+     * @return mensaje de confirmacion
      */
     @PostMapping("/eliminarPrenda/{prenda}")
     public ResponseEntity<RespuestaDto<String>> eliminarPrenda(@PathVariable("prenda") String prenda) throws Exception{
@@ -73,4 +81,48 @@ public class ConfigTypesController{
 
 
     
+    /*
+     * crear institucion
+     * @param nuevaInstitucion - nombre identificador unico
+     * 
+     * @return mensaje de confirmacion
+     * 
+     */
+    @PostMapping("/crearInstitucion/{nuevaInstitucion}")
+    public ResponseEntity<RespuestaDto<String>> crearInstitucion(@PathVariable("nuevaInstitucion")String nuevaInstitucion) throws Exception{
+
+        tipoInstitucionServicioImpl.crearInstitucion(nuevaInstitucion);
+
+        return ResponseEntity.ok().body(new RespuestaDto<>(false,"institucion agregada"));
+    }
+
+
+        /*
+     * eliminar institucion
+     * @param institucion - nombre identificador unico
+     * 
+     * @return mensaje de confirmacion
+     * 
+     */
+    @PostMapping("/eliminarInstitucion/{institucion}")
+    public ResponseEntity<RespuestaDto<String>> eliminarInstitucion(@PathVariable("institucion")String institucion) throws Exception{
+
+        tipoInstitucionServicioImpl.eliminarInstitucion(institucion);
+
+        return ResponseEntity.ok().body(new RespuestaDto<>(false,"institucion eliminada"));
+    }
+
+
+
+    /*
+     * buscar y retornar la lista de instituciones
+     * 
+     */
+    @GetMapping("/buscarInstituciones")
+    public ResponseEntity<RespuestaDto<List<ConfigTypesDto>>> buscarInstituciones() throws Exception{
+
+        List<ConfigTypesDto> lista = tipoInstitucionServicioImpl.listarInstituciones();
+  
+        return ResponseEntity.ok().body(new RespuestaDto<>(false,lista));
+    }
 }

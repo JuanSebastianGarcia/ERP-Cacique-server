@@ -1,6 +1,8 @@
 package com.caciquesport.inventario.inventario.service.interfaces;
 
 import java.util.List;
+
+import com.caciquesport.inventario.inventario.dto.Entities.ConfigTypesDto;
 import com.caciquesport.inventario.inventario.model.configTypes.TipoInstitucion;
 
 /**
@@ -13,7 +15,7 @@ public interface TipoIstitucionServicio {
     * crear una institucion
     * @param nuevoTipoInstitucion - objeto a almacenar
     */
-    Integer crearInstitucion(TipoInstitucion nuevoTipoInstitucion) throws Exception;
+    void crearInstitucion(String nuevaInstitucion) throws Exception;
 
     /*
      * eliminar una institucion
@@ -30,7 +32,7 @@ public interface TipoIstitucionServicio {
     /*
      * buscar la lista de instituciones
      */
-    List<TipoInstitucion> listarInstituciones() throws Exception;
+    List<ConfigTypesDto> listarInstituciones() throws Exception;
     
     
 
