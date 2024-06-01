@@ -1,6 +1,8 @@
 package com.caciquesport.inventario.inventario.service.interfaces;
 
 import java.util.List;
+
+import com.caciquesport.inventario.inventario.dto.Entities.ConfigTypesDto;
 import com.caciquesport.inventario.inventario.model.configTypes.TipoPrenda;
 
 /**
@@ -13,7 +15,7 @@ public interface TipoPrendaServicio {
     * crear una prenda
     * @param nuevoTipoPrenda - objeto a almacenar
     */
-    Integer crearPrenda(TipoPrenda nuevoTipoPrenda) throws Exception;
+    void crearPrenda(String nuevoTipoPrenda) throws Exception;
 
     /*
     * eliminar una prenda
@@ -31,7 +33,7 @@ public interface TipoPrendaServicio {
     * buscar la lista de prendas
     * @param prenda - identificador unico
     */
-    List<TipoPrenda> listarPrendas() throws Exception;
+    List<ConfigTypesDto> listarPrendas() throws Exception;
 
     
 }

@@ -62,6 +62,7 @@ public class EmpleadoController {
     public ResponseEntity<RespuestaDto<List<EmpleadoDto>>> buscarEmpleados() throws Exception{
 
         List<EmpleadoDto> lista=empleadoServicioImpl.listarEmpleado();
+
         return ResponseEntity.ok().body(new RespuestaDto<>(false,lista));
     }
 }
