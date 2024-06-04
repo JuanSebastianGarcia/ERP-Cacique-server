@@ -31,11 +31,11 @@ public class TipoGeneroServicioImpl implements TipoGeneroServicio{
      * @Return - id del genero almacenado
      */
     @Override
-    public void crearGenero(String nuevoTipoGenero) throws Exception {
+    public void crearGenero(ConfigTypesDto nuevoTipoGenero) throws Exception {
 
         try {
             TipoGenero genero = new TipoGenero();
-            genero.setGenero(nuevoTipoGenero);
+            genero.setGenero(nuevoTipoGenero.nombreTipo());
             tipoGeneroRepository.save(genero).getId();
         } catch (Exception e) { 
             throw new Exception("el horario esta repetido"); 
@@ -43,6 +43,7 @@ public class TipoGeneroServicioImpl implements TipoGeneroServicio{
 
     }
 
+    
 
     /*
      * eliminar tipoGenero. se busca por medio del nombre el cual es unico. si no se encuentra lanza una excepcion

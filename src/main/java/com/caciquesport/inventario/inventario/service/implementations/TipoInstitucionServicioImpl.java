@@ -29,10 +29,10 @@ public class TipoInstitucionServicioImpl implements TipoIstitucionServicio{
      * @return - id de la institucion almacenada
      */
     @Override
-    public void  crearInstitucion(String  nuevaInstitucion) throws Exception {
+    public void  crearInstitucion(ConfigTypesDto  nuevaInstitucion) throws Exception {
         try{
         TipoInstitucion tipoInstitucion = new TipoInstitucion();
-        tipoInstitucion.setInstitucion(nuevaInstitucion);
+        tipoInstitucion.setInstitucion(nuevaInstitucion.nombreTipo());
         institucionRepository.save(tipoInstitucion);
         } 
         catch(Exception e){ 

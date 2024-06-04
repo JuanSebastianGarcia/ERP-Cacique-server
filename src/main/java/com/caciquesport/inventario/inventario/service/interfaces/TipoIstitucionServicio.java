@@ -15,7 +15,7 @@ public interface TipoIstitucionServicio {
     * crear una institucion
     * @param nuevoTipoInstitucion - objeto a almacenar
     */
-    void crearInstitucion(String nuevaInstitucion) throws Exception;
+    void crearInstitucion(ConfigTypesDto nuevaInstitucion) throws Exception;
 
     /*
      * eliminar una institucion

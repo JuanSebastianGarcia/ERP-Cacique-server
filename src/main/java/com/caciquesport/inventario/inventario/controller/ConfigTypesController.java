@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -46,8 +47,8 @@ public class ConfigTypesController {
      * 
      * @return mensaje de confirmacion
      */
-    @PostMapping("/crearPrenda/{nuevaPrenda}")
-    public ResponseEntity<RespuestaDto<String>> crearPrenda(@PathVariable("nuevaPrenda") String nuevaPrenda)
+    @PostMapping("/crearPrenda")
+    public ResponseEntity<RespuestaDto<String>> crearPrenda(@RequestBody ConfigTypesDto nuevaPrenda)
             throws Exception {
 
         tipoPrendaServicioImpl.crearPrenda(nuevaPrenda);
@@ -93,9 +94,8 @@ public class ConfigTypesController {
      * @return mensaje de confirmacion
      * 
      */
-    @PostMapping("/crearInstitucion/{nuevaInstitucion}")
-    public ResponseEntity<RespuestaDto<String>> crearInstitucion(
-            @PathVariable("nuevaInstitucion") String nuevaInstitucion) throws Exception {
+    @PostMapping("/crearInstitucion")
+    public ResponseEntity<RespuestaDto<String>> crearInstitucion(@RequestBody ConfigTypesDto nuevaInstitucion) throws Exception {
 
         tipoInstitucionServicioImpl.crearInstitucion(nuevaInstitucion);
 
@@ -142,8 +142,8 @@ public class ConfigTypesController {
      * @return mensaje de confirmacion
      * 
      */
-    @PostMapping("/crearHorario/{nuevoHorario}")
-    public ResponseEntity<RespuestaDto<String>> crearHorario(@PathVariable("nuevoHorario") String nuevoHorario)
+    @PostMapping("/crearHorario")
+    public ResponseEntity<RespuestaDto<String>> crearHorario(@RequestBody ConfigTypesDto nuevoHorario)
             throws Exception {
 
         tipoHorarioServicioImpl.crearHorario(nuevoHorario);
@@ -190,8 +190,8 @@ public class ConfigTypesController {
      * @return mensaje de confirmacion
      * 
      */
-    @PostMapping("/crearGenero/{nuevoGenero}")
-    public ResponseEntity<RespuestaDto<String>> crearGenero(@PathVariable("nuevoGenero") String nuevoGenero)
+    @PostMapping("/crearGenero")
+    public ResponseEntity<RespuestaDto<String>> crearGenero(@RequestBody ConfigTypesDto nuevoGenero)
             throws Exception {
 
         tipoGeneroServicioImpl.crearGenero(nuevoGenero);
@@ -239,8 +239,8 @@ public class ConfigTypesController {
      * @return mensaje de confirmacion
      * 
      */
-    @PostMapping("/crearTalla/{nuevaTalla}")
-    public ResponseEntity<RespuestaDto<String>> crearTalla(@PathVariable("nuevaTalla") String nuevaTalla)
+    @PostMapping("/crearTalla")
+    public ResponseEntity<RespuestaDto<String>> crearTalla(@RequestBody ConfigTypesDto nuevaTalla)
             throws Exception {
 
         tipoTallaServicioImpl.crearTalla(nuevaTalla);

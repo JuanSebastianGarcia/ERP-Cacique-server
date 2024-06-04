@@ -29,10 +29,10 @@ public class TipoHorarioServicioImpl implements TipoHorarioServicio{
      * @param nuevoTipoHorario - objeto tipo horario que se va a almacenar
      */
     @Override
-    public void crearHorario(String nuevoTipoHorario) throws Exception {
+    public void crearHorario(ConfigTypesDto nuevoTipoHorario) throws Exception {
         try{
             TipoHorario tipoHorario =new TipoHorario();
-            tipoHorario.setHorario(nuevoTipoHorario);
+            tipoHorario.setHorario(nuevoTipoHorario.nombreTipo());
             tipoHorarioRepository.save(tipoHorario).getId();
         }catch(Exception e){
             throw new Exception("el horario esta repetido");

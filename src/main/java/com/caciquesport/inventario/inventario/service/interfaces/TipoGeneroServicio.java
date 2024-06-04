@@ -15,7 +15,7 @@ public interface TipoGeneroServicio {
     * crear un genero
     * @param nuevoTipoGenero - objeto a almacenar
     */
-    void crearGenero(String nuevoTipoGenero) throws Exception;
+    void crearGenero(ConfigTypesDto nuevoTipoGenero) throws Exception;
 
     /*
     *buscar y optener  un genero 

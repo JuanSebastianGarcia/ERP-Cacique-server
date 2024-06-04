@@ -16,7 +16,7 @@ public interface TipoTallaServicio {
     * crear una talla
     * @param nuevoTipoTalla - objeto que se requiere almacenar
     */
-    void crearTalla(String nuevoTipoTalla) throws Exception;
+    void crearTalla(ConfigTypesDto nuevoTipoTalla) throws Exception;
 
     /*
     * buscar una talla

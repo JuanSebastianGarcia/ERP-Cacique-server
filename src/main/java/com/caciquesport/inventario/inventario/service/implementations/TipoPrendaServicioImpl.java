@@ -28,11 +28,11 @@ public class TipoPrendaServicioImpl implements TipoPrendaServicio {
      * @param nuevoTipoPrenda - objeto tipoPrenda que se va a almacenar
      */
     @Override
-    public void crearPrenda(String nuevaPrenda) throws Exception {
+    public void crearPrenda(ConfigTypesDto nuevaPrenda) throws Exception {
         try {
 
             TipoPrenda nuevoTipoPrenda = new TipoPrenda();
-            nuevoTipoPrenda.setPrenda(nuevaPrenda);
+            nuevoTipoPrenda.setPrenda(nuevaPrenda.nombreTipo());
             tipoPrendaRepostirory.save(nuevoTipoPrenda);
 
         } catch (Exception e) {

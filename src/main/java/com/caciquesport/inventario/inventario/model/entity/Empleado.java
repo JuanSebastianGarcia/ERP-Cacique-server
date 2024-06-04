@@ -25,19 +25,19 @@ public class Empleado implements Serializable {
     @Column(name = "id_empleado")
     private Integer id;
 
-    @Column(name = "nombre_empleado" , nullable = false , length = 20 , updatable = false)
+    @Column(name = "nombre_empleado" , nullable = false  , updatable = false)
     private String nombre;
 
     @Column(name = "cedula_empleado" , nullable = false , length = 10 , updatable = false , unique = true)
     private String cedula;
 
-    @Column(name = "telefono_empleado"  , length = 10 , unique = true)
+    @Column(name = "telefono_empleado"  , length = 20 , unique = true)
     private String telefono;
 
-    @Column(name = "email_empleado" , nullable = false , length = 40 , unique = true)
+    @Column(name = "email_empleado" , nullable = false , unique = true)
     private String email;
 
-    @Column(name = "password_empleado" , nullable = false , length = 100 )
+    @Column(name = "password_empleado" , nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)

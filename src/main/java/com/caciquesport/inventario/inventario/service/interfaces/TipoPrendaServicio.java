@@ -15,7 +15,7 @@ public interface TipoPrendaServicio {
     * crear una prenda
     * @param nuevoTipoPrenda - objeto a almacenar
     */
-    void crearPrenda(String nuevoTipoPrenda) throws Exception;
+    void crearPrenda(ConfigTypesDto nuevoTipoPrenda) throws Exception;
 
     /*
     * eliminar una prenda

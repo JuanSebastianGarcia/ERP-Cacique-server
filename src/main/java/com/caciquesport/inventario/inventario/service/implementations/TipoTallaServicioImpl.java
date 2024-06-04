@@ -29,11 +29,11 @@ public class TipoTallaServicioImpl implements TipoTallaServicio{
      * @param nuevaTalla- objeto talla que se va a almacenar
      */
     @Override
-    public void  crearTalla(String nuevoTipoTalla) throws Exception {
+    public void  crearTalla(ConfigTypesDto nuevoTipoTalla) throws Exception {
 
         try {
             TipoTalla tipoTalla = new TipoTalla();
-            tipoTalla.setTalla(nuevoTipoTalla);
+            tipoTalla.setTalla(nuevoTipoTalla.nombreTipo());
     
             tallaRepository.save(tipoTalla).getId();
         } catch (Exception e) {

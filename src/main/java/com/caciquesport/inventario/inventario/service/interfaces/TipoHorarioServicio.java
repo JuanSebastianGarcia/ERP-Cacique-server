@@ -17,7 +17,7 @@ public interface TipoHorarioServicio {
     * crear un horario
     * @param nuevoTipoHorario - objeto a almacenar
     */
-    void crearHorario(String nuevoTipoHorario) throws Exception;
+    void crearHorario(ConfigTypesDto nuevoTipoHorario) throws Exception;
 
     /*
     * buscar  un horario
