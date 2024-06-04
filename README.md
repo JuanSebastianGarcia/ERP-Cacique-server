@@ -51,7 +51,7 @@ Para ejecutar este proyecto a nivel local debes
 
 2. clonar el servidor del back en spring https://github.com/JuanSebastianGarcia/ERP-Cacique-server.git
 
-3. clovar el servidor del fron en angular https://github.com/JuanSebastianGarcia/ERP-Cacique-interface.git
+3. clonar el servidor del fron en angular https://github.com/JuanSebastianGarcia/ERP-Cacique-interface.git
 
 4. configurar el properties para la conexion con tu base de datos
 5. ejecutar el proyecto en spring 
