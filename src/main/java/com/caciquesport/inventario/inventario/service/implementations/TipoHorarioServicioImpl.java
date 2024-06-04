@@ -94,7 +94,7 @@ public class TipoHorarioServicioImpl implements TipoHorarioServicio{
         List<ConfigTypesDto> listaDto = new ArrayList<>();
 
         for (TipoHorario tipoHorario : listaHorarios) {
-            listaDto.add(new ConfigTypesDto(tipoHorario.getHorario()));
+            listaDto.add(new ConfigTypesDto(tipoHorario.getId(),tipoHorario.getHorario()));
         }
 
         return listaDto;       

@@ -96,7 +96,7 @@ public class TipoGeneroServicioImpl implements TipoGeneroServicio{
         List<ConfigTypesDto> listaDto=new ArrayList<>();
 
         for (TipoGenero tipoGenero : listaGeneros) {
-            listaDto.add(new ConfigTypesDto(tipoGenero.getGenero()));
+            listaDto.add(new ConfigTypesDto(tipoGenero.getId(),tipoGenero.getGenero()));
         }
 
         return listaDto;

@@ -95,7 +95,7 @@ public class TipoPrendaServicioImpl implements TipoPrendaServicio {
         List<ConfigTypesDto> listaDto = new ArrayList<>();
 
         for (TipoPrenda prenda : lista) {
-            listaDto.add(new ConfigTypesDto(prenda.getPrenda()));
+            listaDto.add(new ConfigTypesDto(prenda.getId(),prenda.getPrenda()));
         }
 
         return listaDto;

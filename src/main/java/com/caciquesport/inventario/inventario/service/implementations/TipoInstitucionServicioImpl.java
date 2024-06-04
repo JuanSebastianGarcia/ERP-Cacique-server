@@ -96,9 +96,41 @@ public class TipoInstitucionServicioImpl implements TipoIstitucionServicio{
         List<ConfigTypesDto> listaDto = new ArrayList<>();
 
         for (TipoInstitucion institucion : listaInstituciones) {
-            listaDto.add(new ConfigTypesDto(institucion.getInstitucion()));
+            listaDto.add(new ConfigTypesDto(institucion.getId(),institucion.getInstitucion()));
         }
+
+        ordenarLista(listaDto);
+
         return listaDto;
     }
+
+
+    
+    /*
+     * Ordenar una lista en orden con el metodo de burbuja
+     * @param listaDto - arreglo de datos de configuracion del producto
+     * @return arreglo ordenado de menor a mayor
+     */
+    private void ordenarLista(List<ConfigTypesDto> listaDto) {
+
+        ConfigTypesDto configType=null;
+
+        for(int i=0;i<listaDto.size();i++){
+            for(int j=0;j<listaDto.size();j++){
+                
+                if(j<listaDto.size()-1){
+                    if(listaDto.get(j).idTipo()>listaDto.get(j+1).idTipo()){
+                        
+                        configType=listaDto.get(j);
+                        listaDto.set(j,listaDto.get(j+1));
+                        listaDto.set(j+1,configType);
+
+                    }
+                }
+            }   
+        }
+    }
+
+
 
 }

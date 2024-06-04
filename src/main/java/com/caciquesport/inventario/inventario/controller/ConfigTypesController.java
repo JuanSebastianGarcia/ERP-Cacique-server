@@ -1,6 +1,7 @@
 package com.caciquesport.inventario.inventario.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,13 +62,15 @@ public class ConfigTypesController {
      * 
      * @return mensaje de confirmacion
      */
-    @PostMapping("/eliminarPrenda/{prenda}")
+    @DeleteMapping("/eliminarPrenda/{prenda}")
     public ResponseEntity<RespuestaDto<String>> eliminarPrenda(@PathVariable("prenda") String prenda) throws Exception {
 
         tipoPrendaServicioImpl.eliminarPrenda(prenda);
 
         return ResponseEntity.ok().body(new RespuestaDto<>(false, "prenda eliminada"));
     }
+
+
 
     /*
      * buscar y retornar la lista de prendas
@@ -79,6 +82,8 @@ public class ConfigTypesController {
 
         return ResponseEntity.ok().body(new RespuestaDto<>(false, lista));
     }
+
+
 
     /*
      * crear institucion
@@ -105,7 +110,7 @@ public class ConfigTypesController {
      * @return mensaje de confirmacion
      * 
      */
-    @PostMapping("/eliminarInstitucion/{institucion}")
+    @DeleteMapping("/eliminarInstitucion/{institucion}")
     public ResponseEntity<RespuestaDto<String>> eliminarInstitucion(@PathVariable("institucion") String institucion)
             throws Exception {
 
@@ -114,6 +119,8 @@ public class ConfigTypesController {
         return ResponseEntity.ok().body(new RespuestaDto<>(false, "institucion eliminada"));
     }
 
+
+    
     /*
      * buscar y retornar la lista de instituciones
      * 
@@ -126,6 +133,7 @@ public class ConfigTypesController {
         return ResponseEntity.ok().body(new RespuestaDto<>(false, lista));
     }
 
+    
     /*
      * crear horario
      * 
@@ -151,7 +159,7 @@ public class ConfigTypesController {
      * @return mensaje de confirmacion
      * 
      */
-    @PostMapping("/eliminarHorario/{horario}")
+    @DeleteMapping("/eliminarHorario/{horario}")
     public ResponseEntity<RespuestaDto<String>> eliminarHorario(@PathVariable("horario") String horario)
             throws Exception {
 
@@ -199,7 +207,7 @@ public class ConfigTypesController {
      * @return mensaje de confirmacion
      * 
      */
-    @PostMapping("/eliminarGenero/{genero}")
+    @DeleteMapping("/eliminarGenero/{genero}")
     public ResponseEntity<RespuestaDto<String>> eliminarGenero(@PathVariable("genero") String genero) throws Exception {
 
         tipoGeneroServicioImpl.eliminarGenero(genero);
@@ -207,6 +215,8 @@ public class ConfigTypesController {
         return ResponseEntity.ok().body(new RespuestaDto<>(false, "género eliminado"));
     }
 
+
+    
     /*
      * buscar y retornar la lista de géneros
      * 
@@ -246,7 +256,7 @@ public class ConfigTypesController {
      * @return mensaje de confirmacion
      * 
      */
-    @PostMapping("/eliminarTalla/{talla}")
+    @DeleteMapping("/eliminarTalla/{talla}")
     public ResponseEntity<RespuestaDto<String>> eliminarTalla(@PathVariable("talla") String talla) throws Exception {
 
         tipoTallaServicioImpl.eliminarTalla(talla);

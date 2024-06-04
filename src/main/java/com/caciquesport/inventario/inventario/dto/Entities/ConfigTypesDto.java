@@ -1,5 +1,5 @@
 package com.caciquesport.inventario.inventario.dto.Entities;
 
-public record ConfigTypesDto( String nombreTipo) {
+public record ConfigTypesDto(int idTipo, String nombreTipo) {
 
 }
