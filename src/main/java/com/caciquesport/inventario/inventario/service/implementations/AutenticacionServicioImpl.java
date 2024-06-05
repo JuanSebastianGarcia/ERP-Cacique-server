@@ -3,7 +3,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.caciquesport.inventario.inventario.dto.LoginDto;
-import com.caciquesport.inventario.inventario.dto.TokenDto;
 import com.caciquesport.inventario.inventario.exceptions.types.EmpleadoNoEncontradoException;
 import com.caciquesport.inventario.inventario.model.entity.Empleado;
 import com.caciquesport.inventario.inventario.service.interfaces.AutenticacionServicio;
@@ -28,7 +27,7 @@ public class AutenticacionServicioImpl implements AutenticacionServicio{
      * @param loginDto - objeto que contiene la informacion para el login (email y contraseña)
      */
     @Override
-    public TokenDto verificarIdentidad(LoginDto loginDto)throws Exception {
+    public String verificarIdentidad(LoginDto loginDto)throws Exception {
 
         Empleado empleadoEncontrado=empleadoServicioImpl.obtenerEmpleado(loginDto.email());
 
@@ -49,7 +48,7 @@ public class AutenticacionServicioImpl implements AutenticacionServicio{
      * 
      * @return token en su representacion dto
      */
-    private TokenDto generarToken(Empleado empleadoEncontrado) {
+    private String generarToken(Empleado empleadoEncontrado) {
         
         Map<String,Object> datos=new HashMap<>();
 
@@ -60,7 +59,7 @@ public class AutenticacionServicioImpl implements AutenticacionServicio{
         //invocacion a metodos que generan el token 
         String token = jwtUtils.generarToken(empleadoEncontrado.getEmail(),datos);
 
-        return new TokenDto(token);
+        return token;
     }
 
 

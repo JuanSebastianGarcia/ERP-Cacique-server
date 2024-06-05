@@ -34,11 +34,11 @@ public class LoginController {
      * @return - estado correcto del proceso  y el token
      */
     @PostMapping("/ingresar")
-    public ResponseEntity<RespuestaDto<TokenDto>> ingresar(@Valid @RequestBody LoginDto loginDto)throws Exception{
+    public ResponseEntity<RespuestaDto<String>> ingresar(@Valid @RequestBody LoginDto loginDto)throws Exception{
 
-            TokenDto tokenDto = autenticacionServicioImpl.verificarIdentidad(loginDto);
+            String token = autenticacionServicioImpl.verificarIdentidad(loginDto);
 
-            return ResponseEntity.ok().body(new RespuestaDto<>(false,tokenDto));
+            return ResponseEntity.ok().body(new RespuestaDto<>(false,token));
     }
 
 
