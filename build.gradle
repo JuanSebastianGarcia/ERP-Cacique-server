@@ -45,12 +45,12 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
 
 
-    //implementation 'com.microsoft.sqlserver:mssql-jdbc:12.6.1.jre11'
 
 
     //dependencias para la bases de datos local y de pruebas
     testImplementation 'com.h2database:h2'
-    runtimeOnly 'com.oracle.database.jdbc:ojdbc8:19.8.0.0'
+    //runtimeOnly 'com.oracle.database.jdbc:ojdbc8:19.8.0.0'
+    implementation 'com.microsoft.sqlserver:mssql-jdbc:12.6.1.jre11'
 
 
     //dependencia para la conexion con azure
