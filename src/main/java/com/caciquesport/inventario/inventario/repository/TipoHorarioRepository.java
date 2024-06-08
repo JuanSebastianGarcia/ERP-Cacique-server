@@ -13,4 +13,5 @@ import com.caciquesport.inventario.inventario.model.configTypes.TipoHorario;
 public interface TipoHorarioRepository extends JpaRepository<TipoHorario,Integer>{
 
     Optional<TipoHorario> findByHorario(String horario);
+
 }

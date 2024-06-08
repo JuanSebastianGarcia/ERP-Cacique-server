@@ -35,7 +35,7 @@ public class RateLimitingFilter implements Filter{
      * Establecer las especificaciones con las que se necesita que el filtro opere
      */
     public RateLimitingFilter() {
-        Bandwidth limit = Bandwidth.classic(30, Refill.greedy(1, Duration.ofSeconds(3)));
+        Bandwidth limit = Bandwidth.classic(100, Refill.greedy(1, Duration.ofSeconds(1)));
         this.bucket = Bucket.builder().addLimit(limit).build();
     }
 

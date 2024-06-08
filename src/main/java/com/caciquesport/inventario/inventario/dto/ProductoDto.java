@@ -4,7 +4,8 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 /*
- * DTO que maneja los datos necesarios para la creacion de un producto
+ * DTO que maneja los datos necesarios para la creacion de un producto o la consulta de mismo
+ * el dto sera usado para ambos casos
  */
 public record ProductoDto(
 

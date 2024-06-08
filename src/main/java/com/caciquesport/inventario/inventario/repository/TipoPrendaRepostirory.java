@@ -13,4 +13,5 @@ import com.caciquesport.inventario.inventario.model.configTypes.TipoPrenda;
 public interface TipoPrendaRepostirory extends JpaRepository<TipoPrenda,Integer>{
 
     Optional<TipoPrenda> findByPrenda(String prenda);
+
 }

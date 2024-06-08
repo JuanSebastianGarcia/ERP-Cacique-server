@@ -13,4 +13,5 @@ import com.caciquesport.inventario.inventario.model.configTypes.TipoGenero;
 public interface TipoGeneroRepository extends JpaRepository<TipoGenero,Integer> {
 
     Optional<TipoGenero> findByGenero(String genero);
+
 }

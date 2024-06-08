@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.caciquesport.inventario.inventario.dto.LoginDto;
 import com.caciquesport.inventario.inventario.dto.RespuestaDto;
-import com.caciquesport.inventario.inventario.dto.TokenDto;
 import com.caciquesport.inventario.inventario.service.implementations.AutenticacionServicioImpl;
 
 import jakarta.validation.Valid;
