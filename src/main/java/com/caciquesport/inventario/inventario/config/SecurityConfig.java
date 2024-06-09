@@ -1,6 +1,8 @@
 package com.caciquesport.inventario.inventario.config;
 
 
+import java.beans.Customizer;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,13 +22,20 @@ public class SecurityConfig{
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.csrf(csrf -> csrf.disable())
+        http.csrf(csrf -> csrf
+                .disable())
+                
             .authorizeHttpRequests(customRequest -> customRequest
                 .requestMatchers(HttpMethod.GET,"/api/**").permitAll()
-                .requestMatchers(HttpMethod.PUT).denyAll())
-                
+                .requestMatchers(HttpMethod.PUT,"/api/**").permitAll()
+                .requestMatchers(HttpMethod.POST,"/api/**").permitAll()
+                .requestMatchers(HttpMethod.DELETE,"/api/**").permitAll())
+
+
+
             .sessionManagement(sess -> sess
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
         
 
 
