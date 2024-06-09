@@ -29,8 +29,8 @@ public class SecurityConfig{
                 .requestMatchers(HttpMethod.GET,"/api/**").permitAll()
                 .requestMatchers(HttpMethod.PUT,"/api/**").permitAll()
                 .requestMatchers(HttpMethod.POST,"/api/**").permitAll()
-                .requestMatchers(HttpMethod.DELETE,"/api/**").permitAll())
-
+                .requestMatchers(HttpMethod.DELETE,"/api/**").permitAll()
+                .requestMatchers(HttpMethod.OPTIONS,"/api/**").permitAll())
 
 
             .sessionManagement(sess -> sess
