@@ -1,4 +1,8 @@
 package com.caciquesport.inventario.inventario.service.implementations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +16,20 @@ import lombok.RequiredArgsConstructor;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/*
+ * Este servicio esta diseñado para poder validar un usuario dentro de la base de datos
+ */
 @Service
 @RequiredArgsConstructor
 public class AutenticacionServicioImpl implements AutenticacionServicio{
 
+    //servicio usado para la comunicacion con la tabla de empleados
     private final EmpleadoServicioImpl empleadoServicioImpl;
+
+    //servicio usado para la gestion de los token
     private final TokenJwtServicio jwtUtils;
+
+
 
 
     /*

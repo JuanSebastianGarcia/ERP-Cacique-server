@@ -36,7 +36,7 @@ dependencies {
     }
     implementation 'org.springframework.security:spring-security-crypto:6.2.0'
 
-    //dependencia para evitar los DoS
+    //dependencia para agregar DoS
     implementation("com.github.vladimir-bukhtoyarov:bucket4j-core:7.6.0")
 
 
