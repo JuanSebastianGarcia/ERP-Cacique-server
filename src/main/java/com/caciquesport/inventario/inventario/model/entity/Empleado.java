@@ -28,7 +28,7 @@ public class Empleado implements Serializable {
     @Column(name = "nombre_empleado" , nullable = false  , updatable = false)
     private String nombre;
 
-    @Column(name = "cedula_empleado" , nullable = false , length = 10 , updatable = false , unique = true)
+    @Column(name = "cedula_empleado" , nullable = false , updatable = false , unique = true)
     private String cedula;
 
     @Column(name = "telefono_empleado"  , length = 20 , unique = true)

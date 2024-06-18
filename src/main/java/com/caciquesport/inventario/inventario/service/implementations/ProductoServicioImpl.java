@@ -102,7 +102,6 @@ public class ProductoServicioImpl implements ProductoServicio{
         
         nuevoDetalleProducto.setCantidad(registroProductoDto.cantidad());
         nuevoDetalleProducto.setPrecio(registroProductoDto.precio());
-        nuevoDetalleProducto.setDescripcion(registroProductoDto.descripcion());
 
     }
 
@@ -196,7 +195,6 @@ public class ProductoServicioImpl implements ProductoServicio{
     private Producto actualizarDatos(Producto producto, ProductoDto productoDto) {
         
         producto.getDetalleProducto().setCantidad(productoDto.cantidad());
-        producto.getDetalleProducto().setDescripcion(productoDto.descripcion());
         producto.getDetalleProducto().setPrecio(productoDto.precio());
 
         return producto;
@@ -283,8 +281,7 @@ public class ProductoServicioImpl implements ProductoServicio{
             producto.getTipoHorario().getHorario(),
             producto.getTipoGenero().getGenero(),
             producto.getDetalleProducto().getPrecio(),
-            producto.getDetalleProducto().getCantidad(),
-            producto.getDetalleProducto().getDescripcion()));
+            producto.getDetalleProducto().getCantidad()));
 
         }
 

@@ -1,8 +1,5 @@
 package com.caciquesport.inventario.inventario.config;
 
-
-import java.beans.Customizer;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

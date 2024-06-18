@@ -28,8 +28,6 @@ public class DetalleProducto implements Serializable {
     @Column(name = "precio_producto" , nullable = false)
     private double precio;
 
-    @Column(name = "descripcion_producto" , nullable = false)
-    private String descripcion;
 
     @OneToOne(mappedBy = "detalleProducto")
     private Producto producto;

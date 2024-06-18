@@ -31,9 +31,8 @@ public record ProductoDto(
     double precio,
     
     @Min(value = 0,message = "la cantidad minima debe de ser cero")
-    int cantidad,
+    int cantidad
 
-    String descripcion
 
     ){
 

@@ -15,6 +15,7 @@ public record EmpleadoDto(
     String nombre,
 
     @NotNull
+    @Size(min=10,message="la cedula es minimo de 10 digitos")
     String cedula,
 
     @NotNull
