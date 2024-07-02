@@ -19,6 +19,7 @@ import lombok.NoArgsConstructor;
 @Table(name="producto")
 public class Producto implements Serializable{
 
+    //_____________FIEDLS__________________//
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_producto")
     private Integer id;
@@ -34,7 +35,7 @@ public class Producto implements Serializable{
     @ManyToOne
     @JoinColumn(name = "tipo_talla")
     private TipoTalla tipoTalla;
-
+    
     @ManyToOne
     @JoinColumn(name = "tipo_institucion")
     private TipoInstitucion tipoInstitucion;

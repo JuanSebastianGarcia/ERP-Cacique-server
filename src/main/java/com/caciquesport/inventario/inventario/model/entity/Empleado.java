@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "empleado")
 public class Empleado implements Serializable {
 
+    //_____________FIEDLS__________________//
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_empleado")
     private Integer id;
