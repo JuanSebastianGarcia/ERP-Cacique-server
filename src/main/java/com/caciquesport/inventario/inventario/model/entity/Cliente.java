@@ -21,10 +21,10 @@ public class Cliente {
     @Column(name="nombre_cliente",nullable = false, updatable = false)
     private String nombre;
 
-    @Column(name="telefono_cliente",nullable = false,updatable = true)
+    @Column(name="telefono_cliente",nullable = false,updatable = true , unique = true)
     private String telefono;
 
-    @Column(name="email_cliente",nullable = true,updatable = true)
+    @Column(name="email_cliente",nullable = true,updatable = true, unique = true)
     private String email;
 
     @Column(name="direccion_cliente",nullable = true,updatable = true)
