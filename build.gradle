@@ -40,10 +40,11 @@ dependencies {
 
 
     // dependencias para escribir codigo
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-
-
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+     // Para pruebas
+    testCompileOnly "org.projectlombok:lombok:1.18.30"
+    testAnnotationProcessor "org.projectlombok:lombok:1.18.30"
 
 
     //dependencias para la bases de datos local y de pruebas

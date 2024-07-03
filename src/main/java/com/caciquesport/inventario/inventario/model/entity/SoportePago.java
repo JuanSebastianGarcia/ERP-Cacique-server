@@ -1,7 +1,6 @@
 package com.caciquesport.inventario.inventario.model.entity;
 
 import java.util.ArrayList;
-import java.util.List;
 import com.caciquesport.inventario.inventario.model.estados.EstadoSoportePago;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
