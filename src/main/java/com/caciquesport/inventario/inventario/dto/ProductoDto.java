@@ -9,37 +9,37 @@ import jakarta.validation.constraints.NotNull;
  */
 public record ProductoDto(
 
-    // Identificación única del producto.
+    //Identificación única del producto.
     Integer id,
 
-    // Tipo de prenda 
+    //Tipo de prenda 
     @NotNull
     String prenda,
 
-    // Institución relacionada con el producto.
+    //Institución relacionada con el producto.
     @NotNull
     String institucion,
 
-    // Talla de la prenda 
+    //Talla de la prenda 
     @NotNull
     String talla,
 
-    // Horario específico relacionado con el producto
+    //Horario específico relacionado con el producto
     @NotNull
     String horario,
 
-    // Género para el cual el producto está destinado 
+    //Género para el cual el producto está destinado 
     @NotNull
     String genero,
 
-    // Precio del producto. 
+    //Precio del producto. 
     @NotNull
     double precio,
 
-    // Cantidad disponible del producto.
+    //Cantidad disponible del producto.
     @Min(value = 0, message = "La cantidad mínima debe ser cero")
     int cantidad
 
 
-) {
+){
 }
