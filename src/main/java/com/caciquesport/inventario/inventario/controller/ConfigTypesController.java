@@ -26,7 +26,7 @@ import java.util.List;
  * provee una funcion para crear, eliminar, y listar para cada uno de los tipos
  * Institucion, prenda, talla, genero, horario
  */
-@RestController()
+@RestController
 @RequestMapping("/api/configuracionTipos")
 @AllArgsConstructor
 public class ConfigTypesController {

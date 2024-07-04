@@ -22,6 +22,9 @@ public class ClienteTest {
         this.clienteServicioImpl = clienteServicioImpl;
     }
 
+   
+
+
     @Test
     public void crearBuscarCliente() throws Exception {
 
@@ -31,14 +34,11 @@ public class ClienteTest {
         cliente.setDireccion("calle45#23-05");
         cliente.setEmail("juan@gmail.com");
         cliente.setNombre("juan");
-        cliente.setTelefono("3233392630");
+        cliente.setTelefono("123");
 
         // convertir objeto cliente en dto
         ClienteDto clienteDto = new ClienteDto(cliente.getCedula(), cliente.getNombre(), cliente.getTelefono(),
                 cliente.getEmail(), cliente.getDireccion());
-
-        // guardar cliente
-        clienteServicioImpl.crearCliente(clienteDto);
 
         // guardar cliente
         clienteServicioImpl.crearCliente(clienteDto);
@@ -51,6 +51,7 @@ public class ClienteTest {
         Assertions.assertEquals(cliente, clienteEncontrado);
     }
 
+   
     /*
      * convirte un dto de un cliente en un objeto
      */
@@ -58,5 +59,6 @@ public class ClienteTest {
         return new Cliente(clienteDto.cedula(), clienteDto.nombre(), clienteDto.telefono(),
                 clienteDto.email(), clienteDto.direccion());
     }
+
 
 }

@@ -123,7 +123,7 @@ public class TokenJwtServicio extends OncePerRequestFilter{
         
         String requestURI = request.getRequestURI();
 
-        if(requestURI.startsWith("/api/manejoProducto") || requestURI.startsWith("/api/manejoEmpleado")){
+        if(requestURI.startsWith("/api/manejoProducto")){
             validarToken(request,response,filterChain);
         }else{
             filterChain.doFilter(request, response);
