@@ -12,27 +12,33 @@ import com.caciquesport.inventario.inventario.model.configTypes.TipoTalla;
  */
 public interface TipoTallaServicio {
 
-    /*
-    * crear una talla
-    * @param nuevoTipoTalla - objeto que se requiere almacenar
-    */
+    /**
+     * Crear una nueva talla.
+     *
+     * @param nuevoTipoTalla El objeto de tipo ConfigTypesDto que representa la nueva talla a almacenar.
+     */
     void crearTalla(ConfigTypesDto nuevoTipoTalla) throws Exception;
 
-    /*
-    * buscar una talla
-    * @param talla - identificador unico
-    */
+    /**
+     * Eliminar una talla por su identificador único.
+     *
+     * @param talla El identificador único de la talla a eliminar.
+     */
     void eliminarTalla(String talla) throws Exception;
 
-    /*
-    * buscar una talla
-    * @param talla - identificador unico
-    */
+    /**
+     * Buscar y obtener una talla por su identificador único.
+     *
+     * @param talla El identificador único de la talla a obtener.
+     * @return El objeto de tipo TipoTalla que representa la talla encontrada.
+     */
     TipoTalla obtenerTalla(String talla) throws Exception;
 
-   
-    /*
-    * buscar la lista de tallas
-    */    
+    /**
+     * Obtener la lista de todas las tallas.
+     *
+     * @return Una lista de objetos ConfigTypesDto que representa todas las tallas.
+     */
     List<ConfigTypesDto> listarTallas() throws Exception;
 }
+

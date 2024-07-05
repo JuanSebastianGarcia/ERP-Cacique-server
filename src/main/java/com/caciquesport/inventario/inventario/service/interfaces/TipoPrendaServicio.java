@@ -11,29 +11,35 @@ import com.caciquesport.inventario.inventario.model.configTypes.TipoPrenda;
  */
 public interface TipoPrendaServicio {
 
-    /*
-    * crear una prenda
-    * @param nuevoTipoPrenda - objeto a almacenar
-    */
+    /**
+     * Crear una nueva prenda.
+     *
+     * @param nuevoTipoPrenda El objeto de tipo ConfigTypesDto que representa la nueva prenda a almacenar.
+     */
     void crearPrenda(ConfigTypesDto nuevoTipoPrenda) throws Exception;
 
-    /*
-    * eliminar una prenda
-    * @param prenda - identificador unico
-    */
+    /**
+     * Eliminar una prenda por su identificador único.
+     *
+     * @param prenda El identificador único de la prenda a eliminar.
+     */
     void eliminarPrenda(String prenda) throws Exception;
 
-    /*
-    * buscar una prenda
-    * @param prenda - identificador unico
-    */
-    TipoPrenda  obtenerPrenda(String prenda) throws Exception;
+    /**
+     * Buscar y obtener una prenda por su identificador único.
+     *
+     * @param prenda El identificador único de la prenda a obtener.
+     * @return El objeto de tipo TipoPrenda que representa la prenda encontrada.
+     */
+    TipoPrenda obtenerPrenda(String prenda) throws Exception;
 
-    /*
-    * buscar la lista de prendas
-    * @param prenda - identificador unico
-    */
+    /**
+     * Obtener la lista de todas las prendas.
+     *
+     * @return Una lista de objetos ConfigTypesDto que representa todas las prendas.
+     */
     List<ConfigTypesDto> listarPrendas() throws Exception;
-
-    
 }
+
+
+

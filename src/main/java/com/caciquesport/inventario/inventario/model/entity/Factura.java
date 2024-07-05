@@ -22,7 +22,7 @@ public class Factura {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_factura")
-    private int idFactura;
+    private Integer idFactura;
 
 
     //Fecha en la que se generó la factura

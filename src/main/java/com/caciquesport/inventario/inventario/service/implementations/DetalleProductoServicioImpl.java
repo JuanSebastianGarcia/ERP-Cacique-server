@@ -89,7 +89,7 @@ public class DetalleProductoServicioImpl implements DetalleProductoServicio{
      * 
      */
     @Override
-    public void EliminarDetalleProducto(Integer id) throws Exception {
+    public void eliminarDetalleProducto(Integer id) throws Exception {
   
         Optional<DetalleProducto> detalleEncontrado=detalleProductoRepository.findById(id);
 
@@ -112,5 +112,8 @@ public class DetalleProductoServicioImpl implements DetalleProductoServicio{
         
         return detalleProductoRepository.findAll();
     }
+
+
+
 
 }

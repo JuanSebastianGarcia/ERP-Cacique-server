@@ -11,26 +11,33 @@ import com.caciquesport.inventario.inventario.model.configTypes.TipoGenero;
  */
 public interface TipoGeneroServicio {
 
-    /*
-    * crear un genero
-    * @param nuevoTipoGenero - objeto a almacenar
-    */
+    /**
+     * Crear un nuevo género.
+     *
+     * @param nuevoTipoGenero El objeto de tipo ConfigTypesDto que representa el nuevo género a almacenar.
+     */
     void crearGenero(ConfigTypesDto nuevoTipoGenero) throws Exception;
 
-    /*
-    *buscar y optener  un genero 
-    *@param  genero - identificador unico 
-    */ 
-    TipoGenero obtenerGenero(String genero) throws Exception ;
+    /**
+     * Buscar y obtener un género por su identificador único.
+     *
+     * @param genero El identificador único del género a obtener.
+     * @return El objeto de tipo TipoGenero que representa el género encontrado.
+     */
+    TipoGenero obtenerGenero(String genero) throws Exception;
 
-    /*
-     * eliminar un genero
-     * @param genero - identificador unico 
+    /**
+     * Eliminar un género por su identificador único.
+     *
+     * @param genero El identificador único del género a eliminar.
      */
     void eliminarGenero(String genero) throws Exception;
 
-    /*
-     * obtener la lista de generos
+    /**
+     * Obtener la lista de todos los géneros.
+     *
+     * @return Una lista de objetos ConfigTypesDto que representa todos los géneros.
      */
     List<ConfigTypesDto> listarGeneros() throws Exception;
 }
+
