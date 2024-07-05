@@ -2,6 +2,8 @@ package com.caciquesport.inventario.inventario.model.entity;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+
 import com.caciquesport.inventario.inventario.model.estados.EstadoFactura;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,11 +37,6 @@ public class Factura {
     @Column(name = "estado_factura", nullable = false, updatable = true)
     private EstadoFactura estadoFactura;
 
-    
-    //Valor total de la factura
-    @Column(name = "valor_factura", nullable = false, updatable = true)
-    private double valorFactura;
-
 
     //Cliente asociado a la factura
     @ManyToOne
@@ -57,4 +54,34 @@ public class Factura {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "factura_id")
     private ArrayList<ProductoFactura> listaProductosFactura;
+
+
+    /*
+     * Este metodo iniciliza la fecha de la factura en el momento en que el metodo es invocado.
+     * La fecha para la generacion de la factura debe ser protegida por lo que solamente 1 vez es asignada
+     */
+    public void inicializarFecha() {
+        this.fechaFactura= LocalDate.now();
+    }
+
+
+    /*
+     * Este metodo instancia un soporte de pago y lo agrega a la factura
+     */
+    public void generarSoportePago() {
+        
+        SoportePago soportePago = new SoportePago();
+
+        this.soportePago=soportePago;
+    }
+
+
+
+    /*
+     * Este metodo calcula el valor total de la factura
+     */
+    public void calcularValorFactura(List<ProductoFactura> listaProductos){
+
+        
+    }
 }

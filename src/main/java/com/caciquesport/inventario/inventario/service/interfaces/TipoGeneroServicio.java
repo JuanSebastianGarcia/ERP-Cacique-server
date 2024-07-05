@@ -18,6 +18,8 @@ public interface TipoGeneroServicio {
      */
     void crearGenero(ConfigTypesDto nuevoTipoGenero) throws Exception;
 
+
+
     /**
      * Buscar y obtener un género por su identificador único.
      *
@@ -26,6 +28,8 @@ public interface TipoGeneroServicio {
      */
     TipoGenero obtenerGenero(String genero) throws Exception;
 
+
+
     /**
      * Eliminar un género por su identificador único.
      *
@@ -33,6 +37,8 @@ public interface TipoGeneroServicio {
      */
     void eliminarGenero(String genero) throws Exception;
 
+
+    
     /**
      * Obtener la lista de todos los géneros.
      *

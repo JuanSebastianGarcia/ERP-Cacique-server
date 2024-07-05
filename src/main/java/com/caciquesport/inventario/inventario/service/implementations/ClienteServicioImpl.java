@@ -17,6 +17,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ClienteServicioImpl implements ClienteServicio{
 
+    /*
+     * Respositorios necesarios para el servicio
+     */
     private final ClienteRepository clienteRepository;
 
 
