@@ -25,7 +25,6 @@ public class FacturaTest {
         
         factura.setCliente(null);//se busca
 
-        factura.setValorFactura(0);//se calcula
         factura.setEstadoFactura(null);//se calcula
         factura.setFechaFactura(null);//se calcula
     }

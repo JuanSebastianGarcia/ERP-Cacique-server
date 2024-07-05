@@ -50,5 +50,12 @@ public interface ProductoServicio {
      */
     List<Producto> listarProductos() throws Exception;
 
+
+    /**
+     * Método que busca un producto por ciertos parametros y retorna el objeto
+     *
+     * @return Una lista de todos los Productos.
+     */
+    Producto buscarObjetoProducto(FiltroProductoDto filtroProductoDto) throws Exception; 
 }
 

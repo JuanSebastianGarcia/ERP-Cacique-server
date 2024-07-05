@@ -80,7 +80,7 @@ public class Factura {
     /*
      * Este metodo calcula el valor total de la factura
      */
-    public void calcularValorFactura(List<ProductoFactura> listaProductos){
+    public void calcularValorFactura(){
 
         
     }

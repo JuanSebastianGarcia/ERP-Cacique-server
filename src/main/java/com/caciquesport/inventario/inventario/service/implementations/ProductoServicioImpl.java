@@ -259,6 +259,24 @@ public class ProductoServicioImpl implements ProductoServicio{
     }
 
 
+    /**
+     * filtra la lista de productos con base en una serie de parametros institucion, talla, prenda, genero y horario
+     * 
+     * @param filtroProducto - criterios de busqueda
+     */
+    @Override
+    public Producto buscarObjetoProducto(FiltroProductoDto filtroProductoDto) throws Exception {
+        
+        List<Producto> listaProductos=listarProductos();
+        
+        listaProductos= filtrarPorPrenda(listaProductos,filtroProductoDto);
+        listaProductos= filtrarPorGenero(listaProductos, filtroProductoDto);
+        listaProductos= filtrarPorHorario(listaProductos, filtroProductoDto);
+        listaProductos= filtrarPorInstitucion(listaProductos, filtroProductoDto);
+        listaProductos= filtrarPorTalla(listaProductos, filtroProductoDto);
+
+        return listaProductos.get(0);
+    }
 
 
 

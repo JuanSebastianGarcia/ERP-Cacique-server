@@ -28,11 +28,11 @@ public class ProductoFactura {
 
     // Identificación de la factura asociada
     @Column(name = "factura_id", nullable = false)
-    private int idFactura;
+    private Factura factura;
 
     // Identificación del producto asociado
     @Column(name = "producto_id", nullable = false)
-    private int idProducto;
+    private int producto;
 
     // Estado del producto en la factura
     @Enumerated(EnumType.STRING)

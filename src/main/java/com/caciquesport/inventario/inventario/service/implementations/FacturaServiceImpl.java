@@ -27,6 +27,7 @@ public class FacturaServiceImpl implements FacturaService{
      * Repositorios 
      */
     private final ClienteRepository clienteRepository;
+    private final ProductoFacturaServicioImpl productoFacturaServicioImpl;
 
 
 
@@ -52,8 +53,17 @@ public class FacturaServiceImpl implements FacturaService{
         //agregar cliente a la factura
         agregarCliente(facturaNueva,facturaDto.cedulaCliente());
 
+
+
         //agregar lista de productos a la factura
-        facturaNueva.agregarProductos(facturaDto.listaProductos());
+        /*
+         * 1-se llama al servicio de productoFactura y un metodo que genere una lista de objetos ProductoFactura
+         * 2-se le envia la lista de productos en dto y la factura actual
+         * 3-se se genera la lista de productos y se agrega a la factura
+         */
+        productoFacturaServicioImpl.generarListaProductos(facturaDto.listaProductos(), facturaNueva);
+
+
 
         //crear soporte de pago
         facturaNueva.generarSoportePago();
