@@ -69,10 +69,8 @@ public class FacturaServiceImpl implements FacturaService{
         //agregar pago  
         facturaNueva.agregarPago(facturaDto);
 
-
-        //agregar soporte a la factura
-
         //identificar estado de factura
+        facturaNueva.identificarEstado();
 
         //almacenar factura
 

@@ -7,6 +7,9 @@ import java.util.List;
 import com.caciquesport.inventario.inventario.dto.FacturaDto;
 import com.caciquesport.inventario.inventario.dto.ProductoFacturaDto;
 import com.caciquesport.inventario.inventario.model.estados.EstadoFactura;
+import com.caciquesport.inventario.inventario.model.estados.EstadoProducto;
+import com.caciquesport.inventario.inventario.model.estados.EstadoSoportePago;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -107,5 +110,65 @@ public class Factura {
      */
     public void agregarPago(FacturaDto facturaDto) throws Exception {
         this.soportePago.agregarPago(facturaDto.pago(),facturaDto.metodoPago());
+    }
+
+
+    /*
+     * Este metodo revisa el estado del soporte de pago, el estado de los productos para identificar cual es el estado de la factura.
+     * si hay algun producto empacado o pendiente ("factura pendiente")
+     * si el soporte de pago esta incompleto ("factura pendiente")
+     * si todos los productos estan entregados y el pago completo ("factura finalizada")
+     */
+    public void identificarEstado() {
+
+        boolean productoPedienteEmpacado=hallarProductoPendiente();
+
+        boolean pagoIncompleto=solicitarEstadoSoporte();
+
+        if(productoPedienteEmpacado==true || pagoIncompleto==true){
+            this.estadoFactura=EstadoFactura.PENDIENTE;
+        }
+
+    }
+
+
+    /**
+     * Este metodo se encarga de solicitar el estado del soporte de pago
+     * 
+     * @return true - el pago esta incompleto 
+     * @return false - el pago esta completo
+     */
+    private boolean solicitarEstadoSoporte() {
+       
+        boolean respuesta=false;
+        EstadoSoportePago estadoSoportePago = this.soportePago.getEstadoSoporte();
+
+        if(estadoSoportePago.equals(EstadoSoportePago.PAGO_INCOMPLETO)){
+            respuesta=true;
+        }
+
+        return respuesta;
+    }
+
+
+    /**
+     * Este metodo revisa la lista de productos en busca de productos que puedan estar en estado pendiente o empado
+     * 
+     * @return true - existen productos pendientes y/o empacados
+     * @return false - todos los productos estan entregados
+     */
+    private boolean hallarProductoPendiente() {
+       
+        boolean respuesta=false;
+
+        for (ProductoFactura productoFactura : this.listaProductosFactura) {
+            
+            if(productoFactura.getEstadoProducto()!=EstadoProducto.ENTREGADO){
+                respuesta=true;
+                break;
+            }
+
+        }
+        return respuesta;
     }
 }
