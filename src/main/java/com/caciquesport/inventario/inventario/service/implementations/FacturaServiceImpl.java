@@ -11,6 +11,7 @@ import com.caciquesport.inventario.inventario.model.entity.Cliente;
 import com.caciquesport.inventario.inventario.model.entity.Factura;
 import com.caciquesport.inventario.inventario.model.entity.SoportePago;
 import com.caciquesport.inventario.inventario.repository.ClienteRepository;
+import com.caciquesport.inventario.inventario.repository.FacturaRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.FacturaService;
 
 import jakarta.transaction.Transactional;
@@ -28,7 +29,7 @@ public class FacturaServiceImpl implements FacturaService{
      */
     private final ClienteRepository clienteRepository;
     private final ProductoFacturaServicioImpl productoFacturaServicioImpl;
-
+    private final FacturaRepository facturaRepository;
 
 
     /**
@@ -73,11 +74,13 @@ public class FacturaServiceImpl implements FacturaService{
         facturaNueva.identificarEstado();
 
         //almacenar factura
+        facturaRepository.save(facturaNueva);
 
-        //notificacion
+        /*
+        *se debe de agregar el metodo que realiza el proceso de facturacion
+        */
 
-
-        return null;
+        return "la factura ha sido creada y su estado es :"+facturaNueva.getEstadoFactura();
     }
 
 
