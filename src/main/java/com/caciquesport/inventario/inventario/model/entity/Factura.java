@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.caciquesport.inventario.inventario.dto.FacturaDto;
+import com.caciquesport.inventario.inventario.dto.ProductoFacturaDto;
 import com.caciquesport.inventario.inventario.model.estados.EstadoFactura;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -70,18 +72,40 @@ public class Factura {
      */
     public void generarSoportePago() {
         
-        SoportePago soportePago = new SoportePago();
+        if(soportePago==null){
 
-        this.soportePago=soportePago;
+            SoportePago soportePago = new SoportePago();
+            this.soportePago=soportePago;
+
+        }
+
     }
 
 
 
     /*
-     * Este metodo calcula el valor total de la factura
+     * Este metodo calcula el valor total de la factura y agrega el valor de la misma al soporte de pago
      */
-    public void calcularValorFactura(){
+    public void calcularValorFactura(List<ProductoFacturaDto> list){
 
-        
+        double sumaTotal=0;
+
+        for (ProductoFacturaDto producto : list) {
+            sumaTotal+=producto.precio();
+        }
+
+        this.soportePago.setValorTotalFactura(sumaTotal);
+    }
+
+
+
+    /**
+     * Este metodo se encarga de recibir un pago y agregarlo al soporte de pago
+     * 
+     * @param facturaDto - contiene la informacion necesaria
+     * @throws Exception 
+     */
+    public void agregarPago(FacturaDto facturaDto) throws Exception {
+        this.soportePago.agregarPago(facturaDto.pago(),facturaDto.metodoPago());
     }
 }

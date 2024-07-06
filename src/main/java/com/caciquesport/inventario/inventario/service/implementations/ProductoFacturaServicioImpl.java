@@ -9,11 +9,18 @@ import com.caciquesport.inventario.inventario.dto.FiltroProductoDto;
 import com.caciquesport.inventario.inventario.dto.ProductoFacturaDto;
 import com.caciquesport.inventario.inventario.model.entity.Factura;
 import com.caciquesport.inventario.inventario.model.entity.Producto;
+import com.caciquesport.inventario.inventario.model.entity.ProductoFactura;
+import com.caciquesport.inventario.inventario.model.estados.EstadoProducto;
 import com.caciquesport.inventario.inventario.service.interfaces.ProductoFacturaServicio;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
+
+/*
+ * Este servicio esta diseñado para poder agregar una lista de productos a una factura. Para esta relacion se usa 
+ * un objeto "ProductoFactura" que representa una relacion entre un objeto y factura. 
+ */
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -24,6 +31,8 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
      * Servicio
      */
     private final ProductoServicioImpl productoServicioImpl;
+
+
 
 
     /**
@@ -51,8 +60,10 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
             listaObjetosProducto.add(productoEncontrado);
         }
 
-        agregarProductosAFactura(listaObjetosProducto,factura);
+        agregarProductosAFactura(listaObjetosProducto,factura,listaProductosDto);
     }
+
+
 
 
     /**
@@ -62,12 +73,30 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
      * @param listaObjetosProducto - contiene las instancias de los objetos encontrados
      * @param factura - instancia de la factura 
      */
-    private void agregarProductosAFactura(List<Producto> listaObjetosProducto, Factura factura) {
+    private void agregarProductosAFactura(List<Producto> listaObjetosProducto, Factura factura, List<ProductoFacturaDto> listaProductosDto) {
 
+        ArrayList<ProductoFactura> productosFactura = new ArrayList<>();
 
         //se deben de crear las relaciones
+        for (int i=0;i<listaObjetosProducto.size();i++) {
 
+            //se crea la instancia
+            ProductoFactura productoFactura = new ProductoFactura();
 
+            //se establece el estado
+            String estadoString = listaProductosDto.get(i).estado();
+            EstadoProducto estadoProducto = EstadoProducto.valueOf(estadoString.toUpperCase());
+
+            //se agregan los datos
+            productoFactura.setEstadoProducto(estadoProducto);
+            productoFactura.setFactura(factura);
+            productoFactura.setProducto(listaObjetosProducto.get(i).getId());
+
+            //se agrega la relacion
+            productosFactura.add(productoFactura);
+        }
+
+        factura.setListaProductosFactura(productosFactura);
 
     }
 

@@ -54,25 +54,21 @@ public class FacturaServiceImpl implements FacturaService{
         agregarCliente(facturaNueva,facturaDto.cedulaCliente());
 
 
-
         //agregar lista de productos a la factura
-        /*
-         * 1-se llama al servicio de productoFactura y un metodo que genere una lista de objetos ProductoFactura
-         * 2-se le envia la lista de productos en dto y la factura actual
-         * 3-se se genera la lista de productos y se agrega a la factura
-         */
         productoFacturaServicioImpl.generarListaProductos(facturaDto.listaProductos(), facturaNueva);
-
 
 
         //crear soporte de pago
         facturaNueva.generarSoportePago();
 
+
         //calcular valor de la factura
-        facturaNueva.calcularValorFactura();
+        facturaNueva.calcularValorFactura(facturaDto.listaProductos());
+
 
         //agregar pago  
-        agregarPagoFactura(facturaNueva, facturaDto);
+        facturaNueva.agregarPago(facturaDto);
+
 
         //agregar soporte a la factura
 
