@@ -11,6 +11,7 @@ import com.caciquesport.inventario.inventario.model.entity.Factura;
 import com.caciquesport.inventario.inventario.model.entity.Producto;
 import com.caciquesport.inventario.inventario.model.entity.ProductoFactura;
 import com.caciquesport.inventario.inventario.model.estados.EstadoProducto;
+import com.caciquesport.inventario.inventario.repository.ProductoRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.ProductoFacturaServicio;
 
 import jakarta.transaction.Transactional;
@@ -28,11 +29,14 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
 
 
     /*
-     * Servicio
+     * Servicio para el manejo de los productos
      */
     private final ProductoServicioImpl productoServicioImpl;
 
-
+    /*
+     * Repositorio para el manejo de los productos
+     */
+    private final ProductoRepository productoRepository;
 
 
     /**
@@ -56,11 +60,33 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
                     producto.prenda(), producto.talla(), producto.horario(), producto.genero(), producto.institucion())
             );
 
+            eliminarUnidadProducto(productoEncontrado,producto.estado());
+
             //agregar el objeto a la lista
             listaObjetosProducto.add(productoEncontrado);
         }
 
         agregarProductosAFactura(listaObjetosProducto,factura,listaProductosDto);
+    }
+
+
+
+    /*
+     * Este metodo se encarga de eliminar una unidad de la cantidad de un producto Sí el estado es empacado o entregado.
+     * 
+     */
+    private void eliminarUnidadProducto(Producto productoEncontrado,String estado) {
+        
+        if(estado.equals(EstadoProducto.EMPACADO) || estado.equals(EstadoProducto.ENTREGADO)){//estado entregado o empacado
+
+            if(productoEncontrado.getDetalleProducto().getCantidad()>=1){
+                productoEncontrado.getDetalleProducto().setCantidad(productoEncontrado.getDetalleProducto().getCantidad()-1);
+
+                productoRepository.save(productoEncontrado);
+            }
+
+        }
+
     }
 
 
@@ -98,7 +124,12 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
 
         factura.setListaProductosFactura(productosFactura);
 
+
     }
+
+
+
+
 
 
 
