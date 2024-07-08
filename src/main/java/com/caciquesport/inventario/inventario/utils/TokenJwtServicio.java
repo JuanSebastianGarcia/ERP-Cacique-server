@@ -177,8 +177,7 @@ public class TokenJwtServicio extends OncePerRequestFilter{
         
         boolean acceso=false;
 
-        if(requestURI.startsWith("/api/manejoProducto") && claims.getBody().get("tipoEmpleado").equals("JEFE") 
-           || requestURI.startsWith("/api/manejoEmpleado") && claims.getBody().get("tipoEmpleado").equals("JEFE") ){
+        if(requestURI.startsWith("/api/manejoProducto") && claims.getBody().get("tipoEmpleado").equals("JEFE")){
             acceso=true;
         }
 
