@@ -6,10 +6,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.caciquesport.inventario.inventario.dto.FacturaDto;
-import com.caciquesport.inventario.inventario.dto.ProductoFacturaDto;
 import com.caciquesport.inventario.inventario.model.entity.Cliente;
 import com.caciquesport.inventario.inventario.model.entity.Factura;
-import com.caciquesport.inventario.inventario.model.entity.SoportePago;
 import com.caciquesport.inventario.inventario.repository.ClienteRepository;
 import com.caciquesport.inventario.inventario.repository.FacturaRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.FacturaService;
@@ -70,9 +68,11 @@ public class FacturaServiceImpl implements FacturaService{
         //agregar pago  
         facturaNueva.agregarPago(facturaDto);
 
+
         //identificar estado de factura
         facturaNueva.identificarEstado();
 
+        
         //almacenar factura
         facturaRepository.save(facturaNueva);
 
@@ -99,9 +99,10 @@ public class FacturaServiceImpl implements FacturaService{
      */
     @Override
     public String guardarCambios(FacturaDto facturaDto) throws Exception {
-        // TODO Auto-generated method stub
+    
         throw new UnsupportedOperationException("Unimplemented method 'guardarCambios'");
     }
+
 
 
 
@@ -110,7 +111,7 @@ public class FacturaServiceImpl implements FacturaService{
      */
     @Override
     public List<FacturaDto> buscarFacturaDto(int codigo) throws Exception {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'buscarFacturaDto'");
     }
 
@@ -132,6 +133,7 @@ public class FacturaServiceImpl implements FacturaService{
         
         validarDatosMinimos(facturaDto);
     }
+
 
 
 
@@ -179,6 +181,7 @@ public class FacturaServiceImpl implements FacturaService{
 
 
 
+
     
     /**
      * Este metodo se encarga de buscar un cliente, y al encontrarlo lo agregara a la factura32
@@ -202,38 +205,4 @@ public class FacturaServiceImpl implements FacturaService{
 
 
 
-    
-
-    /**
-     * Este metodo se encarga de crear un soporte de pago y agregarlo a la factura
-     * 
-     * @param factura - instancia de la nueva factura
-     * @param facturaDto - datos para generar una factura
-     */
-    private void calcularValorFactura(Factura factura, List<ProductoFacturaDto> listaProductos) {
-        
-        //crear soporte de pago
-        SoportePago nuevSoportePago = new SoportePago();
-
-        //calcular valor de la factura
-        nuevSoportePago.calcularValorFactura(listaProductos);
-
-        //agregar soporte de pago
-        factura.setSoportePago(nuevSoportePago);
-
-
-    }
-
-
-
-    /**
-     * Llamar el metodo para  un pago al soporte de pago en una factura.
-     * 
-     * @param factura - instancia de la nueva factura
-     * @param facturaDto - datos para generar una factura
-     */
-    private void agregarPagoFactura(Factura factura, FacturaDto facturaDto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'agregarPago'");
-    }
 }

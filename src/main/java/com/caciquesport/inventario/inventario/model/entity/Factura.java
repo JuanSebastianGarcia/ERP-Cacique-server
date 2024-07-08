@@ -58,7 +58,7 @@ public class Factura {
     //Lista de productos asociados a la factura a través de la entidad intermedia ProductoFactura
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "factura_id")
-    private ArrayList<ProductoFactura> listaProductosFactura;
+    private List<ProductoFactura> listaProductosFactura = new ArrayList<>();
 
 
     /*

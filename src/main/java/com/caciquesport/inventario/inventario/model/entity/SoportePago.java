@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.caciquesport.inventario.inventario.dto.ProductoFacturaDto;
 import com.caciquesport.inventario.inventario.model.configTypes.MetodoPago;
 import com.caciquesport.inventario.inventario.model.estados.EstadoSoportePago;
 import jakarta.persistence.*;
@@ -44,29 +43,13 @@ public class SoportePago {
     // Lista de pagos asociados a este soporte de pago
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "soporte_pago_id",updatable = true) 
-    private ArrayList<Pago> listaPagos;
+    private List<Pago> listaPagos = new ArrayList<>();
 
 
 
 
 
 
-    /**
-     * Metodo encargado de calcular el valor total de la factura.
-     * 
-     * @param listaProductos - lista de productos de la factura
-     * 
-     */
-    public void calcularValorFactura(List<ProductoFacturaDto> listaProductos) {
-        
-        double sumaTotal = 0;
-
-        for (ProductoFacturaDto producto : listaProductos) {
-            sumaTotal+=producto.precio();
-        }
-
-        this.valorTotalFactura=sumaTotal;
-    }
 
 
 
@@ -104,6 +87,8 @@ public class SoportePago {
         nuevoPago.setFechaPago(LocalDate.now());
         nuevoPago.setMetodoPago(MetodoPago.valueOf(metodoPago.toUpperCase()));
         nuevoPago.setValorPago(pago);
+
+        listaPagos.add(nuevoPago);
 
         identificarEstado();
     }

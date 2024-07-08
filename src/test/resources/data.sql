@@ -30,3 +30,29 @@ VALUES ('0987654321', 'María Gómez', '3007654321', 'Carrera 8 #12-34, Bogotá'
 
 INSERT INTO cliente (cedula_cliente, nombre_cliente, telefono_cliente, email_cliente)
 VALUES ('1122334455', 'Carlos López', '3001122334', 'carlos.lopez@example.com');
+
+
+
+--detalles del producto
+insert into detalle_producto (cantidad_producto, precio_producto) values (100, 60000);
+insert into detalle_producto (cantidad_producto, precio_producto) values (200, 60000);
+insert into detalle_producto (cantidad_producto, precio_producto) values (150, 60000);
+insert into detalle_producto (cantidad_producto, precio_producto) values (180, 60000);
+insert into detalle_producto (cantidad_producto, precio_producto) values (120, 60000);
+
+
+--productos
+insert into producto (tipo_prenda, tipo_horario, tipo_talla, tipo_institucion, tipo_genero, detalle_producto) 
+values (1, 1, 1, 1, 1, 1);
+
+insert into producto (tipo_prenda, tipo_horario, tipo_talla, tipo_institucion, tipo_genero, detalle_producto) 
+values (2, 2, 2, 2, 2, 2);
+
+insert into producto (tipo_prenda, tipo_horario, tipo_talla, tipo_institucion, tipo_genero, detalle_producto) 
+values (1, 1, 2, 1, 2, 3);
+
+insert into producto (tipo_prenda, tipo_horario, tipo_talla, tipo_institucion, tipo_genero, detalle_producto) 
+values (2, 2, 1, 2, 1, 4);
+
+insert into producto (tipo_prenda, tipo_horario, tipo_talla, tipo_institucion, tipo_genero, detalle_producto) 
+values (1, 2, 2, 1, 1, 5);

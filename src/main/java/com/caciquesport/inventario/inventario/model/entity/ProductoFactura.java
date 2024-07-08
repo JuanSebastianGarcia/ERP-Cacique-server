@@ -9,6 +9,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,7 +29,8 @@ public class ProductoFactura {
     private int id;
 
     // Identificación de la factura asociada
-    @Column(name = "factura_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "factura_id", nullable = false)
     private Factura factura;
 
     // Identificación del producto asociado
