@@ -40,14 +40,11 @@ public class FacturaTest {
 
         FacturaDto facturaDto = new FacturaDto("1234567890", listaProductos, "EFECTIVO", 120000);
 
-        
-
         String respuesta=facturaServiceImpl.generarFactura(facturaDto);
         
-
-
-
         Assertions.assertEquals("la factura ha sido creada y su estado es :FINALIZADA", respuesta);
+
+
     }
 }
 
