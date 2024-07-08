@@ -38,12 +38,12 @@ public class FacturaTest {
         listaProductos.add(new ProductoFacturaDto("pantalon", "tecnologico", "s", "fisica", "mujer",60000,"ENTREGADO"));
 
 
-        FacturaDto facturaDto = new FacturaDto("1234567890", listaProductos, "EFECTIVO", 120.000);
+        FacturaDto facturaDto = new FacturaDto("1234567890", listaProductos, "EFECTIVO", 120000);
 
         
         String respuesta=facturaServiceImpl.generarFactura(facturaDto);
         
-        Assertions.assertEquals("la factura ha sido creada y su estado es :FINALIZADA", respuesta);
+        Assertions.assertEquals("la factura ha sido creada y su estado es :PENDIENTE", respuesta);
     }
 }
 

@@ -127,6 +127,8 @@ public class Factura {
 
         if(productoPedienteEmpacado==true || pagoIncompleto==true){
             this.estadoFactura=EstadoFactura.PENDIENTE;
+        }else{
+            this.estadoFactura=EstadoFactura.FINALIZADA;
         }
 
     }
