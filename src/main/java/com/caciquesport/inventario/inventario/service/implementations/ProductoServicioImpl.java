@@ -126,8 +126,8 @@ public class ProductoServicioImpl implements ProductoServicio{
 
 
 
-    /*
-     * vericiar la existena del producto validando que no haya otro objeto 
+    /**
+     * verifiar la existena del producto validando que no haya otro objeto 
      * con los mismos valores para los atributos principales(talla, prenda, horario, institucion, genero)
      * 
      * @param registroProductoDto - contiene la informacion necesarioa
@@ -239,10 +239,10 @@ public class ProductoServicioImpl implements ProductoServicio{
 
 
 
-    /*
+    /**
      * filtra la lista de productos con base en una serie de parametros institucion, talla, prenda, genero y horario
      * 
-     * @ filtroProducto
+     * @param filtroProducto - lista de datos para filtrar una lista de productos
      */
     @Override
     public List<ProductoDto> filtrarListaProducto(FiltroProductoDto filtroProductoDto) throws Exception {
@@ -259,23 +259,31 @@ public class ProductoServicioImpl implements ProductoServicio{
     }
 
 
+
     /**
-     * filtra la lista de productos con base en una serie de parametros institucion, talla, prenda, genero y horario
+     * Metodo encargado de buscar un producto espcifico en la base de datos y retornar la instancia
      * 
      * @param filtroProducto - criterios de busqueda
+     * 
+     * @return Producto - objeto producto encontrado
      */
     @Override
     public Producto buscarObjetoProducto(FiltroProductoDto filtroProductoDto) throws Exception {
         
-        List<Producto> listaProductos=listarProductos();
-        
-        listaProductos= filtrarPorPrenda(listaProductos,filtroProductoDto);
-        listaProductos= filtrarPorGenero(listaProductos, filtroProductoDto);
-        listaProductos= filtrarPorHorario(listaProductos, filtroProductoDto);
-        listaProductos= filtrarPorInstitucion(listaProductos, filtroProductoDto);
-        listaProductos= filtrarPorTalla(listaProductos, filtroProductoDto);
+        TipoGenero genero = tipoGeneroServicioImpl.obtenerGenero(filtroProductoDto.genero());
+        TipoTalla talla = tipoTallaServicioImpl.obtenerTalla(filtroProductoDto.talla());
+        TipoInstitucion institucion = tipoInstitucionServicioImpl.obtenerInstitucion(filtroProductoDto.institucion());
+        TipoHorario horario = tipoHorarioServicioImpl.obtenerHorario(filtroProductoDto.horario());
+        TipoPrenda prenda = tipoPrendaServicioImpl.obtenerPrenda(filtroProductoDto.prenda());
+ 
+        Optional<Producto> productoEncontrado = productoRepository.verificarExistenciaProducto(institucion, talla,genero, horario, prenda);
+ 
+        if (productoEncontrado.isEmpty()) {
+            throw new Exception("Un producto no ha sido encontrado");
+        }
+ 
 
-        return listaProductos.get(0);
+        return productoEncontrado.get();
     }
 
 
