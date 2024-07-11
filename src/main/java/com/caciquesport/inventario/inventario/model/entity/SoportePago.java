@@ -65,7 +65,7 @@ public class SoportePago {
     public void agregarPago(Double pago, String metodoPago) throws Exception {
         
         if(!(valorTotalPagado+pago<=valorTotalFactura)){
-            throw new Exception("no se puede realizar mas pagos");
+            throw new Exception("no se puede realizar un pago superior");
         }
 
         instanciarAgregarPago(pago,metodoPago);
@@ -90,8 +90,12 @@ public class SoportePago {
 
         listaPagos.add(nuevoPago);
 
+        
         identificarEstado();
     }
+
+
+
 
 
     /**
@@ -113,6 +117,8 @@ public class SoportePago {
         }else{
             this.estadoSoporte=EstadoSoportePago.PAGO_INCOMPLETO;
         }
+
+        this.valorTotalPagado=sumaPagos;//se agrega el valor total pagado 
     }
 
 }
