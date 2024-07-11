@@ -6,8 +6,10 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.caciquesport.inventario.inventario.dto.FacturaDto;
+import com.caciquesport.inventario.inventario.dto.ProductoFacturaDto;
 import com.caciquesport.inventario.inventario.model.entity.Cliente;
 import com.caciquesport.inventario.inventario.model.entity.Factura;
+import com.caciquesport.inventario.inventario.model.estados.EstadoProducto;
 import com.caciquesport.inventario.inventario.repository.ClienteRepository;
 import com.caciquesport.inventario.inventario.repository.FacturaRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.FacturaService;
@@ -76,9 +78,6 @@ public class FacturaServiceImpl implements FacturaService{
         //almacenar factura
         facturaRepository.save(facturaNueva);
 
-        /*
-        *se debe de agregar el metodo que realiza el proceso de facturacion
-        */
 
         return "la factura ha sido creada y su estado es :"+facturaNueva.getEstadoFactura();
     }
@@ -110,7 +109,7 @@ public class FacturaServiceImpl implements FacturaService{
      * 
      */
     @Override
-    public List<FacturaDto> buscarFacturaDto(int codigo) throws Exception {
+    public List<FacturaDto> buscarFacturaDto(String codigo) throws Exception {
         
         throw new UnsupportedOperationException("Unimplemented method 'buscarFacturaDto'");
     }
@@ -132,12 +131,49 @@ public class FacturaServiceImpl implements FacturaService{
     private void validarDatos(FacturaDto facturaDto) throws Exception {
         
         validarDatosMinimos(facturaDto);
+
+
+        validarEntregaProductos(facturaDto);
+    }
+
+
+
+    /**
+     * Se encarga de validar que se entregen los productos correspondientes al cliente. los productos correspondientes 
+     * son aquellos en los que el valor de los productos entregados no superan el valor pagado.
+     * 
+     * @param facturaDto - contiene los datos necesaios para generar una factura
+     * @throws Exception 
+     */
+    private void validarEntregaProductos(FacturaDto facturaDto) throws Exception {
+        
+        double sumaProductosEntregados=0;
+
+        for (ProductoFacturaDto producto : facturaDto.listaProductos()) {
+            
+            if(producto.estado().equals("ENTREGADO")){
+                sumaProductosEntregados+=producto.precio();
+            }
+        }
+
+        if(sumaProductosEntregados>facturaDto.pago()){
+            throw new Exception("no se pueden entregar productos que superen el pago");
+        }
+
     }
 
 
 
 
-    /*
+
+
+
+
+
+
+
+
+    /**
      * Este metodo, se asegura que la factura tenga los datos minimos para poder funcionar. los datos minimos son
      * 1-una cedula para agregar el cliente
      * 2-al menos un producto en la factura

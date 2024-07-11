@@ -35,7 +35,7 @@ public class FacturaTest {
         List<ProductoFacturaDto> listaProductos = new ArrayList<>();
 
         listaProductos.add(new ProductoFacturaDto("camisa", "robledo", "10", "diario", "hombre",60000,"ENTREGADO"));
-        listaProductos.add(new ProductoFacturaDto("pantalon", "tecnologico", "s", "fisica", "mujer",60000,"ENTREGADO"));
+        listaProductos.add(new ProductoFacturaDto("pantalon", "tecnologico", "s", "fisica", "mujer",60000,"PENDIENTE"));
 
 
         FacturaDto facturaDto = new FacturaDto("1234567890", listaProductos, "EFECTIVO", 60000);

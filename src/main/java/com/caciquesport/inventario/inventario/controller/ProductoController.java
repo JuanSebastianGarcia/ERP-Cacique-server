@@ -36,7 +36,7 @@ public class ProductoController {
 
 
 
-    /*
+    /**
      * api para la creacion de un producto
      * 
      * @param nuevoProductoDto - contiene la informacion para la creacion de un nuevo producto
@@ -51,7 +51,7 @@ public class ProductoController {
 
 
 
-    /*
+    /**
      * api  para la busqueda de un producto
      * 
      * @param filtroProductoDto - contiene las catacteristicas de diferenciacion que un producto tiene con otro
@@ -67,7 +67,7 @@ public class ProductoController {
     }
 
     
-    /*
+    /**
      * api para eliminar un producto
      * 
      * @param idProducto - el id del producto que se va a eliminar
@@ -83,7 +83,7 @@ public class ProductoController {
 
 
 
-    /*
+    /**
      * api para la actualizacion de un producto
      * 
      * @param productoDto - trae la informacion del objeto 
