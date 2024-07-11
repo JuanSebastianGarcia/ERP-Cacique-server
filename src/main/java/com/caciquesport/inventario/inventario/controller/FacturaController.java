@@ -55,10 +55,11 @@ public class FacturaController {
      * @return -lista de facturas encontradas
      * @throws Exception
      */
-    @GetMapping("/buscarFactura/{codigo}")
-    public ResponseEntity<RespuestaDto<List<FacturaDto>>> getMethodName(@PathVariable("codigo") String codigo) throws Exception {
+    @GetMapping("/buscarFactura/{codigo}/{tipoCodigo}")
+    public ResponseEntity<RespuestaDto<List<FacturaDto>>> getMethodName(@PathVariable("codigo") String codigo,
+    @PathVariable("tipoCodigo") String tipoCodigo ) throws Exception {
 
-        List<FacturaDto> factura=facturaServiceImpl.buscarFacturaDto(codigo);
+        List<FacturaDto> factura=facturaServiceImpl.buscarFacturaDto(codigo,tipoCodigo);
 
         return ResponseEntity.ok().body(new RespuestaDto<>(false, factura));
     }
