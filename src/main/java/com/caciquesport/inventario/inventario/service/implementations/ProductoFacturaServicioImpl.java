@@ -2,6 +2,7 @@ package com.caciquesport.inventario.inventario.service.implementations;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -125,6 +126,32 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
         factura.setListaProductosFactura(productosFactura);
 
 
+    }
+
+
+
+    /**
+     * Metodo encargado de recibir una lista de productos de una factura y convertirla a una lista pero en formato dto.
+     * @param listaProductosFactura lista de relaciones entre una factura y los productos
+     * @return lista de productos dto
+     */
+    public List<ProductoFacturaDto> convertirListaProductosDto(List<ProductoFactura> listaProductosFactura) {
+        
+        List<ProductoFacturaDto> listaProductosDto = new ArrayList<>();
+
+        for (ProductoFactura producto : listaProductosFactura) {
+            
+            Producto productoEncontrado=productoRepository.findById(producto.getProducto()).get();
+            
+
+            listaProductosDto.add(new ProductoFacturaDto(productoEncontrado.getTipoPrenda().getPrenda(),
+                productoEncontrado.getTipoInstitucion().getInstitucion(), productoEncontrado.getTipoTalla().getTalla(), 
+                productoEncontrado.getTipoHorario().getHorario(), productoEncontrado.getTipoGenero().getGenero(),
+                productoEncontrado.getDetalleProducto().getPrecio(), producto.getEstadoProducto().toString()));
+        }
+
+
+        return listaProductosDto;
     }
 
 

@@ -15,12 +15,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
 @RestController
-@RequestMapping("/api/majejoFactura")
+@RequestMapping("/api/manejoFactura")
 @RequiredArgsConstructor
 public class FacturaController {
 
@@ -56,7 +55,7 @@ public class FacturaController {
      * @throws Exception
      */
     @GetMapping("/buscarFactura/{codigo}/{tipoCodigo}")
-    public ResponseEntity<RespuestaDto<List<FacturaDto>>> getMethodName(@PathVariable("codigo") String codigo,
+    public ResponseEntity<RespuestaDto<List<FacturaDto>>> buscarFactura(@PathVariable("codigo") String codigo,
     @PathVariable("tipoCodigo") String tipoCodigo ) throws Exception {
 
         List<FacturaDto> factura=facturaServiceImpl.buscarFacturaDto(codigo,tipoCodigo);

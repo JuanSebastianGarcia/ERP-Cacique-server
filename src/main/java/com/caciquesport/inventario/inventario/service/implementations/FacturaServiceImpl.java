@@ -10,10 +10,8 @@ import com.caciquesport.inventario.inventario.dto.FacturaDto;
 import com.caciquesport.inventario.inventario.dto.ProductoFacturaDto;
 import com.caciquesport.inventario.inventario.model.entity.Cliente;
 import com.caciquesport.inventario.inventario.model.entity.Factura;
-import com.caciquesport.inventario.inventario.model.estados.EstadoProducto;
 import com.caciquesport.inventario.inventario.repository.ClienteRepository;
 import com.caciquesport.inventario.inventario.repository.FacturaRepository;
-import com.caciquesport.inventario.inventario.service.interfaces.ClienteServicio;
 import com.caciquesport.inventario.inventario.service.interfaces.FacturaService;
 
 import jakarta.transaction.Transactional;
@@ -86,15 +84,6 @@ public class FacturaServiceImpl implements FacturaService{
 
 
 
-
-
-
-
-
-
-
-
-
     /**
      * 
      */
@@ -139,10 +128,25 @@ public class FacturaServiceImpl implements FacturaService{
      */
     private List<FacturaDto> convertirFacturaDto(List<Factura> listaFacturas) {
 
+        List<FacturaDto> listaFacturasDto= new ArrayList<>();
 
+        for (Factura factura : listaFacturas) {
+            
+            List<ProductoFacturaDto> produtosFacturaDtos = productoFacturaServicioImpl.convertirListaProductosDto(factura.getListaProductosFactura());
 
-        return null;
+            listaFacturasDto.add(new FacturaDto(factura.getCliente().getCedula(), produtosFacturaDtos,"NA", factura.getSoportePago().getValorTotalPagado()));
+        }
+
+        return listaFacturasDto;
     }
+
+
+
+
+
+
+
+
 
 
 
