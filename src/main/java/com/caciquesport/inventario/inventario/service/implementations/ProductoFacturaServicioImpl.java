@@ -78,7 +78,9 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
      */
     private void eliminarUnidadProducto(Producto productoEncontrado,String estado) {
         
-        if(estado.equals(EstadoProducto.EMPACADO) || estado.equals(EstadoProducto.ENTREGADO)){//estado entregado o empacado
+        EstadoProducto estadoEnum = EstadoProducto.valueOf(estado);
+
+        if(estadoEnum.equals(EstadoProducto.EMPACADO) || estadoEnum.equals(EstadoProducto.ENTREGADO)){//estado entregado o empacado
 
             if(productoEncontrado.getDetalleProducto().getCantidad()>=1){
                 productoEncontrado.getDetalleProducto().setCantidad(productoEncontrado.getDetalleProducto().getCantidad()-1);
