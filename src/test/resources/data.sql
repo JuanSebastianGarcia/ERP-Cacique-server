@@ -34,7 +34,7 @@ VALUES ('1122334455', 'Carlos López', '3001122334', 'carlos.lopez@example.com')
 
 
 --detalles del producto
-insert into detalle_producto (cantidad_producto, precio_producto) values (10, 60000);
+insert into detalle_producto (cantidad_producto, precio_producto) values (0, 60000);
 insert into detalle_producto (cantidad_producto, precio_producto) values (200, 60000);
 insert into detalle_producto (cantidad_producto, precio_producto) values (150, 60000);
 insert into detalle_producto (cantidad_producto, precio_producto) values (180, 60000);

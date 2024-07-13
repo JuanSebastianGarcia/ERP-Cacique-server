@@ -8,6 +8,8 @@ import jakarta.validation.constraints.NotNull;
  */
 public record ProductoFacturaDto(
 
+        int idRelacion,
+
         //Tipo de prenda
         @NotNull String prenda,
 

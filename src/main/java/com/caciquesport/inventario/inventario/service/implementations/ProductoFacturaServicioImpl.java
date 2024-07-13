@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.caciquesport.inventario.inventario.dto.FacturaDto;
 import com.caciquesport.inventario.inventario.dto.FiltroProductoDto;
 import com.caciquesport.inventario.inventario.dto.ProductoFacturaDto;
 import com.caciquesport.inventario.inventario.model.entity.Factura;
@@ -16,6 +17,7 @@ import com.caciquesport.inventario.inventario.repository.ProductoRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.ProductoFacturaServicio;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 
 
@@ -146,7 +148,7 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
             Producto productoEncontrado=productoRepository.findById(producto.getProducto()).get();
             
 
-            listaProductosDto.add(new ProductoFacturaDto(productoEncontrado.getTipoPrenda().getPrenda(),
+            listaProductosDto.add(new ProductoFacturaDto(producto.getId(),productoEncontrado.getTipoPrenda().getPrenda(),
                 productoEncontrado.getTipoInstitucion().getInstitucion(), productoEncontrado.getTipoTalla().getTalla(), 
                 productoEncontrado.getTipoHorario().getHorario(), productoEncontrado.getTipoGenero().getGenero(),
                 productoEncontrado.getDetalleProducto().getPrecio(), producto.getEstadoProducto().toString()));
@@ -154,6 +156,57 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
 
 
         return listaProductosDto;
+    }
+
+
+
+    /**
+     * Este metodo se encarga de revisar si los productos que fueron entregados, se mantienen asi en los cambios que se 
+     * quieren realizar
+     * @param listaAnterior - representa la lista de productos de la factura anteriormente generada
+     * @param listaActual  - represennta la nueva lista de productos que sera cambiada
+     * @throws Exception 
+     * 
+
+     * 
+     */
+    public void ValidarListaProductos(List<ProductoFactura> listaAnterior, @NotNull List<ProductoFacturaDto> listaActual) throws Exception {
+       
+
+        for (ProductoFactura productoAnterior : listaAnterior) {
+            
+            if(productoAnterior.getEstadoProducto().equals(EstadoProducto.ENTREGADO)){
+
+                //verificar si el producto mantiene el estado entregado
+                verificarContinuidadDeProductoEntregado(productoAnterior.getId(),listaActual);
+
+            }
+        }
+        
+    }
+
+
+    /**
+     * este metodo se encarga de verificar si un producto entregado permanece en estado entregado en la nueva lista
+     * 
+     * @param idProductoAnterior - id del producto de la factura
+     * @param listaActual - nueva lista de productos
+     * @throws Exception 
+     */
+    private void verificarContinuidadDeProductoEntregado(int idProductoAnterior, @NotNull List<ProductoFacturaDto> listaActual) throws Exception {
+        
+        for (ProductoFacturaDto productoFacturaDto : listaActual) {
+            
+            if(productoFacturaDto.idRelacion()==idProductoAnterior){
+
+                EstadoProducto estadoProducto=EstadoProducto.valueOf(productoFacturaDto.estado());
+
+                if(!(estadoProducto.equals(EstadoProducto.ENTREGADO))){
+                    throw new Exception("los productos que ya fueron entregados no pueden cambiar de estado");
+                }
+
+            }
+        }
     }
 
 

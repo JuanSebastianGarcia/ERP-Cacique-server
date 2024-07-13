@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 
@@ -47,6 +49,7 @@ public class FacturaController {
 
 
 
+    
     /**
      * Api encarga de devolver una lista de facturas
      * 
@@ -65,4 +68,19 @@ public class FacturaController {
     
 
 
+
+    /**
+     * api encargada de actualizar y generar camnbios en una factura
+     * 
+     * @param facturaDto - datos de la factura a la cual se le realizaran los cambios
+     * @return respuesta de la operacion exitosa
+     * @throws Exception 
+     */
+    @PutMapping("/actualizarFactura")
+    public ResponseEntity<RespuestaDto<String>> actualizarFactura(@RequestBody FacturaDto facturaDto) throws Exception {
+        
+        String respuesta=facturaServiceImpl.guardarCambios(facturaDto);
+        
+        return ResponseEntity.ok().body(new RespuestaDto<>(false, ""));
+    }
 }

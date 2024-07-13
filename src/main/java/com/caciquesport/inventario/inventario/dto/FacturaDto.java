@@ -10,6 +10,8 @@ import jakarta.validation.constraints.NotNull;
  */
 public record FacturaDto(
 
+    int idFactura,
+
     // Cédula del cliente asociado con la factura. Este campo no puede ser nulo.
     @NotNull 
     String cedulaCliente,

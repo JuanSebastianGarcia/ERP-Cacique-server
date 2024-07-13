@@ -32,6 +32,7 @@ public class FacturaServiceImpl implements FacturaService{
     private final FacturaRepository facturaRepository;
 
 
+
     /**
      *Metodo que se encarga de la generacion de una factura. en este proceso se hacen las validaciones necesarias
      *para asegurarse que la factura no solo se genera correctamente si no que sus datos seran integros y coherentes.
@@ -84,13 +85,73 @@ public class FacturaServiceImpl implements FacturaService{
 
 
 
+
+
     /**
+     * Este metodo comienza el proceso para generar cambios en una factura, se agregan o se quitan ciertos productos 
+     * y se agregan pagos. despues de cada cambio el estado de la factura es identificado y retornado
      * 
+     * @param facturaDto - datos para actualizar la factura
+     * 
+     * @return respuesta del estado de la factura
      */
     @Override
     public String guardarCambios(FacturaDto facturaDto) throws Exception {
     
-        throw new UnsupportedOperationException("Unimplemented method 'guardarCambios'");
+        String respuesta="";
+        
+        Factura facturaAnterior = obtenerFactura(facturaDto.idFactura());
+        
+
+        validarCambiosEnFactura(facturaDto,facturaAnterior);//validar cambios
+
+        return respuesta;
+    }
+
+
+
+
+
+    /**
+     * Este metodo se encarga de relaizar las validaciones que son necesarias para poder gestionar cambios en una 
+     * factura. estas validaciones son distintas al momento de generar una factura
+     * 
+     * @param facturaDto - nuevos datos para la factura
+     * @throws Exception 
+     */
+    private void validarCambiosEnFactura(FacturaDto facturaDto, Factura facturaAnterior) throws Exception {
+        
+        //verificar que los productos entregados se mantienen asi
+        productoFacturaServicioImpl.ValidarListaProductos(facturaAnterior.getListaProductosFactura(),facturaDto.listaProductos());
+
+        //
+
+
+    }
+
+
+
+
+    /**
+     * Este metodo busca una factura por su id y retorna la instancia
+     * 
+     * @param idFactura - codigo unico de la factura
+     * 
+     * @return instancia de la factura
+     * @throws Exception 
+     * 
+     * @exception - factura no fue encontrada
+     */
+    private Factura obtenerFactura(int idFactura) throws Exception {
+      
+        Optional<Factura> facturaEncontrada=facturaRepository.findById(idFactura);
+
+
+        if(facturaEncontrada.isEmpty()){
+            throw new Exception("la factura por el id no fue encontrada");
+        }
+
+        return facturaEncontrada.get();
     }
 
 
@@ -99,6 +160,11 @@ public class FacturaServiceImpl implements FacturaService{
     /**
      * Este metodo se encarga de consultar una lista de facturas por medio del codigo de la factura o 
      * la cedula del cliente a la cual la factura este asociada
+     * 
+     * @param codigo - codigo unico, puede ser del cliente o de la factura
+     * @param tipoCodigo - especifica si el codigo es del cliente o de la factura
+     * 
+     * @return lista de facturas en formato dto
      */
     @Override
     public List<FacturaDto> buscarFacturaDto(String codigo, String tipoCodigo) throws Exception {
@@ -134,21 +200,11 @@ public class FacturaServiceImpl implements FacturaService{
             
             List<ProductoFacturaDto> produtosFacturaDtos = productoFacturaServicioImpl.convertirListaProductosDto(factura.getListaProductosFactura());
 
-            listaFacturasDto.add(new FacturaDto(factura.getCliente().getCedula(), produtosFacturaDtos,"NA", factura.getSoportePago().getValorTotalPagado()));
+            listaFacturasDto.add(new FacturaDto(factura.getIdFactura(),factura.getCliente().getCedula(), produtosFacturaDtos,"NA", factura.getSoportePago().getValorTotalPagado()));
         }
 
         return listaFacturasDto;
     }
-
-
-
-
-
-
-
-
-
-
 
 
 
