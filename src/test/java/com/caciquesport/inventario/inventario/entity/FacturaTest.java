@@ -39,15 +39,15 @@ public class FacturaTest {
 
         List<ProductoFacturaDto> listaProductos = new ArrayList<>();
 
-        listaProductos.add(new ProductoFacturaDto("camisa", "robledo", "10", "diario", "hombre",60000,"ENTREGADO"));
-        listaProductos.add(new ProductoFacturaDto("pantalon", "tecnologico", "s", "fisica", "mujer",60000,"PENDIENTE"));
+        listaProductos.add(new ProductoFacturaDto(0,"camisa", "robledo", "10", "diario", "hombre",60000,"ENTREGADO"));
+        listaProductos.add(new ProductoFacturaDto(0,"pantalon", "tecnologico", "s", "fisica", "mujer",60000,"ENTREGADO"));
 
 
-        FacturaDto facturaDto = new FacturaDto(0,"1234567890", listaProductos, "EFECTIVO", 60000);
+        FacturaDto facturaDto = new FacturaDto(0,"1234567890", listaProductos, "EFECTIVO", 120000);
 
-        String respuesta=facturaServiceImpl.generarFactura(facturaDto);
+                String respuesta=facturaServiceImpl.generarFactura(facturaDto);
         
-        Assertions.assertEquals("la factura ha sido creada y su estado es :PENDIENTE", respuesta);
+        Assertions.assertEquals("la factura ha sido creada y su estado es :FINALIZADA", respuesta);
 
         validarEliminacionDeUnidades();
     }
@@ -67,7 +67,7 @@ public class FacturaTest {
         int cantidadActualProducto = producto.getDetalleProducto().getCantidad();
         
         //en los datos de prueba este producto tiene 10 unidades, por lo que despues de generar la factura debera ser 9
-        Assertions.assertEquals(0, cantidadActualProducto);
+        Assertions.assertEquals(9, cantidadActualProducto);
 
     }
 }

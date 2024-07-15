@@ -168,7 +168,7 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
 
      * 
      */
-    public void ValidarListaProductos(List<ProductoFactura> listaAnterior, @NotNull List<ProductoFacturaDto> listaActual) throws Exception {
+    public void ValidarListaProductos(List<ProductoFactura> listaAnterior,  List<ProductoFacturaDto> listaActual) throws Exception {
        
 
         for (ProductoFactura productoAnterior : listaAnterior) {
@@ -182,6 +182,7 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
         }
         
     }
+
 
 
     /**
@@ -205,6 +206,36 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
 
             }
         }
+    }
+
+
+
+
+    /**
+     * Este metodo se encarga de verificar que se entreguen la lista de productos correspondientes en una factura. en este proceso se 
+     * verifica que la suma de los productos entregados no supere el valor total pagado
+     * 
+     * @param valorTotalPagado
+     * @param listaProductosFactura
+     * @throws Exception 
+     */
+    public void validarProductosEntregados(double valorTotalPagado, List<ProductoFactura> listaProductosFactura) throws Exception {
+        
+        double sumaProductosEntregados=0;
+
+        for (ProductoFactura productoFactura : listaProductosFactura) {
+            
+            if(productoFactura.getEstadoProducto().equals(EstadoProducto.ENTREGADO)){
+
+                Producto producto = productoRepository.findById(productoFactura.getProducto()).get();
+                sumaProductosEntregados+=producto.getDetalleProducto().getPrecio();
+            }
+        }
+
+        if(sumaProductosEntregados>valorTotalPagado){
+            throw new Exception("El valor de los productos entregados supera el valor pagado");
+        }
+
     }
 
 

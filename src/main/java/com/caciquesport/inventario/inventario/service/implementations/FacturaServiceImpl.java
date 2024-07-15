@@ -69,6 +69,9 @@ public class FacturaServiceImpl implements FacturaService {
         // identificar estado de factura
         facturaNueva.identificarEstado();
 
+        // validar los productos entregados
+        productoFacturaServicioImpl.validarProductosEntregados(facturaNueva.getSoportePago().getValorTotalPagado(),facturaNueva.getListaProductosFactura());
+
         // almacenar factura
         facturaRepository.save(facturaNueva);
 
@@ -101,12 +104,9 @@ public class FacturaServiceImpl implements FacturaService {
         // identificar estado de factura
         facturaAnterior.identificarEstado();
 
-        //falta agregar la validacion para que se entreguen los productos correspondietes
-        /*
-         * tengo planeado manejarlo en el servicio de producto factura quien maneja
-         * toda la gestion en esta relacion
-         */
-
+        // validar los productos entregados
+        productoFacturaServicioImpl.validarProductosEntregados(facturaAnterior.getSoportePago().getValorTotalPagado(),
+                facturaAnterior.getListaProductosFactura());
 
         // almacenar factura
         facturaRepository.save(facturaAnterior);
@@ -259,33 +259,6 @@ public class FacturaServiceImpl implements FacturaService {
     private void validarDatos(FacturaDto facturaDto) throws Exception {
 
         validarDatosMinimos(facturaDto);
-
-        validarEntregaProductos(facturaDto);
-    }
-
-    /**
-     * Se encarga de validar que se entregen los productos correspondientes al
-     * cliente. los productos correspondientes
-     * son aquellos en los que el valor de los productos entregados no superan el
-     * valor pagado.
-     * 
-     * @param facturaDto - contiene los datos necesaios para generar una factura
-     * @throws Exception
-     */
-    private void validarEntregaProductos(FacturaDto facturaDto) throws Exception {
-
-        double sumaProductosEntregados = 0;
-
-        for (ProductoFacturaDto producto : facturaDto.listaProductos()) {
-
-            if (producto.estado().equals("ENTREGADO")) {
-                sumaProductosEntregados += producto.precio();
-            }
-        }
-
-        if (sumaProductosEntregados > facturaDto.pago()) {
-            throw new Exception("no se pueden entregar productos que superen el pago");
-        }
 
     }
 
