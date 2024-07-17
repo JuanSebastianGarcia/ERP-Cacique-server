@@ -11,6 +11,7 @@ import com.caciquesport.inventario.inventario.model.estados.EstadoProducto;
 import com.caciquesport.inventario.inventario.model.estados.EstadoSoportePago;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -174,11 +175,29 @@ public class Factura {
         return respuesta;
     }
 
-
+    /*
+     * Metodo que se encarga de retirar un producto de la factura
+     */
     public void removeProductoFactura(ProductoFactura productoFactura) {
         listaProductosFactura.remove(productoFactura);
         productoFactura.setFactura(null);
     }
+
+
+    /*
+     * Este metodo se encarga de actualizar el estado de uno de sus productos
+     */
+    public void actualizarEstadoProducto(ProductoFactura productoExistente, String estado) {
+        
+
+        int index=this.listaProductosFactura.indexOf(productoExistente);
+
+        this.listaProductosFactura.get(index).setEstadoProducto(EstadoProducto.valueOf(estado));
+
+    }
+
+
+
 
 
 }

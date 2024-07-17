@@ -14,7 +14,6 @@ import com.caciquesport.inventario.inventario.model.entity.Producto;
 import com.caciquesport.inventario.inventario.model.entity.ProductoFactura;
 import com.caciquesport.inventario.inventario.model.estados.EstadoProducto;
 import com.caciquesport.inventario.inventario.repository.FacturaRepository;
-import com.caciquesport.inventario.inventario.repository.ProductoFacturaRepository;
 import com.caciquesport.inventario.inventario.repository.ProductoRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.ProductoFacturaServicio;
 
@@ -34,7 +33,6 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
     /*
      * Servicio para el manejo de los productos
      */
-    private final ProductoFacturaRepository productoFacturaRepository;
     private final ProductoServicioImpl productoServicioImpl;
     private final FacturaRepository facturaRepository;
 
@@ -259,60 +257,43 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
      *                          la lista de productos
      * @throws Exception
      */
-    public void actualizarListaProductos(@NotNull List<ProductoFacturaDto> listaProductosDto, Factura factura) throws Exception {
+    public void actualizarListaProductos(@NotNull List<ProductoFacturaDto> listaProductosDto, Factura factura)
+            throws Exception {
+
+        List<ProductoFactura> listaProductosFactura = factura.getListaProductosFactura();
+
+        List<ProductoFactura> nuevaLista = new ArrayList<>();
+
         Map<Long, ProductoFactura> productoMap = new HashMap<>();
-        
+
         // Crear un mapa de los productos existentes por ID
-        for (ProductoFactura producto : factura.getListaProductosFactura()) {
+        for (ProductoFactura producto : listaProductosFactura) {
             productoMap.put(Long.valueOf(producto.getId()), producto);
         }
-    
-        List<ProductoFactura> nuevaLista = new ArrayList<>();
-    
+
         // Iterar sobre la nueva lista de productos
         for (ProductoFacturaDto productoDto : listaProductosDto) {
-            Long idProducto = Long.valueOf(productoDto.idRelacion());
-            ProductoFactura productoExistente = productoMap.get(idProducto);
-    
+            ProductoFactura productoExistente = productoMap.get(Long.valueOf(productoDto.idRelacion()));
+
             if (productoExistente != null) {
-                // Actualizar el estado del producto existente
+
+                factura.actualizarEstadoProducto(productoExistente,productoDto.estado());
                 productoExistente.setEstadoProducto(EstadoProducto.valueOf(productoDto.estado()));
                 nuevaLista.add(productoExistente);
+                
                 // Remover el producto del mapa para marcarlo como procesado
-                productoMap.remove(idProducto);
-            } else {
-                // Si es un nuevo producto, créalo y añádelo
-                ProductoFactura nuevoProducto = crearNuevoProductoFactura(productoDto, factura);
-                nuevaLista.add(nuevoProducto);
+                productoMap.remove(Long.valueOf(productoDto.idRelacion()));
+            }else{
+                factura.removeProductoFactura(productoExistente);
             }
         }
-    
-        // Manejar los productos que ya no están en la nueva lista
+
+        // Devolver los productos que no se encontraron en la nueva lista
         for (ProductoFactura productoEliminado : productoMap.values()) {
             devolverUnidadProducto(productoEliminado);
-            factura.removeProductoFactura(productoEliminado);
-            productoFacturaRepository.delete(productoEliminado);
         }
-    
-        // Actualizar la lista de productos en la factura
-        factura.getListaProductosFactura().clear();
-        factura.getListaProductosFactura().addAll(nuevaLista);
-    
-        facturaRepository.save(factura);
+
     }
-    
-
-
-    
-    private ProductoFactura crearNuevoProductoFactura(ProductoFacturaDto productoDto, Factura factura) {
-        ProductoFactura nuevoProducto = new ProductoFactura();
-        nuevoProducto.setEstadoProducto(EstadoProducto.valueOf(productoDto.estado()));
-        nuevoProducto.setFactura(factura);
-        // Configura otros campos necesarios aquí
-        return nuevoProducto;
-    }
-
-
 
     /**
      * Este método se encarga de hacer la devolución de un producto agregando una
