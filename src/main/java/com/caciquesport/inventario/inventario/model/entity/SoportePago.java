@@ -68,7 +68,9 @@ public class SoportePago {
             throw new Exception("no se puede realizar un pago superior");
         }
 
+        if(pago!=0){
         instanciarAgregarPago(pago,metodoPago);
+        }
     }
 
 

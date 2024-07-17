@@ -175,4 +175,10 @@ public class Factura {
     }
 
 
+    public void removeProductoFactura(ProductoFactura productoFactura) {
+        listaProductosFactura.remove(productoFactura);
+        productoFactura.setFactura(null);
+    }
+
+
 }
