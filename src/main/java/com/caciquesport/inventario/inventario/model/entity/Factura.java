@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import com.caciquesport.inventario.inventario.dto.FacturaDto;
 import com.caciquesport.inventario.inventario.dto.ProductoFacturaDto;
 import com.caciquesport.inventario.inventario.model.estados.EstadoFactura;
@@ -11,7 +12,6 @@ import com.caciquesport.inventario.inventario.model.estados.EstadoProducto;
 import com.caciquesport.inventario.inventario.model.estados.EstadoSoportePago;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -57,8 +57,7 @@ public class Factura {
 
 
     //Lista de productos asociados a la factura a través de la entidad intermedia ProductoFactura
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "factura_id")
+    @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductoFactura> listaProductosFactura = new ArrayList<>();
 
 
@@ -87,8 +86,10 @@ public class Factura {
 
 
 
-    /*
+    /**
      * Este metodo calcula el valor total de la factura y agrega el valor de la misma al soporte de pago
+     * 
+     * @param list - representa la lista de productos que pertenecen a la factura
      */
     public void calcularValorFactura(List<ProductoFacturaDto> list){
 
@@ -125,6 +126,8 @@ public class Factura {
         boolean productoPedienteEmpacado=hallarProductoPendiente();
 
         boolean pagoIncompleto=solicitarEstadoSoporte();
+
+        System.out.print("los productos estan :" + productoPedienteEmpacado +" el pago esta :"+pagoIncompleto);
 
         if(productoPedienteEmpacado==true || pagoIncompleto==true){
             this.estadoFactura=EstadoFactura.PENDIENTE;
@@ -179,17 +182,20 @@ public class Factura {
      * Metodo que se encarga de retirar un producto de la factura
      */
     public void removeProductoFactura(ProductoFactura productoFactura) {
-        listaProductosFactura.remove(productoFactura);
+        int index=this.listaProductosFactura.indexOf(productoFactura);
         productoFactura.setFactura(null);
+        this.listaProductosFactura.remove(index);
     }
 
 
-    /*
-     * Este metodo se encarga de actualizar el estado de uno de sus productos
+    /**
+     * Este metodo se encarga de actualizar el estado de un producto de la factura
+     * 
+     * @param productoExistente - instancia del producto a actualizar
+     * @param estado - nuevo estado del producto 
      */
     public void actualizarEstadoProducto(ProductoFactura productoExistente, String estado) {
-        
-
+    
         int index=this.listaProductosFactura.indexOf(productoExistente);
 
         this.listaProductosFactura.get(index).setEstadoProducto(EstadoProducto.valueOf(estado));

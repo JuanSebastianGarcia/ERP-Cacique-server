@@ -68,9 +68,12 @@ public class SoportePago {
             throw new Exception("no se puede realizar un pago superior");
         }
 
+        //si hay un pago este se debe de instanciar
         if(pago!=0){
-        instanciarAgregarPago(pago,metodoPago);
+            instanciarAgregarPago(pago,metodoPago);
         }
+
+        identificarEstado();
     }
 
 
@@ -91,9 +94,6 @@ public class SoportePago {
         nuevoPago.setValorPago(pago);
 
         listaPagos.add(nuevoPago);
-
-        
-        identificarEstado();
     }
 
 

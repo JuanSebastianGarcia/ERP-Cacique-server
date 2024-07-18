@@ -107,7 +107,7 @@ public class FacturaTest {
         }
 
         listaProductos.remove(posicion);
-
+    
         FacturaDto facturaDto = new FacturaDto(facturaEncontrada.idFactura(), "1234567890", listaProductos, "EFECTIVO", 0);
 
 

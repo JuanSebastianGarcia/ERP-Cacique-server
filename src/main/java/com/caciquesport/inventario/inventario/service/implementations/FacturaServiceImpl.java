@@ -95,8 +95,12 @@ public class FacturaServiceImpl implements FacturaService {
 
         validarCambiosEnFactura(facturaDto, facturaAnterior);// validar cambios
 
+        System.out.println("------------------------------------------------------------------------------------------------------------------");
         // agregar lista de productos a la factura
         productoFacturaServicioImpl.actualizarListaProductos(facturaDto.listaProductos(), facturaAnterior);
+
+        //identificar nuevo valor de la factura
+        facturaAnterior.calcularValorFactura(facturaDto.listaProductos());
 
         // agregar pago
         facturaAnterior.agregarPago(facturaDto);
@@ -107,6 +111,7 @@ public class FacturaServiceImpl implements FacturaService {
         // validar los productos entregados
         productoFacturaServicioImpl.validarProductosEntregados(facturaAnterior.getSoportePago().getValorTotalPagado(),
                 facturaAnterior.getListaProductosFactura());
+
 
         // almacenar factura
         facturaRepository.save(facturaAnterior);

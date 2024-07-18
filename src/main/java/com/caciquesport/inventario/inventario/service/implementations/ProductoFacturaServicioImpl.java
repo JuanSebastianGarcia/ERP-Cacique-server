@@ -14,6 +14,7 @@ import com.caciquesport.inventario.inventario.model.entity.Producto;
 import com.caciquesport.inventario.inventario.model.entity.ProductoFactura;
 import com.caciquesport.inventario.inventario.model.estados.EstadoProducto;
 import com.caciquesport.inventario.inventario.repository.FacturaRepository;
+import com.caciquesport.inventario.inventario.repository.ProductoFacturaRepository;
 import com.caciquesport.inventario.inventario.repository.ProductoRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.ProductoFacturaServicio;
 
@@ -34,7 +35,7 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
      * Servicio para el manejo de los productos
      */
     private final ProductoServicioImpl productoServicioImpl;
-    private final FacturaRepository facturaRepository;
+    private final ProductoFacturaRepository productoFacturaRepository;
 
     /*
      * Repositorio para el manejo de los productos
@@ -257,13 +258,10 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
      *                          la lista de productos
      * @throws Exception
      */
-    public void actualizarListaProductos(@NotNull List<ProductoFacturaDto> listaProductosDto, Factura factura)
+    public void actualizarListaProductos(List<ProductoFacturaDto> listaProductosDto, Factura factura)
             throws Exception {
 
         List<ProductoFactura> listaProductosFactura = factura.getListaProductosFactura();
-
-        List<ProductoFactura> nuevaLista = new ArrayList<>();
-
         Map<Long, ProductoFactura> productoMap = new HashMap<>();
 
         // Crear un mapa de los productos existentes por ID
@@ -271,29 +269,32 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
             productoMap.put(Long.valueOf(producto.getId()), producto);
         }
 
-        // Iterar sobre la nueva lista de productos
+        //Iterar sobre la nueva lista de productos
         for (ProductoFacturaDto productoDto : listaProductosDto) {
+
             ProductoFactura productoExistente = productoMap.get(Long.valueOf(productoDto.idRelacion()));
 
             if (productoExistente != null) {
 
                 factura.actualizarEstadoProducto(productoExistente,productoDto.estado());
-                productoExistente.setEstadoProducto(EstadoProducto.valueOf(productoDto.estado()));
-                nuevaLista.add(productoExistente);
-                
+               
                 // Remover el producto del mapa para marcarlo como procesado
                 productoMap.remove(Long.valueOf(productoDto.idRelacion()));
-            }else{
-                factura.removeProductoFactura(productoExistente);
+
             }
         }
 
         // Devolver los productos que no se encontraron en la nueva lista
         for (ProductoFactura productoEliminado : productoMap.values()) {
+            factura.removeProductoFactura(productoEliminado);
+            productoFacturaRepository.delete(productoEliminado);
             devolverUnidadProducto(productoEliminado);
         }
 
     }
+
+
+
 
     /**
      * Este método se encarga de hacer la devolución de un producto agregando una
@@ -304,9 +305,9 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
     private void devolverUnidadProducto(ProductoFactura productoEliminado) {
         Producto producto = productoRepository.findById(productoEliminado.getProducto())
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
-        producto.getDetalleProducto().setCantidad(producto.getDetalleProducto().getCantidad() + 1); // Se devuelve la
-                                                                                                    // unidad al
-                                                                                                    // producto
+        producto.getDetalleProducto().setCantidad(producto.getDetalleProducto().getCantidad() + 1); // Se devuelve la unidad al producto
+
+        productoRepository.save(producto);
     }
 
 }
