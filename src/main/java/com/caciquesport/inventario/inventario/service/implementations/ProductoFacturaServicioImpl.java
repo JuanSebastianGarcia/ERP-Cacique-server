@@ -43,13 +43,14 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
     private final ProductoRepository productoRepository;
 
     /**
-     * recorrer la lista de productos uno a uno, los busca en la base de datos y
-     * agrega la instancia a una nueva lista que sera
-     * agregada a la factura
-     *
+     * Metodo encargado de agregar una lista de productos a una factura. se 
+     * debera buscar la instancia de cada producto, agregarla a la lista de productos y
+     * actualizar el inventario segun el estado en el que quede cada producto. por ultimo
+     * la lista de productos con las instancias sera agregada a la factura
+     * 
      * @param listaProductos - contiene la informacion necesaria de los productos
-     * @param factura        - instancia de la factura a la que se le agregara la
-     *                       lista
+     * @param factura        - instancia de la factura a la que se le agregara la lista
+     * 
      */
     @Override
     public void generarListaProductos(List<ProductoFacturaDto> listaProductosDto, Factura factura) throws Exception {

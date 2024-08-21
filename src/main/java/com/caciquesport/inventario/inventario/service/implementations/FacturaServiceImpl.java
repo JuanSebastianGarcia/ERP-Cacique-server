@@ -78,6 +78,8 @@ public class FacturaServiceImpl implements FacturaService {
         return "la factura ha sido creada y su estado es :" + facturaNueva.getEstadoFactura();
     }
 
+
+
     /**
      * Este metodo comienza el proceso para generar cambios en una factura, se
      * agregan o se quitan ciertos productos
@@ -309,7 +311,7 @@ public class FacturaServiceImpl implements FacturaService {
 
     /**
      * Este metodo se encarga de buscar un cliente, y al encontrarlo lo agregara a
-     * la factura32
+     * la factura
      * 
      * @param facturaNueva  - instancia de la nueva factura
      * @param cedulaCliente - codigo unico del cliente
