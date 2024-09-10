@@ -81,14 +81,16 @@ public class FacturaServiceImpl implements FacturaService {
 
 
     /**
-     * Este metodo comienza el proceso para generar cambios en una factura, se
-     * agregan o se quitan ciertos productos
-     * y se agregan pagos. despues de cada cambio el estado de la factura es
+     * Este metodo comienza el proceso para generar cambios en una factura, se puede:
+     *  1.eliminar productos los cuales esten en estado pendiente.
+     *  2.agregar pagos
+     * despues de cada cambio el estado de la factura es
      * identificado y retornado
      * 
      * @param facturaDto - datos para actualizar la factura
-     * 
+     *
      * @return respuesta del estado de la factura
+     * 
      */
     @Override
     public String guardarCambios(FacturaDto facturaDto) throws Exception {
@@ -97,7 +99,6 @@ public class FacturaServiceImpl implements FacturaService {
 
         validarCambiosEnFactura(facturaDto, facturaAnterior);// validar cambios
 
-        System.out.println("------------------------------------------------------------------------------------------------------------------");
         // agregar lista de productos a la factura
         productoFacturaServicioImpl.actualizarListaProductos(facturaDto.listaProductos(), facturaAnterior);
 
@@ -121,6 +122,9 @@ public class FacturaServiceImpl implements FacturaService {
 
         return "La factura ha sido actualizada y el estado es:" + facturaAnterior.getEstadoFactura();
     }
+
+
+
 
     /**
      * Este metodo se encarga de relaizar las validaciones que son necesarias para

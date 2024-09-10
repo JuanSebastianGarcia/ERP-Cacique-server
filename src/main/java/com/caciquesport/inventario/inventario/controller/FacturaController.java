@@ -70,10 +70,10 @@ public class FacturaController {
 
 
     /**
-     * api encargada de actualizar y generar camnbios en una factura
+     * api encargada de actualizar y generar cambios en una factura. 
      * 
      * @param facturaDto - datos de la factura a la cual se le realizaran los cambios
-     * @return respuesta de la operacion exitosa
+     * @return respuesta de la operacion 
      * @throws Exception 
      */
     @PutMapping("/actualizarFactura")
@@ -81,6 +81,6 @@ public class FacturaController {
         
         String respuesta=facturaServiceImpl.guardarCambios(facturaDto);
         
-        return ResponseEntity.ok().body(new RespuestaDto<>(false, ""));
+        return ResponseEntity.ok().body(new RespuestaDto<>(false, respuesta));
     }
 }

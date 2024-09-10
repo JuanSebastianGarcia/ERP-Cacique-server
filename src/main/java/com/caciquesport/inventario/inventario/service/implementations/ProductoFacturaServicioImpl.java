@@ -172,10 +172,6 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
      *                      anteriormente generada
      * @param listaActual   - represennta la nueva lista de productos que sera
      *                      cambiada
-     * @throws Exception
-     * 
-     * 
-     * 
      */
     public void ValidarListaProductos(List<ProductoFactura> listaAnterior, List<ProductoFacturaDto> listaActual)
             throws Exception {
@@ -217,6 +213,7 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
         }
     }
 
+
     /**
      * Este metodo se encarga de verificar que se entreguen la lista de productos
      * correspondientes en una factura. en este proceso se
@@ -251,7 +248,7 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
      * Este método se encarga de actualizar la lista de productos de una factura y
      * de cambiar su estado. La única
      * acción que se puede hacer es cambiar el estado de un producto o retirar un
-     * producto; en este punto no es posible
+     * producto que este en estado pendiente o empacado; en este punto no es posible
      * agregar un producto a la factura
      * 
      * @param listaProductosDto - lista de productos nueva
