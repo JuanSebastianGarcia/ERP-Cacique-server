@@ -129,7 +129,7 @@ public class FacturaServiceImpl implements FacturaService {
     /**
      * Este metodo se encarga de relaizar las validaciones que son necesarias para
      * poder gestionar cambios en una
-     * factura. estas validaciones son distintas al momento de generar una factura
+     * factura. estas validaciones son distintas a ñas validaciones para generar una factura
      * 
      * @param facturaDto - nuevos datos para la factura
      * @throws Exception

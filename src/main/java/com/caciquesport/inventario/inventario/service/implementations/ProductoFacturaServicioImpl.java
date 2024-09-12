@@ -194,10 +194,12 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
      * 
      * @param idProductoAnterior - id del producto de la factura
      * @param listaActual        - nueva lista de productos
-     * @throws Exception
+     * @throws Exception - en caso de cambiar el estado de un producto entregado o eliminarlo
      */
-    private void verificarContinuidadDeProductoEntregado(int idProductoAnterior,
-            @NotNull List<ProductoFacturaDto> listaActual) throws Exception {
+    private void verificarContinuidadDeProductoEntregado(int idProductoAnterior, 
+            List<ProductoFacturaDto> listaActual) throws Exception {
+
+        boolean inexistente=false; //esta bandera nos permite identificar si el producto no fue encontrado 
 
         for (ProductoFacturaDto productoFacturaDto : listaActual) {
 
@@ -208,9 +210,20 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
                 if (!(estadoProducto.equals(EstadoProducto.ENTREGADO))) {
                     throw new Exception("los productos que ya fueron entregados no pueden cambiar de estado");
                 }
-
+                inexistente=false;
+                break;
+            }else{
+                inexistente=true;
             }
         }
+
+        //con este if si el producto no se encontro fue porque se elimino
+        if(inexistente==true){
+            throw new Exception("los productos entregados no se pueden devolver");
+        }
+
+
+
     }
 
 
