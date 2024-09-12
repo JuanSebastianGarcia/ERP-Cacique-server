@@ -10,7 +10,11 @@ import jakarta.validation.constraints.NotNull;
  */
 public record FacturaDto(
 
+    //id unico de la factura
     int idFactura,
+
+    //estado en el que se encuentra la factura.
+    String estadoFactura,
 
     // Cédula del cliente asociado con la factura. Este campo no puede ser nulo.
     @NotNull 

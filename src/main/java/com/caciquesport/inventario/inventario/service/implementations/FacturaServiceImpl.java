@@ -190,7 +190,7 @@ public class FacturaServiceImpl implements FacturaService {
     }
 
     /**
-     * Metodo encargado de convertir una lista de objetos facturas en una lista Dto
+     * Metodo encargado de convertir una lista de  facturas en una lista DtoFactura pata retornar los datos al cliente
      * 
      * @param listaFacturas - lista de objetos de factura
      * @return listaFacturaDto - lista de facturas en formato dto
@@ -204,7 +204,7 @@ public class FacturaServiceImpl implements FacturaService {
             List<ProductoFacturaDto> produtosFacturaDtos = productoFacturaServicioImpl
                     .convertirListaProductosDto(factura.getListaProductosFactura());
 
-            listaFacturasDto.add(new FacturaDto(factura.getIdFactura(), factura.getCliente().getCedula(),
+            listaFacturasDto.add(new FacturaDto(factura.getIdFactura(),factura.getEstadoFactura().toString(), factura.getCliente().getCedula(),
                     produtosFacturaDtos, "NA", factura.getSoportePago().getValorTotalPagado()));
         }
 

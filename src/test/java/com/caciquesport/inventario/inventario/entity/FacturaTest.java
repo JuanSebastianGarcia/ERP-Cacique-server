@@ -45,7 +45,7 @@ public class FacturaTest {
         listaProductos
                 .add(new ProductoFacturaDto(0, "pantalon", "tecnologico", "s", "fisica", "mujer", 60000, "PENDIENTE"));
 
-        FacturaDto facturaDto = new FacturaDto(0, "1234567890", listaProductos, "EFECTIVO", 60000);
+        FacturaDto facturaDto = new FacturaDto(0,"", "1234567890", listaProductos, "EFECTIVO", 60000);
 
         String respuesta = facturaServiceImpl.generarFactura(facturaDto);
 
@@ -108,7 +108,7 @@ public class FacturaTest {
 
         listaProductos.remove(posicion);
     
-        FacturaDto facturaDto = new FacturaDto(facturaEncontrada.idFactura(), "1234567890", listaProductos, "EFECTIVO", 0);
+        FacturaDto facturaDto = new FacturaDto(facturaEncontrada.idFactura(),facturaEncontrada.estadoFactura(), "1234567890", listaProductos, "EFECTIVO", 0);
 
 
         String respuesta = facturaServiceImpl.guardarCambios(facturaDto);

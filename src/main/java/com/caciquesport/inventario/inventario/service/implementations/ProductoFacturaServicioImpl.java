@@ -251,9 +251,9 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
      * producto que este en estado pendiente o empacado; en este punto no es posible
      * agregar un producto a la factura
      * 
-     * @param listaProductosDto - lista de productos nueva
-     * @param factura           - instancia de la factura a la cual se le actualiza
-     *                          la lista de productos
+     * @param listaProductosDto - lista de productos actualizada 
+     * @param factura           - instancia de la factura origin en la base de datos
+     * 
      * @throws Exception
      */
     public void actualizarListaProductos(List<ProductoFacturaDto> listaProductosDto, Factura factura)
