@@ -45,4 +45,8 @@ public interface FacturaService {
      * @return FacturaDto - al encontrar una factura se debe de retornar la factura encontrada
      **/
     List<FacturaDto> buscarFacturaDto(String codigo, String tipoCodigo)throws Exception;
+
+
+
+    List<ProductoPendienteDto> consultarProductosPendientes()throws excepcion;
 }

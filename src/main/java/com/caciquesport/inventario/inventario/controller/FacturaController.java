@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -83,4 +85,18 @@ public class FacturaController {
         
         return ResponseEntity.ok().body(new RespuestaDto<>(false, respuesta));
     }
+
+
+
+    /*
+     * api encargada de retornar la lista de productos que estan en estado pendiente
+     */
+    @GetMapping("/consultarProductosPendientes")
+    public String getMethodName() {
+
+        facturaServiceImpl.consultarProductosPendientes();
+
+        return new String();
+    }
+    
 }

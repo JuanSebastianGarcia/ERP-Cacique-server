@@ -13,6 +13,8 @@ import com.caciquesport.inventario.inventario.model.entity.Factura;
 import com.caciquesport.inventario.inventario.repository.ClienteRepository;
 import com.caciquesport.inventario.inventario.repository.FacturaRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.FacturaService;
+import com.caciquesport.inventario.inventario.service.interfaces.ProductoPendienteDto;
+import com.caciquesport.inventario.inventario.service.interfaces.excepcion;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -124,7 +126,11 @@ public class FacturaServiceImpl implements FacturaService {
     }
 
 
-
+    @Override
+    public List<ProductoPendienteDto> consultarProductosPendientes() throws excepcion {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'consultarProductosPendientes'");
+    }
 
     /**
      * Este metodo se encarga de relaizar las validaciones que son necesarias para
@@ -333,5 +339,9 @@ public class FacturaServiceImpl implements FacturaService {
 
         facturaNueva.setCliente(clienteEncontrado.get());
     }
+
+
+
+
 
 }
