@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.caciquesport.inventario.inventario.dto.FacturaDto;
+import com.caciquesport.inventario.inventario.dto.ProductoPendienteDto;
 
 /**
  * Interfaz para definir los servicios de gestión de Factura.
@@ -48,5 +49,11 @@ public interface FacturaService {
 
 
 
-    List<ProductoPendienteDto> consultarProductosPendientes()throws excepcion;
+    /*
+     * Consultar una lista de productos que estan en estado pendiente
+     * 
+     * @return ProductoFacturaDto - contiene la informacion de cada producto pendiente ademas de datos como la fecha 
+     * de generacion y el id de su factura
+     */
+    List<ProductoPendienteDto> consultarProductosPendientes()throws Exception;
 }

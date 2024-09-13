@@ -92,7 +92,7 @@ public class FacturaController {
      * api encargada de retornar la lista de productos que estan en estado pendiente
      */
     @GetMapping("/consultarProductosPendientes")
-    public String getMethodName() {
+    public String getMethodName() throws Exception {
 
         facturaServiceImpl.consultarProductosPendientes();
 

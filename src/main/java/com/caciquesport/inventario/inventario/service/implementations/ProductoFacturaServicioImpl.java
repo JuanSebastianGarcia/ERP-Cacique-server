@@ -321,4 +321,19 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
         productoRepository.save(producto);
     }
 
+
+    /**
+     * Este metodo se encarga de hacer una consulta y retornar la lista de productos pendientes registrados
+     * en las facturas. esta lista no contiene la informacion del producto si no informacion de la relacion entre
+     * una factura y un producto
+     * 
+     * @return - lista de productos
+     */
+    public List<ProductoFactura> consultarProductosPendientes() {
+        
+        List<ProductoFactura> listaProductos=productoFacturaRepository.findAll();
+
+        return listaProductos;
+    }
+
 }

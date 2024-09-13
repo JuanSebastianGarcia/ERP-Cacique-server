@@ -1,20 +1,23 @@
 package com.caciquesport.inventario.inventario.service.implementations;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
 import com.caciquesport.inventario.inventario.dto.FacturaDto;
 import com.caciquesport.inventario.inventario.dto.ProductoFacturaDto;
+import com.caciquesport.inventario.inventario.dto.ProductoPendienteDto;
 import com.caciquesport.inventario.inventario.model.entity.Cliente;
 import com.caciquesport.inventario.inventario.model.entity.Factura;
+import com.caciquesport.inventario.inventario.model.entity.Producto;
+import com.caciquesport.inventario.inventario.model.entity.ProductoFactura;
 import com.caciquesport.inventario.inventario.repository.ClienteRepository;
 import com.caciquesport.inventario.inventario.repository.FacturaRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.FacturaService;
-import com.caciquesport.inventario.inventario.service.interfaces.ProductoPendienteDto;
-import com.caciquesport.inventario.inventario.service.interfaces.excepcion;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +33,7 @@ public class FacturaServiceImpl implements FacturaService {
     private final ClienteRepository clienteRepository;
     private final ProductoFacturaServicioImpl productoFacturaServicioImpl;
     private final FacturaRepository facturaRepository;
+    private final ProductoServicioImpl productoServicioImpl;
 
     /**
      * Metodo que se encarga de la generacion de una factura. en este proceso se
@@ -126,11 +130,60 @@ public class FacturaServiceImpl implements FacturaService {
     }
 
 
+
+
+    /*
+     * Este metodo se encarga de realizar la consulta de todos los productos pendientes y organizar la 
+     * informacion necesaria como los datos del producto, la fecha en la que fue generado y el id de la factura a la 
+     * que pertenece
+     */
     @Override
-    public List<ProductoPendienteDto> consultarProductosPendientes() throws excepcion {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'consultarProductosPendientes'");
+    public List<ProductoPendienteDto> consultarProductosPendientes() throws Exception {
+        
+        //consultar la lista de productos en estado pendiente
+        List<ProductoFactura> listaProductosPendientes=productoFacturaServicioImpl.consultarProductosPendientes();
+        
+        //consultar la factura de cada uno de dichos productos
+        List<Producto> ListaProductos = consultarInformacionProductos(listaProductosPendientes);
+
+
+
+
+        //construir la lista de dto para retornar
+
+
+
+
+
+        return null;
     }
+
+
+
+
+    /**
+     * Este metodo extrae los ID repetidos en la lista de relaciones de productos pendientes.
+     * cuando tiene los id de los productos pendientes sin repetir, hace la consulta para obtener la informacion
+     * 
+     * @param listaProductosPendientes - lista de las relaciones entre la factura y un producto que estan en estado pendiente
+     * 
+     * @return List<Producto> lista de productos
+     */
+    private List<Producto> consultarInformacionProductos(List<ProductoFactura> listaProductosPendientes) {
+    
+        Set<Integer> listaId = new HashSet<>();//almacena los id de los productos sin repetir 
+
+        for (ProductoFactura productoFactura : listaProductosPendientes) {
+            listaId.add(productoFactura.getProducto());
+        }
+
+        //se busca la informacion de los productos sin repeti
+        List<Producto> listaInformacionProductos= productoServicioImpl.buscarListaProductos(listaId);
+
+        return listaInformacionProductos;
+    }
+
+
 
     /**
      * Este metodo se encarga de relaizar las validaciones que son necesarias para
