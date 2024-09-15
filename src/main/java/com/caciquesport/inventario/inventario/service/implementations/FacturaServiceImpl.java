@@ -5,6 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.Map;
+import java.util.HashMap;
+
 
 import org.springframework.stereotype.Service;
 
@@ -144,20 +147,45 @@ public class FacturaServiceImpl implements FacturaService {
         List<ProductoFactura> listaProductosPendientes=productoFacturaServicioImpl.consultarProductosPendientes();
         
         //consultar la factura de cada uno de dichos productos
-        List<Producto> ListaProductos = consultarInformacionProductos(listaProductosPendientes);
-
-
-
+        Map<Integer, Producto> listaProductos = consultarInformacionProductos(listaProductosPendientes);
 
         //construir la lista de dto para retornar
-
-
-
-
-
-        return null;
+        return construirDtoProductosPendientes(listaProductosPendientes,listaProductos);
     }
 
+
+
+    /**
+     * Construir los dto con base en informacion de la relacion entre el producto y la factura, y la informacion individual
+     * de dicho producto. el metodo construye un dto para cada producto pendiente, agrega la informacion y retorna 
+     * la lista dto
+     * 
+     * @param listaProductosPendientes - lista de las relaciones entre los productos y facturas, contiene informacion
+     *                                   relevante en la relacion y no del producto
+     * 
+     * @param listaProductos - contiene la informacion individual que caracteriza cada producto
+     * 
+     * @return - lista dto que contiene informacion del producto y de la relacion
+     */
+    private List<ProductoPendienteDto> construirDtoProductosPendientes(List<ProductoFactura> listaProductosPendientes,
+            Map<Integer, Producto> listaProductos) {
+
+        List<ProductoPendienteDto> listaDtos = new ArrayList<>();
+                
+
+        for (ProductoFactura productoPendiente : listaProductosPendientes) {
+            
+            Producto producto=listaProductos.get(productoPendiente.getProducto());
+
+            listaDtos.add(new ProductoPendienteDto(producto.getTipoPrenda().getPrenda(), producto.getTipoInstitucion().getInstitucion(), 
+                                                    producto.getTipoTalla().getTalla(), producto.getTipoHorario().getHorario(), producto.getTipoGenero().getGenero(),
+                                                    productoPendiente.getFactura().getIdFactura(),productoPendiente.getFactura().getFechaFactura().toString()));
+        }
+
+
+
+        return listaDtos;
+    }
 
 
 
@@ -169,7 +197,7 @@ public class FacturaServiceImpl implements FacturaService {
      * 
      * @return List<Producto> lista de productos
      */
-    private List<Producto> consultarInformacionProductos(List<ProductoFactura> listaProductosPendientes) {
+    private Map<Integer, Producto> consultarInformacionProductos(List<ProductoFactura> listaProductosPendientes) {
     
         Set<Integer> listaId = new HashSet<>();//almacena los id de los productos sin repetir 
 
@@ -178,9 +206,10 @@ public class FacturaServiceImpl implements FacturaService {
         }
 
         //se busca la informacion de los productos sin repeti
-        List<Producto> listaInformacionProductos= productoServicioImpl.buscarListaProductos(listaId);
+        Map<Integer, Producto> listaProductos= productoServicioImpl.buscarListaProductos(listaId);
 
-        return listaInformacionProductos;
+
+        return listaProductos;
     }
 
 
@@ -222,6 +251,8 @@ public class FacturaServiceImpl implements FacturaService {
         return facturaEncontrada.get();
     }
 
+
+    
     /**
      * Este metodo se encarga de consultar una lista de facturas por medio del
      * codigo de la factura o
