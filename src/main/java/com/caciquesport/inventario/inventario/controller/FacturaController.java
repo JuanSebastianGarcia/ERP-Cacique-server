@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.caciquesport.inventario.inventario.dto.FacturaDto;
+import com.caciquesport.inventario.inventario.dto.ProductoPendienteDto;
 import com.caciquesport.inventario.inventario.dto.RespuestaDto;
 import com.caciquesport.inventario.inventario.service.implementations.FacturaServiceImpl;
 
@@ -88,15 +89,17 @@ public class FacturaController {
 
 
 
-    /*
+    /**
      * api encargada de retornar la lista de productos que estan en estado pendiente
+     * 
+     * @Return lista de productos pendientes
      */
     @GetMapping("/consultarProductosPendientes")
-    public String getMethodName() throws Exception {
+    public ResponseEntity<RespuestaDto<List<ProductoPendienteDto>>> getMethodName() throws Exception {
 
-        facturaServiceImpl.consultarProductosPendientes();
+        List<ProductoPendienteDto> listaProductos = facturaServiceImpl.consultarProductosPendientes();
 
-        return new String();
+        return ResponseEntity.ok().body(new RespuestaDto<>(false, listaProductos));
     }
     
 }

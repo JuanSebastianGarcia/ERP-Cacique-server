@@ -13,13 +13,11 @@ import com.caciquesport.inventario.inventario.model.entity.Factura;
 import com.caciquesport.inventario.inventario.model.entity.Producto;
 import com.caciquesport.inventario.inventario.model.entity.ProductoFactura;
 import com.caciquesport.inventario.inventario.model.estados.EstadoProducto;
-import com.caciquesport.inventario.inventario.repository.FacturaRepository;
 import com.caciquesport.inventario.inventario.repository.ProductoFacturaRepository;
 import com.caciquesport.inventario.inventario.repository.ProductoRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.ProductoFacturaServicio;
 
 import jakarta.transaction.Transactional;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 
 /*
@@ -331,9 +329,13 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
      */
     public List<ProductoFactura> consultarProductosPendientes() {
         
-        List<ProductoFactura> listaProductos=productoFacturaRepository.findAll();
+        List<ProductoFactura> listaProductos=productoFacturaRepository.findByEstadoProducto(EstadoProducto.PENDIENTE);
 
         return listaProductos;
     }
+
+
+
+
 
 }
