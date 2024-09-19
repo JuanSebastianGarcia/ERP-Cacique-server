@@ -155,7 +155,7 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
                     productoEncontrado.getTipoInstitucion().getInstitucion(),
                     productoEncontrado.getTipoTalla().getTalla(),
                     productoEncontrado.getTipoHorario().getHorario(), productoEncontrado.getTipoGenero().getGenero(),
-                    productoEncontrado.getDetalleProducto().getPrecio(), producto.getEstadoProducto().toString()));
+                    productoEncontrado.getDetalleProducto().getPrecio(), producto.getEstadoProducto().toString(),producto.getDescripcion()));
         }
 
         return listaProductosDto;

@@ -29,6 +29,9 @@ public record ProductoFacturaDto(
         @NotNull double precio,
 
         //Estado del producto
-        @NotNull String estado
+        @NotNull String estado,
+
+        //Descripcion del producto
+        String descripcion
         ) {
 }

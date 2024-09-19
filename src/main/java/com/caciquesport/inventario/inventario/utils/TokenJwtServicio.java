@@ -175,11 +175,11 @@ public class TokenJwtServicio extends OncePerRequestFilter{
      */
     private boolean validarAcceso(Jws<Claims> claims, String requestURI) {
         
-        boolean acceso=false;
-
-        if(requestURI.startsWith("/api/manejoProducto") && claims.getBody().get("tipoEmpleado").equals("JEFE")){
+        boolean acceso=true;
+        
+        /*if(requestURI.startsWith("/api/manejoProducto") && claims.getBody().get("tipoEmpleado").equals("JEFE")){
             acceso=true;
-        }
+        }*/
 
         return acceso;
     }

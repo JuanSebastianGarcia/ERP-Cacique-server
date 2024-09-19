@@ -38,6 +38,9 @@ public class ProductoFactura {
     @JoinColumn(name = "producto", nullable = false)
     private Producto producto;
 
+    @Column(name = "descripcion")
+    private String descripcion;
+
     // Estado del producto en la factura
     @Enumerated(EnumType.STRING)
     @Column(name = "estado_producto", nullable = false)
