@@ -135,10 +135,12 @@ public class FacturaServiceImpl implements FacturaService {
 
 
 
-    /*
+    /**
      * Este metodo se encarga de realizar la consulta de todos los productos pendientes y organizar la 
      * informacion necesaria como los datos del producto, la fecha en la que fue generado y el id de la factura a la 
      * que pertenece
+     * 
+     * @return lista de productos en estado pendiente y su informacion
      */
     @Override
     public List<ProductoPendienteDto> consultarProductosPendientes() throws Exception {
@@ -146,36 +148,31 @@ public class FacturaServiceImpl implements FacturaService {
         //consultar la lista de productos en estado pendiente
         List<ProductoFactura> listaProductosPendientes=productoFacturaServicioImpl.consultarProductosPendientes();
         
-        //consultar la factura de cada uno de dichos productos
-        Map<Integer, Producto> listaProductos = consultarInformacionProductos(listaProductosPendientes);
+
 
         //construir la lista de dto para retornar
-        return construirDtoProductosPendientes(listaProductosPendientes,listaProductos);
+        return construirDtoProductosPendientes(listaProductosPendientes);
     }
 
 
 
     /**
-     * Construir los dto con base en informacion de la relacion entre el producto y la factura, y la informacion individual
-     * de dicho producto. el metodo construye un dto para cada producto pendiente, agrega la informacion y retorna 
-     * la lista dto
+     * Metodo que construye la lista de dto de todos los productos pendientes, agregando la informacion de la relacion entre cada
+     * producto y factura, ademas de la informacion individual de cada producto
      * 
      * @param listaProductosPendientes - lista de las relaciones entre los productos y facturas, contiene informacion
      *                                   relevante en la relacion y no del producto
      * 
-     * @param listaProductos - contiene la informacion individual que caracteriza cada producto
-     * 
      * @return - lista dto que contiene informacion del producto y de la relacion
      */
-    private List<ProductoPendienteDto> construirDtoProductosPendientes(List<ProductoFactura> listaProductosPendientes,
-            Map<Integer, Producto> listaProductos) {
+    private List<ProductoPendienteDto> construirDtoProductosPendientes(List<ProductoFactura> listaProductosPendientes) {
 
         List<ProductoPendienteDto> listaDtos = new ArrayList<>();
                 
 
         for (ProductoFactura productoPendiente : listaProductosPendientes) {
             
-            Producto producto=listaProductos.get(productoPendiente.getProducto());
+            Producto producto=productoPendiente.getProducto();
 
             listaDtos.add(new ProductoPendienteDto(producto.getTipoPrenda().getPrenda(), producto.getTipoInstitucion().getInstitucion(), 
                                                     producto.getTipoTalla().getTalla(), producto.getTipoHorario().getHorario(), producto.getTipoGenero().getGenero(),
@@ -186,32 +183,6 @@ public class FacturaServiceImpl implements FacturaService {
 
         return listaDtos;
     }
-
-
-
-    /**
-     * Este metodo extrae los ID repetidos en la lista de relaciones de productos pendientes.
-     * cuando tiene los id de los productos pendientes sin repetir, hace la consulta para obtener la informacion
-     * 
-     * @param listaProductosPendientes - lista de las relaciones entre la factura y un producto que estan en estado pendiente
-     * 
-     * @return List<Producto> lista de productos
-     */
-    private Map<Integer, Producto> consultarInformacionProductos(List<ProductoFactura> listaProductosPendientes) {
-    
-        Set<Integer> listaId = new HashSet<>();//almacena los id de los productos sin repetir 
-
-        for (ProductoFactura productoFactura : listaProductosPendientes) {
-            listaId.add(productoFactura.getProducto());
-        }
-
-        //se busca la informacion de los productos sin repeti
-        Map<Integer, Producto> listaProductos= productoServicioImpl.buscarListaProductos(listaId);
-
-
-        return listaProductos;
-    }
-
 
 
     /**

@@ -124,7 +124,7 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
             // se agregan los datos
             productoFactura.setEstadoProducto(estadoProducto);
             productoFactura.setFactura(factura);
-            productoFactura.setProducto(listaObjetosProducto.get(i).getId());
+            productoFactura.setProducto(listaObjetosProducto.get(i));
 
             // se agrega la relacion
             productosFactura.add(productoFactura);
@@ -148,7 +148,7 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
 
         for (ProductoFactura producto : listaProductosFactura) {
 
-            Producto productoEncontrado = productoRepository.findById(producto.getProducto()).get();
+            Producto productoEncontrado = producto.getProducto();
 
             listaProductosDto.add(new ProductoFacturaDto(producto.getId(),
                     productoEncontrado.getTipoPrenda().getPrenda(),
@@ -244,7 +244,7 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
 
             if (productoFactura.getEstadoProducto().equals(EstadoProducto.ENTREGADO)) {
 
-                Producto producto = productoRepository.findById(productoFactura.getProducto()).get();
+                Producto producto = productoFactura.getProducto();
                 sumaProductosEntregados += producto.getDetalleProducto().getPrecio();
             }
         }
@@ -312,8 +312,7 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
      * @param productoEliminado - información del producto
      */
     private void devolverUnidadProducto(ProductoFactura productoEliminado) {
-        Producto producto = productoRepository.findById(productoEliminado.getProducto())
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+        Producto producto = productoEliminado.getProducto();
         producto.getDetalleProducto().setCantidad(producto.getDetalleProducto().getCantidad() + 1); // Se devuelve la unidad al producto
 
         productoRepository.save(producto);
