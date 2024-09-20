@@ -125,6 +125,7 @@ public class ProductoFacturaServicioImpl implements ProductoFacturaServicio {
             productoFactura.setEstadoProducto(estadoProducto);
             productoFactura.setFactura(factura);
             productoFactura.setProducto(listaObjetosProducto.get(i));
+            productoFactura.setDescripcion(listaProductosDto.get(i).descripcion());
 
             // se agrega la relacion
             productosFactura.add(productoFactura);

@@ -71,6 +71,7 @@ public class FacturaController {
 
 
 
+
     /**
      * api encargada de actualizar y generar cambios en una factura. 
      * 
@@ -88,13 +89,15 @@ public class FacturaController {
 
 
 
+
+    
     /**
      * api encargada de retornar la lista de productos que estan en estado pendiente
      * 
      * @Return lista de productos pendientes
      */
     @GetMapping("/consultarProductosPendientes")
-    public ResponseEntity<RespuestaDto<List<ProductoPendienteDto>>> getMethodName() throws Exception {
+    public ResponseEntity<RespuestaDto<List<ProductoPendienteDto>>> consultarProductosPendientes() throws Exception {
 
         List<ProductoPendienteDto> listaProductos = facturaServiceImpl.consultarProductosPendientes();
 

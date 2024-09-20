@@ -176,7 +176,8 @@ public class FacturaServiceImpl implements FacturaService {
 
             listaDtos.add(new ProductoPendienteDto(producto.getTipoPrenda().getPrenda(), producto.getTipoInstitucion().getInstitucion(), 
                                                     producto.getTipoTalla().getTalla(), producto.getTipoHorario().getHorario(), producto.getTipoGenero().getGenero(),
-                                                    productoPendiente.getFactura().getIdFactura(),productoPendiente.getFactura().getFechaFactura().toString()));
+                                                    productoPendiente.getFactura().getIdFactura(),productoPendiente.getFactura().getFechaFactura().toString(),
+                                                    productoPendiente.getDescripcion()));
         }
 
 

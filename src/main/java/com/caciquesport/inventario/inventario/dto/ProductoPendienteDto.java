@@ -31,9 +31,9 @@ public record ProductoPendienteDto(
 
     //fecha en la cual fue generado el producto pendiente
     @NotNull
-    String fecha
+    String fecha,
 
-
+    String descripcion
 ) {
 
 }
