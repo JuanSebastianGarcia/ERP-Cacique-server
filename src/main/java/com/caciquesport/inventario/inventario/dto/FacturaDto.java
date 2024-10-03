@@ -30,6 +30,9 @@ public record FacturaDto(
 
     // Monto total pagado por la factura. Este campo no puede ser nulo.
     @NotNull 
-    double pago
+    double pago,
+
+    //valor total que un cliente ha pagado de una factura
+    double valorPagado
 ) {
 }
