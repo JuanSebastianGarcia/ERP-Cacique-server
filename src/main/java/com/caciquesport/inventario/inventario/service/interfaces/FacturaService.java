@@ -11,7 +11,6 @@ import com.caciquesport.inventario.inventario.dto.ProductoPendienteDto;
  * Interfaz para definir los servicios de gestión de Factura.
  * Proporciona métodos para operaciones CRUD básicas en factura.
  */
-@Service
 public interface FacturaService {
 
     /**
