@@ -1,8 +1,9 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.1.12'
-    id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.springframework.boot' version '3.3.4'
+    id 'io.spring.dependency-management' version '1.1.5'
 }
+
 
 group = 'com.caciquesport.inventario'
 version = '0.0.1-SNAPSHOT'
@@ -58,8 +59,10 @@ dependencies {
 
 
     //dependencias para la comunicacion por medio del correo
-    implementation 'javax.mail:javax.mail-api:1.6.2'
-    implementation 'com.sun.mail:javax.mail:1.6.2'
+    implementation 'jakarta.mail:jakarta.mail-api:2.0.1'
+
+    //libraria para generar pdf
+    implementation 'com.itextpdf:itext7-core:7.2.5'
 }
 
 
