@@ -1,6 +1,5 @@
 package com.caciquesport.inventario.inventario.service.interfaces;
 
-import org.springframework.stereotype.Service;
 
 import com.caciquesport.inventario.inventario.model.entity.Factura;
 
@@ -16,7 +15,7 @@ public interface NotificacionFacturaService {
      * @param factura
      * @throws Exception
      */
-    void notificarFactura(Factura factura)throws Exception;
+    void notificarFactura(Factura factura);
 
 
 }

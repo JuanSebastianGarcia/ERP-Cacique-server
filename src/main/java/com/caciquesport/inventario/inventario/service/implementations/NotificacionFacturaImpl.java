@@ -27,12 +27,23 @@ public class NotificacionFacturaImpl implements NotificacionFacturaService {
      * @param factura - factura la cual sera notificada
      */
     @Override
-    public void notificarFactura(Factura factura) throws Exception {
+    public void notificarFactura(Factura factura){
+        
+        //se verifica que el cliente tenga correo
+        if(!factura.getCliente().getEmail().isEmpty()){
+            try {
+                generarPdf(factura);
+            } catch (Exception e) {
+                //se agregara un mensaje que notifique que la factura no fue enviada al correo
+            }
+        }
 
+        
     }
 
-    public void generarPdf(Factura factura) throws FileNotFoundException {
+    public Document generarDocumentoParaPDf() throws FileNotFoundException{
 
+        //ruta para el correo
         String dest = System.getProperty("user.dir") + "/facturaspdf/" + "factura1.pdf";
 
         // Inicializar el PdfWriter
@@ -41,29 +52,22 @@ public class NotificacionFacturaImpl implements NotificacionFacturaService {
         Document document = new Document(pdf, PageSize.A4);
         document.setMargins(20, 20, 20, 20);
 
+        return document;
+    }
+
+    public void generarPdf(Factura factura) throws FileNotFoundException {
+
+        //generar documento
+        Document document =generarDocumentoParaPDf();
+
         // Color personalizado
         Color greenColor = new DeviceRgb(139, 195, 74);
 
-        // Agregar título y logo
-        document.add(new Paragraph("Cacique Sport")
-                .setFontSize(40)
-                .setBold()
-                .setTextAlignment(TextAlignment.CENTER));
+        construirTitulo(document);
 
-        document.add(new Paragraph("Confecciones")
-                .setFontSize(14)
-                .setBold()
-                .setTextAlignment(TextAlignment.CENTER));
+        //generar datos de la factura como codigo, titular, fecha
+        generarDetallesFactura(document,factura);
 
-        // Detalles de la factura
-        document.add(new Paragraph("Factura de venta")
-                .setFontSize(15)
-                .setBold());
-
-        document.add(new Paragraph("Código: 0001\n" +
-                "Fecha: 31 de agosto 2024\n" +
-                "Titular: Carlos Andrés\n" +
-                "Estado: Pendiente").setFontSize(13));
 
         // Crear tabla de productos
         float[] columnWidths = { 4, 4, 4 }; // Anchos de las columnas
@@ -118,6 +122,51 @@ public class NotificacionFacturaImpl implements NotificacionFacturaService {
 
         // Cerrar el documento
         document.close();
+    }
+
+
+
+    /**
+     * Este metodo agrega datos generales a la factura. los datos son:
+     * codigo de la factura, titular de la factura, fecha de la factura y estado
+     */
+    private void generarDetallesFactura(Document document, Factura factura) {
+        
+        // Detalles de la factura
+        document.add(new Paragraph("Factura de venta")
+                .setFontSize(15)
+                .setBold());
+
+        String codigo=factura.getIdFactura().toString();
+        String fecha =factura.getFechaFactura().toString();
+        String titular =factura.getCliente().getNombre();
+        String estado =factura.getEstadoFactura().toString();
+
+        document.add(new Paragraph("Código: "+codigo+"\n" +
+                "Fecha: "+fecha+"\n" +
+                "Titular: "+titular+"\n" +
+                "Estado: "+estado).setFontSize(13));
+    }
+
+
+    
+    /**
+     * agregar un titulo principal  al documento
+     * 
+     * @param document - documento al que se le agrega el titulo
+     */
+    private void construirTitulo(Document document) {
+        
+                
+        document.add(new Paragraph("Cacique Sport")
+                .setFontSize(40)
+                .setBold()
+                .setTextAlignment(TextAlignment.CENTER));
+
+        document.add(new Paragraph("Confecciones")
+                .setFontSize(14)
+                .setBold()
+                .setTextAlignment(TextAlignment.CENTER));
     }
 
 }
