@@ -1,12 +1,8 @@
 package com.caciquesport.inventario.inventario.service.implementations;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.Map;
-import java.util.HashMap;
 
 
 import org.springframework.stereotype.Service;
@@ -36,7 +32,7 @@ public class FacturaServiceImpl implements FacturaService {
     private final ClienteRepository clienteRepository;
     private final ProductoFacturaServicioImpl productoFacturaServicioImpl;
     private final FacturaRepository facturaRepository;
-    private final ProductoServicioImpl productoServicioImpl;
+    private final NotificacionFacturaImpl notificacionFacturaImpl;
 
     /**
      * Metodo que se encarga de la generacion de una factura. en este proceso se
@@ -84,7 +80,10 @@ public class FacturaServiceImpl implements FacturaService {
         // almacenar factura
         facturaRepository.save(facturaNueva);
 
-        return "la factura ha sido creada y su estado es :" + facturaNueva.getEstadoFactura();
+        String respuestaNotificacion=notificacionFacturaImpl.notificarFactura(facturaNueva);
+
+        return "la factura ha sido creada y su estado es :" + facturaNueva.getEstadoFactura()
+        + "\n ademas "+respuestaNotificacion;
     }
 
 

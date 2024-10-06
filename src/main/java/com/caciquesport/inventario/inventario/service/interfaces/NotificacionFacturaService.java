@@ -15,7 +15,7 @@ public interface NotificacionFacturaService {
      * @param factura
      * @throws Exception
      */
-    void notificarFactura(Factura factura);
+    String notificarFactura(Factura factura);
 
 
 }
