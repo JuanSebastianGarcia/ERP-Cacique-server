@@ -60,7 +60,7 @@ public class NotificacionFacturaImpl implements NotificacionFacturaService {
         if (!factura.getCliente().getEmail().isEmpty()) {
             try {
                 generarPdf(factura);
-                enviarPDfCorreo(factura.getCliente().getEmail());
+                enviarPDfCorreo(factura.getCliente().getEmail(),factura.getCliente().getNombre());
                 return "factura enviada correctamente";
             } catch (Exception e) {
                 return "hubo un error al enviar la factura :" + e.getMessage();
@@ -75,7 +75,7 @@ public class NotificacionFacturaImpl implements NotificacionFacturaService {
      * 
      * @param emailCliente - correo del receptor del pdf
      */
-    private void enviarPDfCorreo(String emailCliente)throws Exception  {
+    private void enviarPDfCorreo(String emailCliente,String nombre)throws Exception  {
 
         Properties properties = new Properties();
 
@@ -89,7 +89,7 @@ public class NotificacionFacturaImpl implements NotificacionFacturaService {
             }
         });
 
-        enviarCorreo(session, emailCliente);
+        enviarCorreo(session, emailCliente,nombre);
     }
 
     /**
@@ -97,7 +97,7 @@ public class NotificacionFacturaImpl implements NotificacionFacturaService {
      * 
      * @param emailCliente - correo del receptor
      */
-    private void enviarCorreo(Session session, String emailCliente)throws Exception {
+    private void enviarCorreo(Session session, String emailCliente,String nombreCliente)throws Exception {
 
         Message message = new MimeMessage(session);
 
@@ -107,7 +107,7 @@ public class NotificacionFacturaImpl implements NotificacionFacturaService {
         message.setSubject("Factura de Compra");
 
         // Crear cuerpo del mensaje con saludo
-        String body = "Hola, Cacique Sport te manda tu factura de compra.";
+        String body = "Hola "+ nombreCliente+", Cacique Sport te manda tu factura de compra.";
         MimeBodyPart mimeBodyPart = new MimeBodyPart();
         mimeBodyPart.setContent(body, "text/plain");
 
@@ -140,13 +140,15 @@ public class NotificacionFacturaImpl implements NotificacionFacturaService {
      */
     private void generarPropertiesParaEmail(Properties properties) {
 
-        // Configurar las propiedades del servidor SMTP de Hotmail/Outlook
-        properties.put("mail.smtp.host", "smtp-mail.outlook.com");
+        // Configurar las propiedades del servidor SMTP de Gmail
+        properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port", "587");
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.smtp.ssl.protocols", "TLSv1.2"); 
-        properties.put("mail.smtp.ssl.trust", "smtp-mail.outlook.com"); 
+        properties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+
+
 
         
 
