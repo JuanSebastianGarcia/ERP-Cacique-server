@@ -131,6 +131,7 @@ public class NotificacionFacturaImpl implements NotificacionFacturaService {
 
     }
 
+
     /**
      * Agregar las configuraciones basicas(propiedades) para el manejo del servidor
      * del correo electronico
@@ -148,11 +149,9 @@ public class NotificacionFacturaImpl implements NotificacionFacturaService {
         properties.put("mail.smtp.ssl.protocols", "TLSv1.2"); 
         properties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
 
-
-
-        
-
     }
+
+
 
     /**
      * Generar documento pdf en el cual se agregara todo el contenido para la
@@ -281,7 +280,7 @@ public class NotificacionFacturaImpl implements NotificacionFacturaService {
             // se contruye la informacion para la columna de producto
             String caracteristicasProducto = producto.getTipoPrenda().getPrenda() + " del "
                     + producto.getTipoInstitucion().getInstitucion() + " " + producto.getTipoTalla().getTalla() +
-                    " de " + producto.getTipoHorario().getHorario() + "para " + producto.getTipoGenero().getGenero();
+                    " de " + producto.getTipoHorario().getHorario() + " para " + producto.getTipoGenero().getGenero();
 
             String estado = factura.getListaProductosFactura().get(i).getEstadoProducto().toString();
 
