@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
  */
 public record ProductoFacturaDto(
 
+        //esta variable corresponde a la relacion unica entre un producto y una factura
         int idRelacion,
 
         //Tipo de prenda
