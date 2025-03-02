@@ -41,3 +41,5 @@ out/
 *.p12
 
 facturaspdf
+.env
+*.yml
