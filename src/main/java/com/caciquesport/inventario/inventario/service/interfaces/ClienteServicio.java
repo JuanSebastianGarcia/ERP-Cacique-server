@@ -28,12 +28,14 @@ public interface ClienteServicio {
     ClienteDto buscarCliente(String cedula) throws Exception;
 
     /**
-     *actualizar un cliente en la base de datos
+     * Actualiza la información de un cliente identificado por su cédula.
      *
-     * @param clienteDto Los datos del cliente a actualizar.
-     * @return Un mensaje indicando el resultado de la actualización.
-     * @throws Exception Si ocurre un error durante la actualización del cliente, 
-     *                   como problemas de validación o de conexión con la base de datos.
+     * @param clienteDto Objeto con los nuevos datos del cliente.
+     * @param cedula Cédula del cliente que se desea actualizar.
+     * @return Mensaje que indica el resultado del proceso de actualización.
+     * @throws Exception Si ocurre un error durante la actualización, como fallos de validación
+     *                   o problemas de conexión con la base de datos.
      */
-    String actualizarCliente(ClienteDto clienteDto) throws Exception;
+    String actualizarCliente(ClienteDto clienteDto, String cedula) throws Exception;
+
 }

@@ -71,11 +71,11 @@ public class ClienteServicioImpl implements ClienteServicio{
      * @return - mensaje de confirmacion
      */
     @Override
-    public String actualizarCliente(ClienteDto clienteDto) {
+    public String actualizarCliente(ClienteDto clienteDto,String cedula) {
 
-        Cliente cliente= new Cliente();
+        Cliente cliente = new Cliente();
 
-        cliente.setCedula(clienteDto.cedula());
+        cliente.setCedula(cedula);
         cliente.setDireccion(clienteDto.direccion());
         cliente.setEmail(clienteDto.email());
         cliente.setNombre(clienteDto.nombre());

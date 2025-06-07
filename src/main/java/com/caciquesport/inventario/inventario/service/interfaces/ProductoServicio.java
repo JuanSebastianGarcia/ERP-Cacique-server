@@ -21,12 +21,15 @@ public interface ProductoServicio {
     Integer crearProducto(ProductoDto registroProductoDto) throws Exception;
 
     /**
-     * Método para actualizar un Producto existente.
+     * Actualiza los datos de un producto existente identificado por su ID.
      *
-     * @param productoDto Los datos del Producto a actualizar.
-     * @return El ID del Producto actualizado.
+     * @param productoDto Objeto con los nuevos datos del producto.
+     * @param idProducto ID del producto que se desea actualizar.
+     * @return ID del producto actualizado.
+     * @throws Exception si ocurre un error durante la actualización.
      */
-    Integer actualizarProducto(ProductoDto productoDto) throws Exception;
+    Integer actualizarProducto(ProductoDto productoDto, Integer idProducto) throws Exception;
+
 
     /**
      * Método para eliminar un Producto por su ID.

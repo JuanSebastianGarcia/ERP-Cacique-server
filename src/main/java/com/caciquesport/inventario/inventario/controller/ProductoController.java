@@ -3,15 +3,18 @@ package com.caciquesport.inventario.inventario.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.caciquesport.inventario.inventario.dto.FiltroProductoDto;
 import com.caciquesport.inventario.inventario.dto.ProductoDto;
 import com.caciquesport.inventario.inventario.dto.RespuestaDto;
-import com.caciquesport.inventario.inventario.service.implementations.ProductoServicioImpl;
+import com.caciquesport.inventario.inventario.service.interfaces.ProductoServicio;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -23,7 +26,7 @@ import java.util.List;
  * servicios para poder gestionar el inventario
  */
 @RestController
-@RequestMapping("/api/manejoProducto")
+@RequestMapping("/api/producto")
 @RequiredArgsConstructor
 public class ProductoController {
 
@@ -31,7 +34,7 @@ public class ProductoController {
     /*
      * SERVICIOS 
      */
-    private final ProductoServicioImpl productoServicioImpl;
+    private final ProductoServicio productoServicio;
 
 
 
@@ -41,10 +44,10 @@ public class ProductoController {
      * 
      * @param nuevoProductoDto - contiene la informacion para la creacion de un nuevo producto
      */
-    @PostMapping("/crearProducto")
+    @PostMapping
     public ResponseEntity<RespuestaDto<String>> crearProducto(@Valid @RequestBody ProductoDto nuevoProductoDto) throws Exception{
 
-        Integer id =productoServicioImpl.crearProducto(nuevoProductoDto);
+        Integer id =productoServicio.crearProducto(nuevoProductoDto);
 
         return ResponseEntity.ok().body(new RespuestaDto<>(false,"el producto ha sido creado id:"+id));
     }
@@ -58,10 +61,17 @@ public class ProductoController {
      * 
      * @return - lista de productos filtrada
      */
-    @PostMapping("/buscarProductos")
-    public ResponseEntity<RespuestaDto<List<ProductoDto>>> buscarProductos(@RequestBody FiltroProductoDto filtroProductoDto ) throws Exception{
+    @GetMapping
+    public ResponseEntity<RespuestaDto<List<ProductoDto>>> buscarProductos(
+            @RequestParam(required = false) String prenda,
+            @RequestParam(required = false) String talla,
+            @RequestParam(required = false) String institucion,
+            @RequestParam(required = false) String genro,
+            @RequestParam(required = false) String horario
+    ) throws Exception{
 
-        List<ProductoDto> listaProducto = productoServicioImpl.filtrarListaProducto(filtroProductoDto);
+        FiltroProductoDto filtroProductoDto = new FiltroProductoDto(prenda, talla, horario, genro, institucion);
+        List<ProductoDto> listaProducto = productoServicio.filtrarListaProducto(filtroProductoDto);
 
         return ResponseEntity.ok().body(new RespuestaDto<>(false,listaProducto));
     }
@@ -71,11 +81,11 @@ public class ProductoController {
      * api para eliminar un producto
      * 
      * @param idProducto - el id del producto que se va a eliminar
-     */
-    @DeleteMapping("/eliminarProducto/{id}")
+    */
+    @DeleteMapping("/{id}")
     public ResponseEntity<RespuestaDto<String>> eliminarProducto(@PathVariable("id") Integer idProducto) throws Exception{
 
-        productoServicioImpl.eliminarProducto(idProducto);
+        productoServicio.eliminarProducto(idProducto);
 
         return ResponseEntity.ok().body(new RespuestaDto<>(false,"el producto ha sido eliminado"));
     }
@@ -88,10 +98,11 @@ public class ProductoController {
      * 
      * @param productoDto - trae la informacion del objeto 
      */
-    @PostMapping("/actualizarProducto")
-    public ResponseEntity<RespuestaDto<String>> actualizarProducto(@Valid @RequestBody ProductoDto productoDto) throws Exception{
-       
-        Integer id=productoServicioImpl.actualizarProducto(productoDto);
+    @PostMapping("/{id}")
+    public ResponseEntity<RespuestaDto<String>> actualizarProducto(@Valid @RequestBody ProductoDto productoDto, @PathVariable("id") Integer idProducto) throws Exception{
+        
+
+        Integer id=productoServicio.actualizarProducto(productoDto, idProducto);
         
         return ResponseEntity.ok().body(new RespuestaDto<>(false,"el producto ha sido actualizado id:"+id));
     }

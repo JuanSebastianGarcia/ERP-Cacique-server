@@ -101,9 +101,9 @@ public class FacturaServiceImpl implements FacturaService {
      * 
      */
     @Override
-    public String guardarCambios(FacturaDto facturaDto) throws Exception {
+    public String guardarCambios(FacturaDto facturaDto, Integer idFactura) throws Exception {
 
-        Factura facturaAnterior = obtenerFactura(facturaDto.idFactura());
+        Factura facturaAnterior = obtenerFactura(idFactura);
 
         validarCambiosEnFactura(facturaDto, facturaAnterior);// validar cambios
 

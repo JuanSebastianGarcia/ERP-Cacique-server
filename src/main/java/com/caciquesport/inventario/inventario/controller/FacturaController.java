@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.caciquesport.inventario.inventario.dto.FacturaDto;
 import com.caciquesport.inventario.inventario.dto.ProductoPendienteDto;
 import com.caciquesport.inventario.inventario.dto.RespuestaDto;
-import com.caciquesport.inventario.inventario.service.implementations.FacturaServiceImpl;
+import com.caciquesport.inventario.inventario.service.interfaces.FacturaService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 
 @RestController
-@RequestMapping("/api/manejoFactura")
+@RequestMapping("/api/factura")
 @RequiredArgsConstructor
 public class FacturaController {
 
@@ -32,7 +32,7 @@ public class FacturaController {
     /*
      * Servicio para el manejo de la factura
      */
-    private final FacturaServiceImpl facturaServiceImpl;
+    private final FacturaService facturaService;
 
 
     /**
@@ -41,10 +41,10 @@ public class FacturaController {
      * @return String - mensaje de confirmacion
      * @throws Exception - errores en la creacion de una factura
      */
-    @PostMapping("/generarFactura")
+    @PostMapping
     public ResponseEntity<RespuestaDto<String>> generarFactura(@RequestBody FacturaDto facturaDto) throws Exception{
 
-        String respuesta = facturaServiceImpl.generarFactura(facturaDto);
+        String respuesta = facturaService.generarFactura(facturaDto);
 
         return ResponseEntity.ok().body(new RespuestaDto<>(false,respuesta));
     }
@@ -59,11 +59,13 @@ public class FacturaController {
      * @return -lista de facturas encontradas
      * @throws Exception
      */
-    @GetMapping("/buscarFactura/{codigo}/{tipoCodigo}")
-    public ResponseEntity<RespuestaDto<List<FacturaDto>>> buscarFactura(@PathVariable("codigo") String codigo,
-    @PathVariable("tipoCodigo") String tipoCodigo ) throws Exception {
+    @GetMapping("/{codigo}/{tipoCodigo}")
+    public ResponseEntity<RespuestaDto<List<FacturaDto>>> buscarFactura(
+        @PathVariable("codigo") String codigo,
+        @PathVariable("tipoCodigo") String tipoCodigo ) 
+    throws Exception {
 
-        List<FacturaDto> factura=facturaServiceImpl.buscarFacturaDto(codigo,tipoCodigo);
+        List<FacturaDto> factura=facturaService.buscarFacturaDto(codigo,tipoCodigo);
 
         return ResponseEntity.ok().body(new RespuestaDto<>(false, factura));
     }
@@ -79,10 +81,13 @@ public class FacturaController {
      * @return respuesta de la operacion 
      * @throws Exception 
      */
-    @PutMapping("/actualizarFactura")
-    public ResponseEntity<RespuestaDto<String>> actualizarFactura(@RequestBody FacturaDto facturaDto) throws Exception {
+    @PutMapping("/{idFactura}")
+    public ResponseEntity<RespuestaDto<String>> actualizarFactura(
+        @PathVariable("idFactura") Integer idFactura,
+        @RequestBody FacturaDto facturaDto) 
+    throws Exception {
         
-        String respuesta=facturaServiceImpl.guardarCambios(facturaDto);
+        String respuesta=facturaService.guardarCambios(facturaDto,idFactura);
         
         return ResponseEntity.ok().body(new RespuestaDto<>(false, respuesta));
     }
@@ -99,9 +104,12 @@ public class FacturaController {
     @GetMapping("/consultarProductosPendientes")
     public ResponseEntity<RespuestaDto<List<ProductoPendienteDto>>> consultarProductosPendientes() throws Exception {
 
-        List<ProductoPendienteDto> listaProductos = facturaServiceImpl.consultarProductosPendientes();
+        List<ProductoPendienteDto> listaProductos = facturaService.consultarProductosPendientes();
 
         return ResponseEntity.ok().body(new RespuestaDto<>(false, listaProductos));
     }
+    
+
+
     
 }

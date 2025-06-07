@@ -26,14 +26,17 @@ public interface FacturaService {
 
 
     /**
-     * realizar actualizaciones a una factura. usando los datos ingregados por parametro realiza las validaciones 
-     * para los cambios en los productos y el pago. los realiza y devuelve el mensaje de confirmacion
-     * 
-     * @param facturaDto - representa los datos necesarios para actualizar una factura
-     * 
-     * @return String - se debe de retornar una mensaje de confirmacion 
-     **/
-    String guardarCambios(FacturaDto facturaDto)throws Exception;
+     * Actualiza una factura existente utilizando los datos proporcionados.
+     * Realiza las validaciones necesarias sobre los productos y el estado de pago,
+     * aplica los cambios correspondientes y devuelve un mensaje de confirmación.
+     *
+     * @param facturaDto Objeto con los datos actualizados de la factura.
+     * @param idFactura ID de la factura que se desea modificar.
+     * @return Mensaje de confirmación indicando el resultado de la operación.
+     * @throws Exception Si ocurre un error durante la validación o el proceso de actualización.
+     */
+    String guardarCambios(FacturaDto facturaDto, Integer idFactura) throws Exception;
+
 
 
     /**

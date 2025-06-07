@@ -8,23 +8,23 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.caciquesport.inventario.inventario.dto.ClienteDto;
 import com.caciquesport.inventario.inventario.dto.RespuestaDto;
-import com.caciquesport.inventario.inventario.service.implementations.ClienteServicioImpl;
+import com.caciquesport.inventario.inventario.service.interfaces.ClienteServicio;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 
 @RestController
-@RequestMapping("/api/manejocliente")
+@RequestMapping("/api/cliente")
 @AllArgsConstructor
 public class ClienteController {
 
     /*
      * Servicio para las funciones posibles con el cliente
      */
-    private final ClienteServicioImpl clienteServicioImpl;
+    private final ClienteServicio clienteServicio;
 
 
     /**
@@ -34,10 +34,10 @@ public class ClienteController {
      * 
      * @return clienteDto - datos del cliente registrado
      */
-    @PostMapping("/crearCliente")
-    public ResponseEntity<RespuestaDto<ClienteDto>> crearCliente(@RequestBody ClienteDto clienteDto) throws Exception{
+    @PostMapping
+    public ResponseEntity<RespuestaDto<ClienteDto>> crearCliente(@RequestBody @Valid ClienteDto clienteDto) throws Exception{
 
-        clienteDto = clienteServicioImpl.crearCliente(clienteDto);
+        clienteDto = clienteServicio.crearCliente(clienteDto);
 
         return ResponseEntity.ok().body(new RespuestaDto<>(false,clienteDto));
     }
@@ -51,10 +51,10 @@ public class ClienteController {
      * 
      * @return clienteDto - datos del cliente registrado
      */
-    @GetMapping("/buscarCliente/{cedula}")
+    @GetMapping("/{cedula}")
     public ResponseEntity<RespuestaDto<ClienteDto>> buscarCliente(@PathVariable("cedula")String cedula) throws Exception{
 
-        ClienteDto clienteDto=clienteServicioImpl.buscarCliente(cedula);
+        ClienteDto clienteDto=clienteServicio.buscarCliente(cedula);
         
         return ResponseEntity.ok().body(new RespuestaDto<>(false,clienteDto));
     }
@@ -68,10 +68,10 @@ public class ClienteController {
      * 
      * @return clienteDto - datos del cliente registrado
      */
-    @PutMapping ("/actualizarCliente")
-    public ResponseEntity<RespuestaDto<String>> actualizarCliente(@RequestBody ClienteDto clienteDto) throws Exception{
+    @PutMapping("/{cedula}")
+    public ResponseEntity<RespuestaDto<String>> actualizarCliente(@RequestBody ClienteDto clienteDto, @PathVariable("cedula") String cedula) throws Exception{
 
-        String respuesta = clienteServicioImpl.actualizarCliente(clienteDto);
+        String respuesta = clienteServicio.actualizarCliente(clienteDto,cedula);
 
         return ResponseEntity.ok().body(new RespuestaDto<>(false,respuesta));
     }

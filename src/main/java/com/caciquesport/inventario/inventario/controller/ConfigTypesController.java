@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.caciquesport.inventario.inventario.dto.RespuestaDto;
 import com.caciquesport.inventario.inventario.dto.Entities.ConfigTypesDto;
-import com.caciquesport.inventario.inventario.service.implementations.TipoGeneroServicioImpl;
-import com.caciquesport.inventario.inventario.service.implementations.TipoHorarioServicioImpl;
-import com.caciquesport.inventario.inventario.service.implementations.TipoInstitucionServicioImpl;
-import com.caciquesport.inventario.inventario.service.implementations.TipoPrendaServicioImpl;
-import com.caciquesport.inventario.inventario.service.implementations.TipoTallaServicioImpl;
+import com.caciquesport.inventario.inventario.service.interfaces.TipoGeneroServicio;
+import com.caciquesport.inventario.inventario.service.interfaces.TipoHorarioServicio;
+import com.caciquesport.inventario.inventario.service.interfaces.TipoIstitucionServicio;
+import com.caciquesport.inventario.inventario.service.interfaces.TipoPrendaServicio;
+import com.caciquesport.inventario.inventario.service.interfaces.TipoTallaServicio;
 
 import lombok.AllArgsConstructor;
 
@@ -34,11 +34,11 @@ public class ConfigTypesController {
     /*
      * servicios para la configuracion de los tipos
      */
-    private final TipoPrendaServicioImpl tipoPrendaServicioImpl;
-    private final TipoInstitucionServicioImpl tipoInstitucionServicioImpl;
-    private final TipoHorarioServicioImpl tipoHorarioServicioImpl;
-    private final TipoGeneroServicioImpl tipoGeneroServicioImpl;
-    private final TipoTallaServicioImpl tipoTallaServicioImpl;
+    private final TipoPrendaServicio tipoPrendaServicioImpl;
+    private final TipoIstitucionServicio tipoInstitucionServicioImpl;
+    private final TipoHorarioServicio tipoHorarioServicioImpl;
+    private final TipoGeneroServicio tipoGeneroServicioImpl;
+    private final TipoTallaServicio tipoTallaServicioImpl;
 
     /*
      * Crear una prenda
@@ -47,7 +47,7 @@ public class ConfigTypesController {
      * 
      * @return mensaje de confirmacion
      */
-    @PostMapping("/crearPrenda")
+    @PostMapping("/prenda")
     public ResponseEntity<RespuestaDto<String>> crearPrenda(@RequestBody ConfigTypesDto nuevaPrenda)
             throws Exception {
 
@@ -63,7 +63,7 @@ public class ConfigTypesController {
      * 
      * @return mensaje de confirmacion
      */
-    @DeleteMapping("/eliminarPrenda/{prenda}")
+    @DeleteMapping("/prenda/{prenda}")
     public ResponseEntity<RespuestaDto<String>> eliminarPrenda(@PathVariable("prenda") String prenda) throws Exception {
 
         tipoPrendaServicioImpl.eliminarPrenda(prenda);
@@ -76,7 +76,7 @@ public class ConfigTypesController {
     /*
      * buscar y retornar la lista de prendas
      */
-    @GetMapping("/buscarPrendas")
+    @GetMapping("/prenda")
     public ResponseEntity<RespuestaDto<List<ConfigTypesDto>>> listarPrendas() throws Exception {
 
         List<ConfigTypesDto> lista = tipoPrendaServicioImpl.listarPrendas();
@@ -94,7 +94,7 @@ public class ConfigTypesController {
      * @return mensaje de confirmacion
      * 
      */
-    @PostMapping("/crearInstitucion")
+    @PostMapping("/institucion")
     public ResponseEntity<RespuestaDto<String>> crearInstitucion(@RequestBody ConfigTypesDto nuevaInstitucion) throws Exception {
 
         tipoInstitucionServicioImpl.crearInstitucion(nuevaInstitucion);
@@ -110,7 +110,7 @@ public class ConfigTypesController {
      * @return mensaje de confirmacion
      * 
      */
-    @DeleteMapping("/eliminarInstitucion/{institucion}")
+    @DeleteMapping("/institucion/{institucion}")
     public ResponseEntity<RespuestaDto<String>> eliminarInstitucion(@PathVariable("institucion") String institucion)
             throws Exception {
 
@@ -125,7 +125,7 @@ public class ConfigTypesController {
      * buscar y retornar la lista de instituciones
      * 
      */
-    @GetMapping("/buscarInstituciones")
+    @GetMapping("/institucion")
     public ResponseEntity<RespuestaDto<List<ConfigTypesDto>>> buscarInstituciones() throws Exception {
 
         List<ConfigTypesDto> lista = tipoInstitucionServicioImpl.listarInstituciones();
@@ -142,7 +142,7 @@ public class ConfigTypesController {
      * @return mensaje de confirmacion
      * 
      */
-    @PostMapping("/crearHorario")
+    @PostMapping("/horario")
     public ResponseEntity<RespuestaDto<String>> crearHorario(@RequestBody ConfigTypesDto nuevoHorario)
             throws Exception {
 
@@ -159,7 +159,7 @@ public class ConfigTypesController {
      * @return mensaje de confirmacion
      * 
      */
-    @DeleteMapping("/eliminarHorario/{horario}")
+    @DeleteMapping("/horario/{horario}")
     public ResponseEntity<RespuestaDto<String>> eliminarHorario(@PathVariable("horario") String horario)
             throws Exception {
 
@@ -174,7 +174,7 @@ public class ConfigTypesController {
      * @return lista de datos de configuracion
      * 
      */
-    @GetMapping("/buscarHorarios")
+    @GetMapping("/horario")
     public ResponseEntity<RespuestaDto<List<ConfigTypesDto>>> buscarHorarios() throws Exception {
 
         List<ConfigTypesDto> lista = tipoHorarioServicioImpl.listarHorarios();
@@ -190,7 +190,7 @@ public class ConfigTypesController {
      * @return mensaje de confirmacion
      * 
      */
-    @PostMapping("/crearGenero")
+    @PostMapping("/genero")
     public ResponseEntity<RespuestaDto<String>> crearGenero(@RequestBody ConfigTypesDto nuevoGenero)
             throws Exception {
 
@@ -207,7 +207,7 @@ public class ConfigTypesController {
      * @return mensaje de confirmacion
      * 
      */
-    @DeleteMapping("/eliminarGenero/{genero}")
+    @DeleteMapping("/genero/{genero}")
     public ResponseEntity<RespuestaDto<String>> eliminarGenero(@PathVariable("genero") String genero) throws Exception {
 
         tipoGeneroServicioImpl.eliminarGenero(genero);
@@ -223,7 +223,7 @@ public class ConfigTypesController {
      *
      * @return lista de datos de configuracion
      */
-    @GetMapping("/buscarGeneros")
+    @GetMapping("/genero")
     public ResponseEntity<RespuestaDto<List<ConfigTypesDto>>> buscarGeneros() throws Exception {
 
         List<ConfigTypesDto> lista = tipoGeneroServicioImpl.listarGeneros();
@@ -239,7 +239,7 @@ public class ConfigTypesController {
      * @return mensaje de confirmacion
      * 
      */
-    @PostMapping("/crearTalla")
+    @PostMapping("/talla")
     public ResponseEntity<RespuestaDto<String>> crearTalla(@RequestBody ConfigTypesDto nuevaTalla)
             throws Exception {
 
@@ -256,7 +256,7 @@ public class ConfigTypesController {
      * @return mensaje de confirmacion
      * 
      */
-    @DeleteMapping("/eliminarTalla/{talla}")
+    @DeleteMapping("/talla/{talla}")
     public ResponseEntity<RespuestaDto<String>> eliminarTalla(@PathVariable("talla") String talla) throws Exception {
 
         tipoTallaServicioImpl.eliminarTalla(talla);
@@ -271,7 +271,7 @@ public class ConfigTypesController {
      * 
      * @return lista de datos de configuracion
      */
-    @GetMapping("/buscarTallas")
+    @GetMapping("/talla")
     public ResponseEntity<RespuestaDto<List<ConfigTypesDto>>> buscarTallas() throws Exception {
 
         List<ConfigTypesDto> lista = tipoTallaServicioImpl.listarTallas();

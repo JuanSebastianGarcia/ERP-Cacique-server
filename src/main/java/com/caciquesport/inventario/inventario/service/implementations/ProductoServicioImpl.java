@@ -165,9 +165,9 @@ public class ProductoServicioImpl implements ProductoServicio {
      * 
      */
     @Override
-    public Integer actualizarProducto(ProductoDto productoDto) throws Exception {
+    public Integer actualizarProducto(ProductoDto productoDto, Integer idProducto) throws Exception {
 
-        Optional<Producto> productoEncontrado = productoRepository.findById(productoDto.id());
+        Optional<Producto> productoEncontrado = productoRepository.findById(idProducto);
 
         // actualizar los datos
         Producto productoActualizado = actualizarDatos(productoEncontrado.get(), productoDto);

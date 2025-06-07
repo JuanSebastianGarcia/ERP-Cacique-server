@@ -30,12 +30,12 @@ public class ProductoFactura {
 
     // Identificación de la factura asociada
     @ManyToOne
-    @JoinColumn(name = "factura", nullable = false)
+    @JoinColumn(name = "factura_id", nullable = false)
     private Factura factura;
 
     // Identificación del producto asociado
     @ManyToOne
-    @JoinColumn(name = "producto", nullable = false)
+    @JoinColumn(name = "producto_id", nullable = false)
     private Producto producto;
 
     @Column(name = "descripcion")

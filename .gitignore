@@ -39,7 +39,6 @@ out/
 
 *.cer
 *.p12
+*.pdf
 
-facturaspdf
-.env
 *.yml

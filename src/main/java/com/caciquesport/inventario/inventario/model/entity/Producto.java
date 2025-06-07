@@ -56,7 +56,7 @@ public class Producto implements Serializable {
 
     // Detalle adicional del producto
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "detalle_producto")
+    @JoinColumn(name = "id_detalle_producto")
     private DetalleProducto detalleProducto;
 }
 

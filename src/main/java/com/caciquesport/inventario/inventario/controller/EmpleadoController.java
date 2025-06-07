@@ -12,19 +12,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.caciquesport.inventario.inventario.dto.EmpleadoDto;
 import com.caciquesport.inventario.inventario.dto.RespuestaDto;
-import com.caciquesport.inventario.inventario.service.implementations.EmpleadoServicioImpl;
+import com.caciquesport.inventario.inventario.service.interfaces.EmpleadoServicio;
+
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/api/manejoEmpleado")
+@RequestMapping("/api/empleado")
 @AllArgsConstructor
 public class EmpleadoController {
 
     /*
      * SERVICIOS
      */
-    private final EmpleadoServicioImpl empleadoServicioImpl;
+    private final EmpleadoServicio empleadoServicio;
 
 
     /*
@@ -32,10 +33,10 @@ public class EmpleadoController {
      * 
      * @param empleadoDto - contiene la informacion necesaria para la creacion
      */
-    @PostMapping("/crearEmpleado")
+    @PostMapping
     public ResponseEntity<RespuestaDto<String>> crearEmpleado(@RequestBody @Valid EmpleadoDto EmpleadoDto) throws Exception{
 
-        Integer id=empleadoServicioImpl.crearEmpleado(EmpleadoDto);
+        Integer id=empleadoServicio.crearEmpleado(EmpleadoDto);
 
         return ResponseEntity.ok().body(new RespuestaDto<>(false,"el empleado ha sido creado id:"+id));
     }
@@ -46,10 +47,10 @@ public class EmpleadoController {
      * 
      * @param cedula - cedula del empleado que se va a eliminar
      */
-    @DeleteMapping("/eliminarEmpleado/{cedula}")
+    @DeleteMapping("/{cedula}")
     public ResponseEntity<RespuestaDto<String>> eliminarEmpleado(@PathVariable("cedula") String cedula) throws Exception{
 
-        empleadoServicioImpl.eliminarEmpleado(cedula);
+        empleadoServicio.eliminarEmpleado(cedula);
 
         return ResponseEntity.ok().body(new RespuestaDto<>(false,"el empelado ha sido eliminadoo"));
     }
@@ -58,10 +59,10 @@ public class EmpleadoController {
     /*
      * api encargada de la busqueda de todos los empleados
     */
-    @GetMapping("/buscarEmpleados")
+    @GetMapping
     public ResponseEntity<RespuestaDto<List<EmpleadoDto>>> buscarEmpleados() throws Exception{
 
-        List<EmpleadoDto> lista=empleadoServicioImpl.listarEmpleado();
+        List<EmpleadoDto> lista=empleadoServicio.listarEmpleado();
 
         return ResponseEntity.ok().body(new RespuestaDto<>(false,lista));
     }
