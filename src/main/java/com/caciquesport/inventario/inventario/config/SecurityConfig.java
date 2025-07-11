@@ -19,24 +19,31 @@ public class SecurityConfig{
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.csrf(csrf -> csrf
-                .disable())
-                
-            .authorizeHttpRequests(customRequest -> customRequest
-                .requestMatchers(HttpMethod.GET,"/api/**").permitAll()
-                .requestMatchers(HttpMethod.PUT,"/api/**").permitAll()
-                .requestMatchers(HttpMethod.POST,"/api/**").permitAll()
-                .requestMatchers(HttpMethod.DELETE,"/api/**").permitAll()
-                .requestMatchers(HttpMethod.OPTIONS,"/api/**").permitAll())
+        http.csrf(csrf -> csrf.disable())
 
+            .authorizeHttpRequests(auth -> auth
+                // Permitir acceso libre a Swagger/OpenAPI
+                .requestMatchers(
+                    "/swagger-ui/**",
+                    "/swagger-ui.html",
+                    "/v3/api-docs/**"
+                ).permitAll()
+
+                // Permitir todos los métodos en /api/**
+                .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
+                .requestMatchers(HttpMethod.PUT, "/api/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/**").permitAll()
+                .requestMatchers(HttpMethod.DELETE, "/api/**").permitAll()
+                .requestMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
+
+                // Cualquier otra solicitud requiere autenticación (opcional)
+                .anyRequest().permitAll() // o .authenticated() si luego usarás seguridad
+            )
 
             .sessionManagement(sess -> sess
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        
-
-
-         return http.build();
+        return http.build();
     }
 
 

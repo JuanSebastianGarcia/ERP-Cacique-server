@@ -1,25 +1,24 @@
 package com.caciquesport.inventario.inventario.controller;
 
-
 import java.util.List;
+
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import com.caciquesport.inventario.inventario.dto.EmpleadoDto;
 import com.caciquesport.inventario.inventario.dto.RespuestaDto;
 import com.caciquesport.inventario.inventario.service.interfaces.EmpleadoServicio;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/api/empleado")
 @AllArgsConstructor
+@Tag(name = "Empleado", description = "Operaciones para gestionar empleados en el sistema")
 public class EmpleadoController {
 
     /*
@@ -27,43 +26,38 @@ public class EmpleadoController {
      */
     private final EmpleadoServicio empleadoServicio;
 
-
     /*
-     * api encargada de la creacion de un empleado
+     * API encargada de la creación de un empleado
      * 
-     * @param empleadoDto - contiene la informacion necesaria para la creacion
+     * @param empleadoDto - contiene la información necesaria para la creación
      */
     @PostMapping
-    public ResponseEntity<RespuestaDto<String>> crearEmpleado(@RequestBody @Valid EmpleadoDto EmpleadoDto) throws Exception{
-
-        Integer id=empleadoServicio.crearEmpleado(EmpleadoDto);
-
-        return ResponseEntity.ok().body(new RespuestaDto<>(false,"el empleado ha sido creado id:"+id));
+    @Operation(summary = "Crear empleado", description = "Registra un nuevo empleado en el sistema.")
+    public ResponseEntity<RespuestaDto<String>> crearEmpleado(@RequestBody @Valid EmpleadoDto EmpleadoDto) throws Exception {
+        Integer id = empleadoServicio.crearEmpleado(EmpleadoDto);
+        return ResponseEntity.ok().body(new RespuestaDto<>(false, "el empleado ha sido creado id:" + id));
     }
 
-
     /*
-     * api encargada de la eliminacion de un empleado
+     * API encargada de la eliminación de un empleado
      * 
-     * @param cedula - cedula del empleado que se va a eliminar
+     * @param cedula - cédula del empleado que se va a eliminar
      */
     @DeleteMapping("/{cedula}")
-    public ResponseEntity<RespuestaDto<String>> eliminarEmpleado(@PathVariable("cedula") String cedula) throws Exception{
-
+    @Operation(summary = "Eliminar empleado", description = "Elimina un empleado existente según su cédula.")
+    public ResponseEntity<RespuestaDto<String>> eliminarEmpleado(
+            @Parameter(description = "Cédula del empleado") @PathVariable("cedula") String cedula) throws Exception {
         empleadoServicio.eliminarEmpleado(cedula);
-
-        return ResponseEntity.ok().body(new RespuestaDto<>(false,"el empelado ha sido eliminadoo"));
+        return ResponseEntity.ok().body(new RespuestaDto<>(false, "el empleado ha sido eliminado"));
     }
 
-
     /*
-     * api encargada de la busqueda de todos los empleados
-    */
+     * API encargada de la búsqueda de todos los empleados
+     */
     @GetMapping
-    public ResponseEntity<RespuestaDto<List<EmpleadoDto>>> buscarEmpleados() throws Exception{
-
-        List<EmpleadoDto> lista=empleadoServicio.listarEmpleado();
-
-        return ResponseEntity.ok().body(new RespuestaDto<>(false,lista));
+    @Operation(summary = "Listar empleados", description = "Obtiene una lista de todos los empleados registrados.")
+    public ResponseEntity<RespuestaDto<List<EmpleadoDto>>> buscarEmpleados() throws Exception {
+        List<EmpleadoDto> lista = empleadoServicio.listarEmpleado();
+        return ResponseEntity.ok().body(new RespuestaDto<>(false, lista));
     }
 }

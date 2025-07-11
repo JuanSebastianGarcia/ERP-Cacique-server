@@ -2,7 +2,6 @@ package com.caciquesport.inventario.inventario.service.interfaces;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
 
 import com.caciquesport.inventario.inventario.dto.FacturaDto;
 import com.caciquesport.inventario.inventario.dto.ProductoPendienteDto;

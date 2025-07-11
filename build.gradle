@@ -67,6 +67,9 @@ dependencies {
 
         //libraria para generar pdf
         implementation 'com.itextpdf:itext7-core:7.2.5'
+
+        // libreria para documentacion de la API
+        implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
 }
 
 
