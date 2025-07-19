@@ -16,6 +16,9 @@ public record FacturaDto(
     //estado en el que se encuentra la factura.
     String estadoFactura,
 
+    //fecha de la factura
+    String fechaFactura,
+
     // Cédula del cliente asociado con la factura. Este campo no puede ser nulo.
     @NotNull 
     String cedulaCliente,

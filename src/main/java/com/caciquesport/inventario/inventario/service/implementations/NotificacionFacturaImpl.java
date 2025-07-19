@@ -57,7 +57,7 @@ public class NotificacionFacturaImpl implements NotificacionFacturaService {
     public String notificarFactura(Factura factura) {
 
         // se verifica que el cliente tenga correo
-        if (!factura.getCliente().getEmail().isEmpty()) {
+        if (factura.getCliente().getEmail() != null && !factura.getCliente().getEmail().isEmpty()) {
             try {
                 generarPdf(factura);
                 enviarPDfCorreo(factura.getCliente().getEmail(),factura.getCliente().getNombre());
