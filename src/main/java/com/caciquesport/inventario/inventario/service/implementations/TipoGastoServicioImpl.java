@@ -1,10 +1,15 @@
 package com.caciquesport.inventario.inventario.service.implementations;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.caciquesport.inventario.inventario.dto.TipoGastoDto;
+import com.caciquesport.inventario.inventario.model.configTypes.TipoGasto;
+import com.caciquesport.inventario.inventario.repository.TipoGastoRepository;
 import com.caciquesport.inventario.inventario.service.interfaces.TipoGastoServicio;
 
 import jakarta.transaction.Transactional;
@@ -20,6 +25,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TipoGastoServicioImpl implements TipoGastoServicio{
 
+    /*
+     * Repositorio
+     */
+    private final TipoGastoRepository tipoGastoRepository;
+
+
     /**
      * Crea un nuevo tipo de gasto.
      * 
@@ -29,9 +40,21 @@ public class TipoGastoServicioImpl implements TipoGastoServicio{
      */
     @Override
     public String crearTipoGasto(String tipoGastoDto) throws Exception {
-        // Método aún no implementado
-        throw new UnsupportedOperationException("Unimplemented method 'crearTipoGasto'");
+        
+        //buscar si ya existe
+        Optional<TipoGasto> tipoGastoEncontrado = tipoGastoRepository.findByNombre(tipoGastoDto);
+
+        if(tipoGastoEncontrado.isPresent()){
+            throw new Exception("El tipo de gasto ya existe");
+        }
+        
+        //si no existe, crearlo
+        tipoGastoRepository.save(new TipoGasto(null, tipoGastoDto));
+
+        //retornar respuesta
+        return "Tipo de gasto creado correctamente";
     }
+
 
     /**
      * Busca y retorna la lista de todos los tipos de gasto existentes.
@@ -41,9 +64,14 @@ public class TipoGastoServicioImpl implements TipoGastoServicio{
      */
     @Override
     public List<TipoGastoDto> buscarTiposGasto() throws Exception {
-        // Método aún no implementado
-        throw new UnsupportedOperationException("Unimplemented method 'buscarTiposGasto'");
+        
+        List<TipoGasto> tiposGasto = tipoGastoRepository.findAll();
+
+        List<TipoGastoDto> tiposGastoDto = convertObjectDto(tiposGasto);
+
+        return tiposGastoDto;
     }
+
 
     /**
      * Actualiza un tipo de gasto existente identificado por su ID.
@@ -55,8 +83,18 @@ public class TipoGastoServicioImpl implements TipoGastoServicio{
      */
     @Override
     public String actualizarTipoGasto(String tipoGastoDto, Integer id) throws Exception {
-        // Método aún no implementado
-        throw new UnsupportedOperationException("Unimplemented method 'actualizarTipoGasto'");
+        
+        Optional<TipoGasto> tipoGastoEncontrado = tipoGastoRepository.findById(id);
+
+        if(tipoGastoEncontrado.isEmpty()){
+            throw new Exception("El tipo de gasto no existe");
+        }
+
+        tipoGastoEncontrado.get().setNombre(tipoGastoDto);
+
+        tipoGastoRepository.save(tipoGastoEncontrado.get());
+        
+        return "Tipo de gasto actualizado correctamente";
     }
 
     /**
@@ -68,9 +106,28 @@ public class TipoGastoServicioImpl implements TipoGastoServicio{
      */
     @Override
     public String eliminarTipoGasto(Integer id) throws Exception {
-        // Método aún no implementado
-        throw new UnsupportedOperationException("Unimplemented method 'eliminarTipoGasto'");
+        
+        tipoGastoRepository.deleteById(id);
+
+        return "Tipo de gasto eliminado correctamente";
     }
 
+
+    /**
+     * Convierte una lista de objetos TipoGasto a una lista de objetos TipoGastoDto.
+     * 
+     * @param tiposGasto Lista de objetos TipoGasto a convertir.
+     * @return Lista de objetos TipoGastoDto.
+     */
+    private List<TipoGastoDto> convertObjectDto(List<TipoGasto> tiposGasto){
+        
+        List<TipoGastoDto> tiposGastoDto = new ArrayList<>();
+
+        for(TipoGasto tipoGasto : tiposGasto){
+            tiposGastoDto.add(new TipoGastoDto(tipoGasto.getId(), tipoGasto.getNombre()));
+        }
+
+        return tiposGastoDto;
+    }
     
 }
