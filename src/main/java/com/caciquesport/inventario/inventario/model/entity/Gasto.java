@@ -29,7 +29,7 @@ public class Gasto {
     @Column(name = "valor_gasto")
     private double valor;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "id_tipo_gasto")
     private TipoGasto tipoGasto;
 

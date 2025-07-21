@@ -2,7 +2,6 @@ package com.caciquesport.inventario.inventario.controller;
 
 import java.util.List;
 
-import org.checkerframework.dataflow.qual.Pure;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +15,6 @@ import com.caciquesport.inventario.inventario.dto.RespuestaDto;
 import com.caciquesport.inventario.inventario.dto.TipoGastoDto;
 import com.caciquesport.inventario.inventario.service.interfaces.TipoGastoServicio;
 
-import org.springframework.web.bind.annotation.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
@@ -49,7 +47,9 @@ public class TipoGastoController {
      * @throws Exception si ocurre un error durante la creación
      */
     @PostMapping("/{tipoGasto}")
-    public ResponseEntity<RespuestaDto<String>> crearTipoGasto(@PathVariable String tipoGasto) throws Exception {
+    public ResponseEntity<RespuestaDto<String>> crearTipoGasto(
+        @PathVariable(name = "tipoGasto") String tipoGasto) throws Exception 
+    {
         // Llamar al servicio para crear el tipo de gasto
         String respuesta = tipoGastoServicio.crearTipoGasto(tipoGasto);
         
