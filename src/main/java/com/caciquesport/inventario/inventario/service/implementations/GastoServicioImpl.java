@@ -1,4 +1,6 @@
 package com.caciquesport.inventario.inventario.service.implementations;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
+import com.caciquesport.inventario.inventario.dto.EstadisticasDto;
 import com.caciquesport.inventario.inventario.dto.GastoDto;
 import com.caciquesport.inventario.inventario.model.configTypes.TipoGasto;
 import com.caciquesport.inventario.inventario.model.entity.Gasto;
@@ -180,5 +183,75 @@ public class GastoServicioImpl implements GastoServicio {
         }
 
         return gastosDto;
+    }
+
+    /**
+     * Retrieves statistical information about expenses, including:
+     * - Total expenses for today
+     * - Total expenses for the current month
+     * - Total number of expenses for today
+     *
+     * @return EstadisticasDto containing the calculated statistics
+     */
+    @Override
+    public EstadisticasDto obtenerEstadisticas() {
+        
+        double totalGastosHoy = this.obtenerTotalGastosHoy();
+        double totalGastosMes = this.obtenerTotalGastosMes();
+        int totalNumeroGastos = this.obtenerTotalNumeroGastos();
+
+        return new EstadisticasDto(totalGastosHoy, totalGastosMes, totalNumeroGastos);
+    }
+
+    /**
+     * Calculates the total amount of expenses for the current month.
+     *
+     * @return The sum of all expenses for the current month
+     */
+    private double obtenerTotalGastosMes(){
+    
+        LocalDate hoy = LocalDate.now();
+        LocalDate inicioMes = hoy.withDayOfMonth(1);
+        LocalDate inicioSiguienteMes = inicioMes.plusMonths(1);
+    
+        Date inicio = Date.from(inicioMes.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date fin = Date.from(inicioSiguienteMes.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    
+        List<Gasto> gastos = gastoRepositorio.findByFechaBetweenDates(inicio, fin);
+        return gastos.stream().mapToDouble(Gasto::getValor).sum();
+
+    }
+
+    /**
+     * Calculates the total amount of expenses for today.
+     *
+     * @return The sum of all expenses for today
+     */
+    private double obtenerTotalGastosHoy() {
+        LocalDate hoy = LocalDate.now();
+        ZoneId zona = ZoneId.systemDefault();
+    
+        Date inicio = Date.from(hoy.atStartOfDay(zona).toInstant());
+        Date fin = Date.from(hoy.plusDays(1).atStartOfDay(zona).toInstant());
+    
+        List<Gasto> gastos = gastoRepositorio.findByFechaBetweenDates(inicio, fin);
+        return gastos.stream().mapToDouble(Gasto::getValor).sum();
+    }
+    
+
+    /**
+     * Calculates the total number of expenses for today.
+     *
+     * @return The count of expenses for today
+     */
+    private int obtenerTotalNumeroGastos(){
+        LocalDate hoy = LocalDate.now();
+        ZoneId zona = ZoneId.systemDefault();
+    
+        Date inicio = Date.from(hoy.atStartOfDay(zona).toInstant());
+        Date fin = Date.from(hoy.plusDays(1).atStartOfDay(zona).toInstant());
+    
+        List<Gasto> gastos = gastoRepositorio.findByFechaBetweenDates(inicio, fin);
+        return gastos.size();
     }
 }

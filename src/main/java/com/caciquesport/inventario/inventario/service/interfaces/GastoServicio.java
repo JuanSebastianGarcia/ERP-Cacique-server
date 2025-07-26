@@ -3,6 +3,7 @@ package com.caciquesport.inventario.inventario.service.interfaces;
 import java.util.Date;
 import java.util.List;
 
+import com.caciquesport.inventario.inventario.dto.EstadisticasDto;
 import com.caciquesport.inventario.inventario.dto.GastoDto;
 
 /**
@@ -53,4 +54,12 @@ public interface GastoServicio {
      * @throws Exception If expense not found, deletion conflicts exist, or database error occurs
      */
     String eliminarGasto(Integer id) throws Exception;
+
+
+    /**
+     * Retrieves statistical information about expenses.
+     * 
+     * @return A DTO containing total expenses for today, total expenses for the current month, and total number of expenses
+     */
+    EstadisticasDto obtenerEstadisticas();
 }

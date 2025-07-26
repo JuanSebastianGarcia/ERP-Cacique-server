@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.caciquesport.inventario.inventario.dto.EstadisticasDto;
 import com.caciquesport.inventario.inventario.dto.GastoDto;
 import com.caciquesport.inventario.inventario.dto.RespuestaDto;
 import com.caciquesport.inventario.inventario.service.interfaces.GastoServicio;
@@ -128,4 +129,18 @@ public class GastoController {
         // Return success response with confirmation message
         return ResponseEntity.ok(new RespuestaDto<>(false, respuesta));
     }
+
+
+
+
+    @GetMapping("/statistics")
+    public ResponseEntity<RespuestaDto<EstadisticasDto>> obtenerEstadisticas() {
+
+        EstadisticasDto estadisticas = this.gastoServicio.obtenerEstadisticas();
+
+        return ResponseEntity.ok(new RespuestaDto<>(false, estadisticas));
+    }
+
+
+
 }
