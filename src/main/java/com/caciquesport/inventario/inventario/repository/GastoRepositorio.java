@@ -26,6 +26,9 @@ public interface GastoRepositorio extends JpaRepository<Gasto, Integer> {
     // 4. Buscar por fecha entre dos fechas
     @Query("SELECT g FROM Gasto g WHERE g.fecha >= :inicio AND g.fecha < :fin")
     List<Gasto> findByFechaBetweenDates(@Param("inicio") Date inicio, @Param("fin") Date fin);
-    
+
+    // 5. Buscar por año y mes
+    @Query("SELECT g FROM Gasto g WHERE FUNCTION('YEAR', g.fecha) = :year AND FUNCTION('MONTH', g.fecha) = :month")
+    List<Gasto> findByYearAndMonth(@Param("year") int year, @Param("month") int month);
 
 }
