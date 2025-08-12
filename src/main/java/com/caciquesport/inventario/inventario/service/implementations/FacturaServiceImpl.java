@@ -266,7 +266,7 @@ public class FacturaServiceImpl implements FacturaService {
                     .convertirListaProductosDto(factura.getListaProductosFactura());
 
             listaFacturasDto.add(new FacturaDto(factura.getIdFactura(),factura.getEstadoFactura().toString(),factura.getFechaFactura().toString(), factura.getCliente().getCedula(),
-                    produtosFacturaDtos, "NA",0,factura.getSoportePago().getValorTotalPagado()));
+                    factura.getCliente().getNombre(),produtosFacturaDtos, "NA",0,factura.getSoportePago().getValorTotalPagado()));
         }
 
         return listaFacturasDto;

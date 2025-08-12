@@ -210,7 +210,9 @@ public class GastoServicioImpl implements GastoServicio {
      */
     private double obtenerTotalGastosMes(){
     
-        LocalDate hoy = LocalDate.now();
+        ZoneId zonaColombia = ZoneId.of("America/Bogota");
+        
+        LocalDate hoy = LocalDate.now(zonaColombia);
         LocalDate inicioMes = hoy.withDayOfMonth(1);
         LocalDate inicioSiguienteMes = inicioMes.plusMonths(1);
     
@@ -228,11 +230,13 @@ public class GastoServicioImpl implements GastoServicio {
      * @return The sum of all expenses for today
      */
     private double obtenerTotalGastosHoy() {
-        LocalDate hoy = LocalDate.now();
-        ZoneId zona = ZoneId.systemDefault();
+        
+        ZoneId zonaColombia = ZoneId.of("America/Bogota");
+        
+        LocalDate hoy = LocalDate.now(zonaColombia);
     
-        Date inicio = Date.from(hoy.atStartOfDay(zona).toInstant());
-        Date fin = Date.from(hoy.plusDays(1).atStartOfDay(zona).toInstant());
+        Date inicio = Date.from(hoy.atStartOfDay(zonaColombia).toInstant());
+        Date fin = Date.from(hoy.plusDays(1).atStartOfDay(zonaColombia).toInstant());
     
         List<Gasto> gastos = gastoRepositorio.findByFechaBetweenDates(inicio, fin);
         return gastos.stream().mapToDouble(Gasto::getValor).sum();

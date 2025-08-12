@@ -23,6 +23,10 @@ public record FacturaDto(
     @NotNull 
     String cedulaCliente,
 
+    //nombre del cliente
+    String nombreCliente,
+
+    
     // Lista de productos incluidos en la factura. Este campo no puede ser nulo.
     @NotNull 
     List<ProductoFacturaDto> listaProductos,
@@ -37,5 +41,6 @@ public record FacturaDto(
 
     //valor total que un cliente ha pagado de una factura
     double valorPagado
+
 ) {
 }
