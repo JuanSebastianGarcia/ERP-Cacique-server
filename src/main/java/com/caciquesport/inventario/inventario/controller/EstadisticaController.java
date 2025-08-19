@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.caciquesport.inventario.inventario.dto.HitoricoIndicadoresDto;
 import com.caciquesport.inventario.inventario.dto.IndicadoresMensualesDto;
 import com.caciquesport.inventario.inventario.dto.RespuestaDto;
+import com.caciquesport.inventario.inventario.service.interfaces.EstadisticaServicio;
 
 import lombok.AllArgsConstructor;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,7 +19,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/api/estadistica")
 @AllArgsConstructor
 @Tag(name = "Estadistica", description = "Operaciones para gestionar estadisticas en el sistema")
-public class Estadistica {
+public class EstadisticaController {
 
     /*
      * SERVICIOS
@@ -31,7 +33,10 @@ public class Estadistica {
     @GetMapping("/indicadores-mensuales")
     @Operation(summary = "Obtener indicadores mensuales", description = "Obtiene los indicadores mensuales del sistema")
     public ResponseEntity<RespuestaDto<IndicadoresMensualesDto>> ObtenerIndicadoresMensuales() {
-        return ResponseEntity.ok().body(new RespuestaDto<>(false, "indicadores mensuales"));
+        
+        IndicadoresMensualesDto indicadoresMensuales = estadisticaServicio.obtenerIndicadoresMensuales();
+        return ResponseEntity.ok().body(new RespuestaDto<>(false, indicadoresMensuales));
+        
     }
 
 
@@ -39,8 +44,12 @@ public class Estadistica {
     
     @GetMapping("/historico-indicadores")
     @Operation(summary = "Obtener historico indicadores", description = "Obtiene el historico de indicadores del sistema")
-    public ResponseEntity<RespuestaDto<HistoricoIndicadoresDto>> ObtenerHistoricoIndicadores(@RequestParam(required = true)String TipoIndicador) {
-        return ResponseEntity.ok().body(new RespuestaDto<>(false, "historico indicadores"));
+    public ResponseEntity<RespuestaDto<HitoricoIndicadoresDto>> ObtenerHistoricoIndicadores(@RequestParam(required = true)String TipoIndicador) {
+        
+        HitoricoIndicadoresDto historicoIndicadores = estadisticaServicio.ObtenerHistoricoIndicadores(TipoIndicador);
+        
+        return ResponseEntity.ok().body(new RespuestaDto<>(false, historicoIndicadores));
+
     }
 
 
