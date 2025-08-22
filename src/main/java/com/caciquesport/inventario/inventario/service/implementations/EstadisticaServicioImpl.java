@@ -8,11 +8,13 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.caciquesport.inventario.inventario.dto.AnalisisVentasAgrupadasDto;
 import com.caciquesport.inventario.inventario.dto.HitoricoIndicadoresDto;
 import com.caciquesport.inventario.inventario.dto.IndicadoresMensualesDto;
 import com.caciquesport.inventario.inventario.dto.graficas.GraficaAnualDto;
 import com.caciquesport.inventario.inventario.dto.graficas.GraficaDiariaDto;
 import com.caciquesport.inventario.inventario.dto.graficas.GraficaMensualDto;
+import com.caciquesport.inventario.inventario.dto.VentaAgrupadaDto;
 import com.caciquesport.inventario.inventario.model.entity.Factura;
 import com.caciquesport.inventario.inventario.model.entity.Gasto;
 import com.caciquesport.inventario.inventario.model.entity.ProductoFactura;
@@ -709,6 +711,102 @@ public class EstadisticaServicioImpl implements EstadisticaServicio {
         }
         
         return utilidadesPorFecha;
+    }
+
+    @Override
+    public AnalisisVentasAgrupadasDto obtenerAnalisisVentasAgrupadas(String tipoDato) {
+        
+        // Get current year
+        int añoActual = LocalDate.now().getYear();
+        
+        // Query invoices from current year using existing method
+        List<Factura> facturasAñoActual = obtenerFacturasDelAño(añoActual);
+        
+        // Map to store accumulated income for each distinct value of the specified data type
+        Map<String, Double> ingresosPorTipoDato = new HashMap<>();
+        
+        // Iterate through each invoice
+        for (Factura factura : facturasAñoActual) {
+            
+            // Iterate through each product in the invoice
+            for (ProductoFactura productoFactura : factura.getListaProductosFactura()) {
+                
+                // Only process delivered products
+                if (productoFactura.getEstadoProducto().equals(EstadoProducto.ENTREGADO)) {
+                    
+                    // Get the product detail
+                    String valorTipoDato = obtenerValorTipoDato(productoFactura, tipoDato);
+                    double precioProducto = productoFactura.getProducto().getDetalleProducto().getPrecio();
+                    
+                    // Accumulate income for each distinct value of the specified data type
+                    ingresosPorTipoDato.merge(valorTipoDato, precioProducto, Double::sum);
+                }
+            }
+        }
+        
+        // Convert the map to the DTO format
+        return mapearAnalisisVentasAgrupadas(ingresosPorTipoDato, tipoDato);
+    }
+    
+    /**
+     * Extracts the value of the specified data type from a product
+     * 
+     * @param productoFactura The product invoice to extract data from
+     * @param tipoDato The type of data to extract (institucion, genero, prenda, talla, horario)
+     * @return The value of the specified data type
+     */
+    private String obtenerValorTipoDato(ProductoFactura productoFactura, String tipoDato) {
+        
+        switch (tipoDato.toUpperCase()) {
+            case "INSTITUCION":
+                return productoFactura.getProducto().getTipoInstitucion().getInstitucion();
+            case "GENERO":
+                return productoFactura.getProducto().getTipoGenero().getGenero();
+            case "PRENDA":
+                return productoFactura.getProducto().getTipoPrenda().getPrenda();
+            case "TALLA":
+                return productoFactura.getProducto().getTipoTalla().getTalla();
+            case "HORARIO":
+                return productoFactura.getProducto().getTipoHorario().getHorario();
+            default:
+                throw new IllegalArgumentException("Tipo de dato no válido: " + tipoDato);
+        }
+    }
+    
+    /**
+     * Maps the accumulated income data to the AnalisisVentasAgrupadasDto format
+     * 
+     * @param ingresosPorTipoDato Map containing accumulated income for each distinct value
+     * @param tipoDato The type of data that was analyzed
+     * @return AnalisisVentasAgrupadasDto with the grouped sales analysis
+     */
+    private AnalisisVentasAgrupadasDto mapearAnalisisVentasAgrupadas(Map<String, Double> ingresosPorTipoDato, String tipoDato) {
+        
+        // Create list to store the analysis data
+        List<VentaAgrupadaDto> detalles = new ArrayList<>();
+        
+        // Convert map entries to the required format
+        for (Map.Entry<String, Double> entry : ingresosPorTipoDato.entrySet()) {
+            VentaAgrupadaDto ventaAgrupada = new VentaAgrupadaDto(tipoDato, entry.getValue());
+            detalles.add(ventaAgrupada);
+        }
+        
+        // Create and return the DTO
+        return new AnalisisVentasAgrupadasDto(detalles);
+    }
+    
+    /**
+     * Gets invoices from a specific year by filtering all invoices
+     * 
+     * @param año The year to filter invoices
+     * @return List of invoices from the specified year
+     */
+    private List<Factura> obtenerFacturasDelAño(int año) {
+        List<Factura> todasLasFacturas = facturaRepository.findAll();
+        
+        return todasLasFacturas.stream()
+                .filter(factura -> factura.getFechaFactura().getYear() == año)
+                .toList();
     }
 
 
