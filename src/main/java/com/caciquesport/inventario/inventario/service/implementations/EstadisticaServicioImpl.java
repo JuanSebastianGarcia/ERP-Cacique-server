@@ -1,7 +1,9 @@
 package com.caciquesport.inventario.inventario.service.implementations;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +12,10 @@ import org.springframework.stereotype.Service;
 
 import com.caciquesport.inventario.inventario.dto.AnalisisVentasAgrupadasDto;
 import com.caciquesport.inventario.inventario.dto.HitoricoIndicadoresDto;
+import com.caciquesport.inventario.inventario.dto.IndicadoresDiariosDto;
 import com.caciquesport.inventario.inventario.dto.IndicadoresMensualesDto;
+import com.caciquesport.inventario.inventario.dto.ListaRegistrosMovimientoDto;
+import com.caciquesport.inventario.inventario.dto.RegistroMovimientoDto;
 import com.caciquesport.inventario.inventario.dto.graficas.GraficaAnualDto;
 import com.caciquesport.inventario.inventario.dto.graficas.GraficaDiariaDto;
 import com.caciquesport.inventario.inventario.dto.graficas.GraficaMensualDto;
@@ -139,37 +144,45 @@ public class EstadisticaServicioImpl implements EstadisticaServicio {
 
     
     /*
-     * Obtener los gastos del mes actual
-     */
+    * Obtener los gastos del mes actual
+    */
     private List<Gasto> obtenerGastosMesActual() {
         LocalDate ahora = LocalDate.now();
+        ZoneId zonaColombia = ZoneId.of("America/Bogota");
 
-        // Mes actual
-        int mesActual = ahora.getMonthValue();
-        int añoActual = ahora.getYear();
+        // Primer día del mes
+        LocalDate inicioMes = ahora.withDayOfMonth(1);
 
-        // Consultas
-        List<Gasto> gastosMesActual = gastoRepository.findByYearAndMonth(añoActual, mesActual);
+        // Primer día del mes siguiente (para usar como límite exclusivo)
+        LocalDate inicioMesSiguiente = inicioMes.plusMonths(1);
 
-        return gastosMesActual;
+        // Convertir a java.util.Date
+        Date inicio = Date.from(inicioMes.atStartOfDay(zonaColombia).toInstant());
+        Date fin = Date.from(inicioMesSiguiente.atStartOfDay(zonaColombia).toInstant());
+
+        // Consultar por rango en el repositorio
+        return gastoRepository.findByFechaBetweenDates(inicio, fin);
     }
 
 
 
+
+
+
     /*
-     * Obtener las facturas del mes actual
-     */
+    * Buscar las facturas que se registraron en el mes actual
+    */
     private List<Factura> obtenerFacturasMesActual() {
         LocalDate ahora = LocalDate.now();
 
-        // Mes actual
-        int mesActual = ahora.getMonthValue();
-        int añoActual = ahora.getYear();
+        // Primer día del mes
+        LocalDate inicio = ahora.withDayOfMonth(1);
 
-        // Consultas
-        List<Factura> facturasMesActual = facturaRepository.findByYearAndMonth(añoActual, mesActual);
+        // Último día del mes
+        LocalDate fin = ahora.withDayOfMonth(ahora.lengthOfMonth());
 
-        return facturasMesActual;
+        // Consultar por rango de fechas
+        return facturaRepository.findByFechaBetween(inicio, fin);
     }
 
 
@@ -796,18 +809,272 @@ public class EstadisticaServicioImpl implements EstadisticaServicio {
     }
     
     /**
-     * Gets invoices from a specific year by filtering all invoices
+     * Gets invoices from a specific year by using the repository's date range query
+     * This method is more efficient than fetching all invoices and filtering in memory
      * 
      * @param año The year to filter invoices
      * @return List of invoices from the specified year
      */
     private List<Factura> obtenerFacturasDelAño(int año) {
-        List<Factura> todasLasFacturas = facturaRepository.findAll();
+        // Define start and end dates for the year
+        LocalDate fechaInicio = LocalDate.of(año, 1, 1);  // January 1st of the year
+        LocalDate fechaFin = LocalDate.of(año, 12, 31);   // December 31st of the year
         
-        return todasLasFacturas.stream()
-                .filter(factura -> factura.getFechaFactura().getYear() == año)
-                .toList();
+        // Use the repository method to query invoices within the date range
+        return facturaRepository.findByFechaBetween(fechaInicio, fechaFin);
     }
 
+    @Override
+    public IndicadoresDiariosDto obtenerKpisDiarios(String fecha) {
+        
+        // Parse the date parameter to LocalDate
+        LocalDate fechaConsulta = LocalDate.parse(fecha);
+        
+        // Get invoices for the specific date
+        List<Factura> facturasDelDia = obtenerFacturasDelDia(fechaConsulta);
+        
+        // Get expenses for the specific date
+        List<Gasto> gastosDelDia = obtenerGastosDelDia(fechaConsulta);
+        
+        // Calculate KPIs
+        double ingresosTotalesCaja = calcularIngresosTotalesDelDia(facturasDelDia, fechaConsulta);
+        double gastosTotales = calcularGastosTotalesDelDia(gastosDelDia);
+        int numeroFacturasEmitidas = facturasDelDia.size();
+        
+        // Create and return the DTO with calculated KPIs
+        return new IndicadoresDiariosDto(ingresosTotalesCaja, gastosTotales, numeroFacturasEmitidas);
+    }
+    
+    /**
+     * Retrieves invoices issued on a specific date
+     * 
+     * @param fecha The specific date to query invoices for
+     * @return List of invoices issued on the specified date
+     */
+    private List<Factura> obtenerFacturasDelDia(LocalDate fecha) {
+        // Use the repository method to query invoices for the specific date
+        return facturaRepository.findByFechaBetween(fecha, fecha);
+    }
+    
+    /**
+     * Obtiene los gastos de un día específico
+     *
+     * @param fecha Día a consultar
+     * @return Lista de gastos registrados en la fecha indicada
+     */
+    private List<Gasto> obtenerGastosDelDia(LocalDate fecha) {
+        // Convertir LocalDate a Date (inicio y fin del día)
+        ZoneId zonaColombia = ZoneId.of("America/Bogota");
+
+        Date inicio = Date.from(fecha.atStartOfDay(zonaColombia).toInstant());
+        Date fin = Date.from(fecha.plusDays(1).atStartOfDay(zonaColombia).toInstant());
+
+        // Consultar usando el repositorio
+        return gastoRepository.findByFechaBetweenDates(inicio, fin);
+    }
+
+    
+    /**
+     * Calculates total income for a specific date by reviewing payment support
+     * and summing all payments made on that date
+     * 
+     * @param facturasDelDia List of invoices for the specific date
+     * @param fecha The specific date to calculate income for
+     * @return Total income received on the specified date
+     */
+    private double calcularIngresosTotalesDelDia(List<Factura> facturasDelDia, LocalDate fecha) {
+        double ingresosTotales = 0.0;
+        
+        // Colombia timezone
+        java.time.ZoneId zonaColombia = java.time.ZoneId.of("America/Bogota");
+        
+        for (Factura factura : facturasDelDia) {
+            // Check if the invoice has payment support
+            if (factura.getSoportePago() != null && factura.getSoportePago().getListaPagos() != null) {
+                
+                // Iterate through all payments in the payment support
+                for (Object pago : factura.getSoportePago().getListaPagos()) {
+                    // Check if the payment was made on the specified date
+                    if (esPagoDelDia(pago, fecha, zonaColombia)) {
+                        // Add the payment amount to total income
+                        ingresosTotales += obtenerMontoPago(pago);
+                    }
+                }
+            }
+        }
+        
+        return ingresosTotales;
+    }
+    
+    /**
+     * Checks if a payment was made on a specific date
+     * 
+     * @param pago The payment object to check
+     * @param fecha The specific date to compare against
+     * @param zonaColombia Colombia timezone
+     * @return true if payment was made on the specified date, false otherwise
+     */
+    private boolean esPagoDelDia(Object pago, LocalDate fecha, java.time.ZoneId zonaColombia) {
+        try {
+            // Use reflection to get the payment date
+            java.lang.reflect.Method getFechaMethod = pago.getClass().getMethod("getFecha");
+            Object fechaPago = getFechaMethod.invoke(pago);
+    
+            if (fechaPago instanceof java.util.Date) {
+                java.util.Date date = (java.util.Date) fechaPago;
+                LocalDate fechaPagoLocal = date.toInstant().atZone(zonaColombia).toLocalDate();
+                return fechaPagoLocal.equals(fecha);
+            }
+        } catch (Exception e) {
+            // Log error or handle gracefully
+            System.err.println("Error checking payment date: " + e.getMessage());
+        }
+        return false;
+    }
+    
+    
+    /**
+     * Extracts the payment amount from a payment object
+     * 
+     * @param pago The payment object
+     * @return The payment amount
+     */
+    private double obtenerMontoPago(Object pago) {
+        try {
+            // Use reflection to get the payment amount
+            java.lang.reflect.Method getMontoMethod = pago.getClass().getMethod("getMonto");
+            Object monto = getMontoMethod.invoke(pago);
+            
+            if (monto instanceof Number) {
+                return ((Number) monto).doubleValue();
+            }
+        } catch (Exception e) {
+            // Log error or handle gracefully
+            System.err.println("Error getting payment amount: " + e.getMessage());
+        }
+        return 0.0;
+    }
+    
+    /**
+     * Calculates total expenses for a specific date
+     * 
+     * @param gastosDelDia List of expenses for the specific date
+     * @return Total expenses incurred on the specified date
+     */
+    private double calcularGastosTotalesDelDia(List<Gasto> gastosDelDia) {
+        return gastosDelDia.stream()
+                .mapToDouble(Gasto::getValor)
+                .sum();
+    }
+
+    @Override
+    public ListaRegistrosMovimientoDto obtenerRegistrosMovimientos(String fecha) {
+        
+        // Parse the date parameter to LocalDate
+        LocalDate fechaConsulta = LocalDate.parse(fecha);
+        
+        // Get invoices and expenses for the specific date
+        List<Factura> facturasDelDia = obtenerFacturasDelDia(fechaConsulta);
+        List<Gasto> gastosDelDia = obtenerGastosDelDia(fechaConsulta);
+        
+        // Create movement records from expenses and income
+        List<RegistroMovimientoDto> registros = new ArrayList<>();
+        registros.addAll(crearRegistrosGastos(gastosDelDia, fechaConsulta));
+        registros.addAll(crearRegistrosIngresos(facturasDelDia, fechaConsulta));
+        
+        // Create and return the DTO with all movement records
+        return new ListaRegistrosMovimientoDto(registros);
+    }
+    
+    /**
+     * Creates movement records from expenses for a specific date
+     * 
+     * @param gastosDelDia List of expenses for the specific date
+     * @param fechaConsulta The date to create records for
+     * @return List of movement records for expenses
+     */
+    private List<RegistroMovimientoDto> crearRegistrosGastos(List<Gasto> gastosDelDia, LocalDate fechaConsulta) {
+        List<RegistroMovimientoDto> registros = new ArrayList<>();
+        
+        for (Gasto gasto : gastosDelDia) {
+            RegistroMovimientoDto registro = new RegistroMovimientoDto(
+                fechaConsulta.toString(),
+                "GASTO",
+                gasto.getValor()
+            );
+            registros.add(registro);
+        }
+        
+        return registros;
+    }
+    
+    /**
+     * Creates movement records from income (invoice payments) for a specific date
+     * 
+     * @param facturasDelDia List of invoices for the specific date
+     * @param fechaConsulta The date to create records for
+     * @return List of movement records for income
+     */
+    private List<RegistroMovimientoDto> crearRegistrosIngresos(List<Factura> facturasDelDia, LocalDate fechaConsulta) {
+        List<RegistroMovimientoDto> registros = new ArrayList<>();
+        
+        for (Factura factura : facturasDelDia) {
+            if (tieneSoportePago(factura)) {
+                registros.addAll(procesarPagosFactura(factura, fechaConsulta));
+            }
+        }
+        
+        return registros;
+    }
+    
+    /**
+     * Checks if an invoice has payment support
+     * 
+     * @param factura The invoice to check
+     * @return true if the invoice has payment support, false otherwise
+     */
+    private boolean tieneSoportePago(Factura factura) {
+        return factura.getSoportePago() != null && factura.getSoportePago().getListaPagos() != null;
+    }
+    
+    /**
+     * Processes payments from an invoice and creates movement records for payments made on the specified date
+     * 
+     * @param factura The invoice to process payments from
+     * @param fechaConsulta The date to filter payments for
+     * @return List of movement records for payments made on the specified date
+     */
+    private List<RegistroMovimientoDto> procesarPagosFactura(Factura factura, LocalDate fechaConsulta) {
+        List<RegistroMovimientoDto> registros = new ArrayList<>();
+        
+        // Colombia timezone
+        java.time.ZoneId zonaColombia = java.time.ZoneId.of("America/Bogota");
+        
+        for (Object pago : factura.getSoportePago().getListaPagos()) {
+            if (esPagoDelDia(pago, fechaConsulta, zonaColombia)) {
+                RegistroMovimientoDto registro = crearRegistroIngreso(pago, fechaConsulta);
+                registros.add(registro);
+            }
+        }
+        
+        return registros;
+    }
+    
+    /**
+     * Creates an income movement record from a payment
+     * 
+     * @param pago The payment object
+     * @param fechaConsulta The date for the record
+     * @return Movement record for the income
+     */
+    private RegistroMovimientoDto crearRegistroIngreso(Object pago, LocalDate fechaConsulta) {
+        double montoPago = obtenerMontoPago(pago);
+        
+        return new RegistroMovimientoDto(
+            fechaConsulta.toString(),
+            "INGRESO",
+            montoPago
+        );
+    }
 
 }

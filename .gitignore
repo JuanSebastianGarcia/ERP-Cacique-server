@@ -41,4 +41,4 @@ out/
 *.p12
 *.pdf
 
-*.yml
+/docker/docker-compose.yml

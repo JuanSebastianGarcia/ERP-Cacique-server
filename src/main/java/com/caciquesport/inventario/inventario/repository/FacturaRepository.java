@@ -1,5 +1,6 @@
 package com.caciquesport.inventario.inventario.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,17 +25,18 @@ public interface FacturaRepository extends JpaRepository<Factura,Integer>{
      */
     List<Factura> findByCliente(Cliente cliente);
 
-
     /*
-     * Buscar facturas por año y mes específico
+     * Buscar facturas en un rango de fechas específico
      * 
-     * @param year
-     * @param month
-     * @return
+     * @param fechaInicio fecha de inicio del rango (inclusive)
+     * @param fechaFin fecha de fin del rango (inclusive)
+     * @return lista de facturas dentro del rango de fechas
      */
     @Query("SELECT f FROM Factura f " +
-           "WHERE FUNCTION('YEAR', f.fechaFactura) = :year " +
-           "AND FUNCTION('MONTH', f.fechaFactura) = :month")
-    List<Factura> findByYearAndMonth(@Param("year") int year, @Param("month") int month);
+           "WHERE f.fechaFactura >= :fechaInicio " +
+           "AND f.fechaFactura <= :fechaFin " +
+           "ORDER BY f.fechaFactura ASC")
+    List<Factura> findByFechaBetween(@Param("fechaInicio") LocalDate fechaInicio, 
+                                   @Param("fechaFin") LocalDate fechaFin);
 
 }

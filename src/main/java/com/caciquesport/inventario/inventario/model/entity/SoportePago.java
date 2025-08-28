@@ -1,6 +1,7 @@
 package com.caciquesport.inventario.inventario.model.entity;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,7 +90,7 @@ public class SoportePago {
         
         Pago nuevoPago = new Pago();
 
-        nuevoPago.setFechaPago(LocalDate.now());
+        nuevoPago.setFechaPago(LocalDate.now(ZoneId.of("America/Bogota")));
         nuevoPago.setMetodoPago(MetodoPago.valueOf(metodoPago.toUpperCase()));
         nuevoPago.setValorPago(pago);
 

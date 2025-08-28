@@ -8,13 +8,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.caciquesport.inventario.inventario.dto.AnalisisVentasAgrupadasDto;
 import com.caciquesport.inventario.inventario.dto.HitoricoIndicadoresDto;
+import com.caciquesport.inventario.inventario.dto.IndicadoresDiariosDto;
 import com.caciquesport.inventario.inventario.dto.IndicadoresMensualesDto;
+import com.caciquesport.inventario.inventario.dto.ListaRegistrosMovimientoDto;
 import com.caciquesport.inventario.inventario.dto.RespuestaDto;
 import com.caciquesport.inventario.inventario.service.interfaces.EstadisticaServicio;
 
 import lombok.AllArgsConstructor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import com.caciquesport.inventario.inventario.dto.IndicadoresDiariosDto;
 
 /**
  * REST Controller for managing statistics operations in the inventory system.
@@ -97,4 +100,46 @@ public class EstadisticaController {
 
     }
 
+    /**
+     * Retrieves daily Key Performance Indicators (KPIs) for a specific date.
+     * This endpoint provides comprehensive daily metrics including total income,
+     * total expenses, and number of invoices issued for the specified date.
+     * 
+     * @param fecha The specific date to retrieve KPIs for (format: yyyy-MM-dd)
+     * @return ResponseEntity containing daily KPIs wrapped in RespuestaDto
+     */
+    @GetMapping("/kpis-diarios")
+    @Operation(summary = "Obtener KPIs diarios", description = "Obtiene los indicadores clave de rendimiento del día especificado")
+    public ResponseEntity<RespuestaDto<IndicadoresDiariosDto>> obtenerKpisDiarios(@RequestParam(required = true) String fecha) {
+        
+        // Parse the date parameter and retrieve daily KPIs from service layer
+        IndicadoresDiariosDto kpisDiarios = estadisticaServicio.obtenerKpisDiarios(fecha);
+        
+        // Return successful response with daily KPIs data
+        return ResponseEntity.ok().body(new RespuestaDto<>(false, kpisDiarios));
+    }
+
+    /**
+     * Retrieves a list of movement records (income and expenses) for a specific date.
+     * This endpoint provides detailed financial movement information including
+     * the date of registration, type of movement (income or expense), and the value.
+     * 
+     * @param fecha The specific date to retrieve movement records for (format: yyyy-MM-dd)
+     * @return ResponseEntity containing movement records wrapped in RespuestaDto
+     */
+    @GetMapping("/registros-movimientos")
+    @Operation(summary = "Obtener registros de movimientos", description = "Obtiene la lista de registros de movimientos (ingresos y gastos) para una fecha específica")
+    public ResponseEntity<RespuestaDto<ListaRegistrosMovimientoDto>> obtenerRegistrosMovimientos(@RequestParam(required = true) String fecha) {
+        
+        // Retrieve movement records from service layer for the specified date
+        ListaRegistrosMovimientoDto registrosMovimientos = estadisticaServicio.obtenerRegistrosMovimientos(fecha);
+        
+        // Return successful response with movement records data
+        return ResponseEntity.ok().body(new RespuestaDto<>(false, registrosMovimientos));
+    }
+
+
+
+
+    
 }
