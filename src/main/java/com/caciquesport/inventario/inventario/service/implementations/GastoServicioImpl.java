@@ -40,7 +40,6 @@ public class GastoServicioImpl implements GastoServicio {
 
     /**
      * Creates a new expense record in the database.
-     * TODO: This method needs to be completed - currently it saves an empty Gasto object
      * without populating it with data from the DTO.
      * 
      * @param gastoDto The expense data transfer object containing expense information

@@ -758,7 +758,7 @@ public class EstadisticaServicioImpl implements EstadisticaServicio {
         }
         
         // Convert the map to the DTO format
-        return mapearAnalisisVentasAgrupadas(ingresosPorTipoDato, tipoDato);
+        return mapearAnalisisVentasAgrupadas(ingresosPorTipoDato);
     }
     
     /**
@@ -772,7 +772,7 @@ public class EstadisticaServicioImpl implements EstadisticaServicio {
         
         switch (tipoDato.toUpperCase()) {
             case "INSTITUCION":
-                return productoFactura.getProducto().getTipoInstitucion().getInstitucion();
+                return productoFactura.getProducto().getTipoInstitucion().getInstitucion()  ;
             case "GENERO":
                 return productoFactura.getProducto().getTipoGenero().getGenero();
             case "PRENDA":
@@ -790,17 +790,16 @@ public class EstadisticaServicioImpl implements EstadisticaServicio {
      * Maps the accumulated income data to the AnalisisVentasAgrupadasDto format
      * 
      * @param ingresosPorTipoDato Map containing accumulated income for each distinct value
-     * @param tipoDato The type of data that was analyzed
      * @return AnalisisVentasAgrupadasDto with the grouped sales analysis
      */
-    private AnalisisVentasAgrupadasDto mapearAnalisisVentasAgrupadas(Map<String, Double> ingresosPorTipoDato, String tipoDato) {
+    private AnalisisVentasAgrupadasDto mapearAnalisisVentasAgrupadas(Map<String, Double> ingresosPorTipoDato) {
         
         // Create list to store the analysis data
         List<VentaAgrupadaDto> detalles = new ArrayList<>();
         
         // Convert map entries to the required format
         for (Map.Entry<String, Double> entry : ingresosPorTipoDato.entrySet()) {
-            VentaAgrupadaDto ventaAgrupada = new VentaAgrupadaDto(tipoDato, entry.getValue());
+            VentaAgrupadaDto ventaAgrupada = new VentaAgrupadaDto(entry.getKey(), entry.getValue());
             detalles.add(ventaAgrupada);
         }
         

@@ -17,7 +17,6 @@ import com.caciquesport.inventario.inventario.service.interfaces.EstadisticaServ
 import lombok.AllArgsConstructor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import com.caciquesport.inventario.inventario.dto.IndicadoresDiariosDto;
 
 /**
  * REST Controller for managing statistics operations in the inventory system.
@@ -67,7 +66,10 @@ public class EstadisticaController {
      * This endpoint allows filtering of historical data by different indicator categories
      * such as gross income, net income, and expenses
      * 
-     * @param TipoIndicador The type of indicator to retrieve historical data for (required)
+     * @param TipoIndicador The type of indicator to retrieve historical data for (required) 
+     *                      - "INGRESOS"
+     *                      - "GASTOS"
+     *                      - "UTILIDADES"
      * @return ResponseEntity containing historical indicators wrapped in RespuestaDto
      */
     @GetMapping("/historico-indicadores")
@@ -110,7 +112,8 @@ public class EstadisticaController {
      */
     @GetMapping("/kpis-diarios")
     @Operation(summary = "Obtener KPIs diarios", description = "Obtiene los indicadores clave de rendimiento del día especificado")
-    public ResponseEntity<RespuestaDto<IndicadoresDiariosDto>> obtenerKpisDiarios(@RequestParam(required = true) String fecha) {
+    public ResponseEntity<RespuestaDto<IndicadoresDiariosDto>> obtenerKpisDiarios(
+        @RequestParam(name = "fecha",required = true) String fecha) {
         
         // Parse the date parameter and retrieve daily KPIs from service layer
         IndicadoresDiariosDto kpisDiarios = estadisticaServicio.obtenerKpisDiarios(fecha);
@@ -129,7 +132,9 @@ public class EstadisticaController {
      */
     @GetMapping("/registros-movimientos")
     @Operation(summary = "Obtener registros de movimientos", description = "Obtiene la lista de registros de movimientos (ingresos y gastos) para una fecha específica")
-    public ResponseEntity<RespuestaDto<ListaRegistrosMovimientoDto>> obtenerRegistrosMovimientos(@RequestParam(required = true) String fecha) {
+    public ResponseEntity<RespuestaDto<ListaRegistrosMovimientoDto>> obtenerRegistrosMovimientos(
+        @RequestParam(name = "fecha",required = true) String fecha
+        ) {
         
         // Retrieve movement records from service layer for the specified date
         ListaRegistrosMovimientoDto registrosMovimientos = estadisticaServicio.obtenerRegistrosMovimientos(fecha);
